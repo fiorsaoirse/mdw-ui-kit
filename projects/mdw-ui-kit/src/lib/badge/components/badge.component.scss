@@ -1,0 +1,28 @@
+$badge-margin: 4px;
+$badge-radius: 5px;
+$badge-color: #ffffff;
+$badge-background: #1520A6;
+
+.md-badge-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid $badge-background;
+    background-color: $badge-background;
+    border-radius: $badge-radius;
+    color: $badge-color;
+    margin-left: -$badge-margin;
+    margin-right: -$badge-margin;
+    padding-top: $badge-margin;
+    padding-bottom: $badge-margin;
+    max-width: max-content;
+
+    & > * {
+        margin: 0 $badge-margin;
+    }
+
+    .md-badge-remove-button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+}
