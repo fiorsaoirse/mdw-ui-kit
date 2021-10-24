@@ -1,28 +1,25 @@
 import { Directive, forwardRef, InjectionToken, Input } from '@angular/core';
-import { Controller } from '../controller';
+import { ControllerDirective } from '../controller';
 
-export const MDW_REMOVABLE = new InjectionToken<MdwRemovableControllerDirective>(
-    `Token that creates the instance of mdwRemovable directive with default params
+export const MD_REMOVABLE = new InjectionToken<MdRemovableControllerDirective>(
+    `Token that creates the instance of mdRemovable directive with default params
      if there is no directive was provided from upper components`,
     {
-        factory: () => {
-            console.log('[mdwRemovable] inside the injection token factory');
-            return new MdwRemovableControllerDirective();
-        }
+        factory: () => new MdRemovableControllerDirective()
     }
-)
+);
 
 @Directive({
-    selector: '[mdwRemovable]',
+    selector: '[mdRemovable]',
     providers: [
         {
-            provide: MDW_REMOVABLE,
-            useExisting: forwardRef(() => MdwRemovableControllerDirective),
+            provide: MD_REMOVABLE,
+            useExisting: forwardRef(() => MdRemovableControllerDirective),
         },
     ],
 })
-export class MdwRemovableControllerDirective extends Controller {
-    @Input('mdwRemovable') removable: boolean;
+export class MdRemovableControllerDirective extends ControllerDirective {
+    @Input('mdRemovable') removable: boolean;
 
     constructor() {
         super();

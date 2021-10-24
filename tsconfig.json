@@ -13,6 +13,12 @@
       "mdw-ui-kit": [
         "dist/mdw-ui-kit/mdw-ui-kit",
         "dist/mdw-ui-kit"
+      ],
+      "playground": [
+        "dist/playground"
+      ],
+      "tslib": [
+        "node_modules/tslib/tslib.d.ts"
       ]
     },
     "declaration": false,
@@ -23,7 +29,7 @@
     "target": "es2015",
     "module": "es2020",
     "lib": [
-      "es2018",
+      "ESNext",
       "dom"
     ]
   },

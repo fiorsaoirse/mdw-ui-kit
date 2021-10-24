@@ -1,24 +1,21 @@
 import { NgModule } from '@angular/core';
-import { MdwRemovableControllerDirective } from './directives/removable/removable.directive';
-import { MdwLargeControllerDirective } from './directives/size/large-size.directive';
-import { MdwSmallControllerDirective } from './directives/size/small-size.directive';
-import { MdwOnDestroy } from './services/destroy/destroy.service';
+import { MdRemovableControllerDirective } from './directives/removable/removable.directive';
+import { MdSizeControllerDirective } from './directives/size/size.directive';
+import { MdOnDestroy } from './services/destroy/destroy.service';
 
 @NgModule({
     declarations: [
-        MdwRemovableControllerDirective,
-        MdwLargeControllerDirective,
-        MdwSmallControllerDirective
+        MdRemovableControllerDirective,
+        MdSizeControllerDirective
     ],
     providers: [
-        MdwOnDestroy
+        MdOnDestroy
     ],
     exports: [
-        MdwRemovableControllerDirective,
-        MdwLargeControllerDirective,
-        MdwSmallControllerDirective
+        MdRemovableControllerDirective,
+        MdSizeControllerDirective
     ]
 })
-export class MdwSharedModule {
+export class MdSharedModule {
     constructor() { }
 }

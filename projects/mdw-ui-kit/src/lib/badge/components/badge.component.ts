@@ -3,54 +3,26 @@ import {
     ElementRef,
     EventEmitter,
     HostBinding,
+    Inject,
     Input,
     Output,
     Renderer2,
     ViewEncapsulation,
 } from '@angular/core';
+import { MdBadgeWatchedController, MD_BADGE_WATCHED_CONTROLLER, MD_BADGE_WATCHED_PROVIDER } from '../badge.controller';
 
 type PrimitiveTypes = string | number;
 
 @Component({
-    selector: 'mdw-badge',
+    selector: 'md-badge',
     templateUrl: './badge.component.html',
     styleUrls: ['./badge.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    providers: [
+        MD_BADGE_WATCHED_PROVIDER
+    ]
 })
-export class MdwBadgeComponent<T extends PrimitiveTypes, W> {
-    // private _removable: boolean;
-
-    // @HostBinding('class.md-badge-large')
-    // private _large: boolean;
-
-    // @HostBinding('class.md-badge-small')
-    // private _small: boolean;
-
-    // @Input() set removable(value: boolean) {
-    //     this._removable = convertToBoolean(value) || (value as unknown) === '';
-    // }
-
-    get removable(): boolean {
-        return true;
-        // return this._removable;
-    }
-
-    // @Input() set large(value) {
-    //     this._large = convertToBoolean(value) || (value as unknown) === '';
-    // }
-
-    // get large(): boolean {
-    //     return this._large;
-    // }
-
-    // @Input() set small(value) {
-    //     this._small = convertToBoolean(value) || (value as unknown) === '';
-    // }
-
-    // get small(): boolean {
-    //     return this._small;
-    // }
-
+export class MdBadgeComponent<T extends PrimitiveTypes, W> {
     @Input() value: T | null;
 
     @Input() item?: W;
@@ -59,12 +31,17 @@ export class MdwBadgeComponent<T extends PrimitiveTypes, W> {
 
     constructor(
         private readonly renderer: Renderer2,
-        private readonly elementRef: ElementRef
+        private readonly elementRef: ElementRef,
+        @Inject(MD_BADGE_WATCHED_CONTROLLER) private readonly controller: MdBadgeWatchedController
     ) {
         this.value = null;
         this.removed = new EventEmitter<W>();
 
         this.renderer.addClass(this.elementRef.nativeElement, 'md-badge-container');
+    }
+
+    public get removable(): boolean {
+        return this.controller.removable;
     }
 
     public onRemove(): void {

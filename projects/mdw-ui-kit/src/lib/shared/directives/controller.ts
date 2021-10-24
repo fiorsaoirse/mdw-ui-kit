@@ -1,7 +1,8 @@
-import { OnChanges } from '@angular/core';
+import { Directive, OnChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-export abstract class Controller<T = any> implements OnChanges {
+@Directive({})
+export abstract class ControllerDirective<T = any> implements OnChanges {
     private readonly _changes$: Subject<void>;
 
     constructor() {

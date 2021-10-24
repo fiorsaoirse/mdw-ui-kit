@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { MdwSharedModule } from '../shared/shared.module';
+import { MdSharedModule } from '../shared/shared.module';
+import { MdBadgeComponent } from './components/badge.component';
 
 @NgModule({
-    imports: [MdwSharedModule],
+    imports: [MdSharedModule],
     declarations: [
-
+        MdBadgeComponent
     ]
 })
-export class MdwBadgeModule {
+export class MdBadgeModule {
     constructor() { }
 }
