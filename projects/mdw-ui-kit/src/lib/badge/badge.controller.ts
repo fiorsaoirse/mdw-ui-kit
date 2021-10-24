@@ -1,9 +1,7 @@
 import { ChangeDetectorRef, InjectionToken, Provider } from '@angular/core';
 import { merge, Observable } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
-import { MdRemovableControllerDirective, MD_REMOVABLE } from '../shared/directives/removable/removable.directive';
-import { MdSize, MdSizeControllerDirective, MD_SIZE } from '../shared/directives/size/size.directive';
-import { MdOnDestroy } from '../shared/services/destroy/destroy.service';
+import { MdOnDestroy, MdRemovableControllerDirective, MdSize, MdSizeControllerDirective, MD_REMOVABLE, MD_SIZE } from '../shared';
 
 const mdBadgeWatchedControllerFactory = (
     changeDetectorRef: ChangeDetectorRef,
@@ -14,6 +12,7 @@ const mdBadgeWatchedControllerFactory = (
     ]
 ): MdBadgeWatchedController => {
     const mergedChanges$ = merge(...controllers.map(({ changes$ }) => changes$));
+
     mergedChanges$.pipe(
         tap(() => {
             changeDetectorRef.detectChanges();
@@ -35,6 +34,7 @@ export const MD_BADGE_WATCHED_PROVIDER: Provider = {
     provide: MD_BADGE_WATCHED_CONTROLLER,
     deps: [
         ChangeDetectorRef,
+        MdOnDestroy,
         MD_REMOVABLE,
         MD_SIZE
     ],

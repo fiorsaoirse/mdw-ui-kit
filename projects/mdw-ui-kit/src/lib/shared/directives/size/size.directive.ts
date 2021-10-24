@@ -1,11 +1,6 @@
 import { Directive, forwardRef, InjectionToken, Input } from '@angular/core';
+import { MdSize } from '../../contracts';
 import { ControllerDirective } from '../controller';
-
-export enum MdSize {
-    Small = 'small',
-    Medium = 'medium',
-    Large = 'large'
-}
 
 export const MD_SIZE = new InjectionToken<MdSizeControllerDirective>(
     `Token that creates the instance of mdSize directive with default params

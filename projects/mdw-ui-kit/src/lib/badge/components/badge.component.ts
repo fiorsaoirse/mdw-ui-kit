@@ -40,6 +40,16 @@ export class MdBadgeComponent<T extends PrimitiveTypes, W> {
         this.renderer.addClass(this.elementRef.nativeElement, 'md-badge-container');
     }
 
+    @HostBinding('class.md-badge-large')
+    private get large(): boolean {
+        return this.controller.isLarge;
+    }
+
+    @HostBinding('class.md-badge-small')
+    private get small(): boolean {
+        return this.controller.isSmall;
+    }
+
     public get removable(): boolean {
         return this.controller.removable;
     }

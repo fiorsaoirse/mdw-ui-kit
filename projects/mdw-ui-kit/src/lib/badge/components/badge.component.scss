@@ -1,7 +1,20 @@
 $badge-margin: 4px;
 $badge-radius: 5px;
 $badge-color: #ffffff;
-$badge-background: #1520A6;
+$badge-background: #1520a6;
+
+// TODO: in common file
+.md-badge {
+    font-size: 16px;
+}
+
+.md-badge-small {
+    font-size: 12px;
+}
+
+.md-badge-large {
+    font-size: 20px;
+}
 
 .md-badge-container {
     display: flex;
