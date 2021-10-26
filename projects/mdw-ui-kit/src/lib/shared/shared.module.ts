@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdRemovableControllerDirective } from './directives/removable/removable.directive';
+import { MdDisabledControllerDirective } from './directives/disabled/disabled.directive';
+import { MdClearableControllerDirective } from './directives/clearable/clearable.directive';
 import { MdSizeControllerDirective } from './directives/size/size.directive';
 import { MdOnDestroy } from './services/destroy/destroy.service';
 
@@ -11,15 +12,17 @@ import { MdOnDestroy } from './services/destroy/destroy.service';
         CommonModule
     ],
     declarations: [
-        MdRemovableControllerDirective,
-        MdSizeControllerDirective
+        MdClearableControllerDirective,
+        MdSizeControllerDirective,
+        MdDisabledControllerDirective
     ],
     providers: [
         MdOnDestroy
     ],
     exports: [
-        MdRemovableControllerDirective,
-        MdSizeControllerDirective
+        MdClearableControllerDirective,
+        MdSizeControllerDirective,
+        MdDisabledControllerDirective
     ]
 })
 export class MdSharedModule {

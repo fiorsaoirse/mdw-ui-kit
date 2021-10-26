@@ -1,24 +1,26 @@
 import { ChangeDetectorRef, InjectionToken, Provider } from '@angular/core';
 import { merge, Observable } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
-import { MdOnDestroy, MdRemovableControllerDirective, MdSize, MdSizeControllerDirective, MD_REMOVABLE, MD_SIZE } from '../shared';
+import { MdOnDestroy, MdClearableControllerDirective, MdSize, MdSizeControllerDirective, MD_CLEARABLE, MD_SIZE, noop } from '../shared';
 
 const mdBadgeWatchedControllerFactory = (
     changeDetectorRef: ChangeDetectorRef,
     destroy$: MdOnDestroy,
     ...controllers: [
-        MdRemovableControllerDirective,
+        MdClearableControllerDirective,
         MdSizeControllerDirective
     ]
 ): MdBadgeWatchedController => {
-    const mergedChanges$ = merge(...controllers.map(({ changes$ }) => changes$));
+    const mergedChanges$ = merge(...controllers.map(({ changes$ }) => changes$))
+        .pipe(
+            tap(() => {
+                changeDetectorRef.detectChanges();
+            }),
+            noop(),
+            takeUntil(destroy$)
+        );
 
-    mergedChanges$.pipe(
-        tap(() => {
-            changeDetectorRef.detectChanges();
-        }),
-        takeUntil(destroy$)
-    ).subscribe();
+    mergedChanges$.subscribe();
 
     return new MdBadgeWatchedController(mergedChanges$, ...controllers);
 };
@@ -35,7 +37,7 @@ export const MD_BADGE_WATCHED_PROVIDER: Provider = {
     deps: [
         ChangeDetectorRef,
         MdOnDestroy,
-        MD_REMOVABLE,
+        MD_CLEARABLE,
         MD_SIZE
     ],
     useFactory: mdBadgeWatchedControllerFactory
@@ -47,12 +49,12 @@ export const MD_BADGE_WATCHED_PROVIDER: Provider = {
 export class MdBadgeWatchedController {
     constructor(
         readonly changes$: Observable<void>,
-        private readonly removableDirective: MdRemovableControllerDirective,
+        private readonly clearableDirective: MdClearableControllerDirective,
         private readonly sizeDirecrive: MdSizeControllerDirective
     ) { }
 
-    get removable(): boolean {
-        return this.removableDirective.removable;
+    get clearable(): boolean {
+        return this.clearableDirective.clearable;
     }
 
     get isSmall(): boolean {

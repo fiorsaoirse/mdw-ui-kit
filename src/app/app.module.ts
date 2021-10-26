@@ -9,6 +9,7 @@ import { ButtonTestComponent } from './button/button.component';
 // TODO: проверить импорты
 import { MdBadgeModule } from '../../projects/mdw-ui-kit/src/lib/badge';
 import { MdSharedModule } from '../../projects/mdw-ui-kit/src/lib/shared';
+import { MdButtonModule } from '../../projects/mdw-ui-kit/src/lib/button';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MdSharedModule } from '../../projects/mdw-ui-kit/src/lib/shared';
         CommonModule,
         RouterModule.forRoot(routes),
         MdSharedModule,
-        MdBadgeModule
+        MdBadgeModule,
+        MdButtonModule
     ],
     providers: [],
     bootstrap: [AppComponent]

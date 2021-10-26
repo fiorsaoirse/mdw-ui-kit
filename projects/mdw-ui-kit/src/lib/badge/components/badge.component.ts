@@ -50,8 +50,8 @@ export class MdBadgeComponent<T extends PrimitiveTypes, W> {
         return this.controller.isSmall;
     }
 
-    public get removable(): boolean {
-        return this.controller.removable;
+    public get clearable(): boolean {
+        return this.controller.clearable;
     }
 
     public onRemove(): void {
