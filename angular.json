@@ -41,6 +41,13 @@
             ]
           }
         }
+      },
+      "schematics": {
+        "@schematics/angular": {
+          "component": {
+            "changeDetection": "OnPush"
+          }
+        }
       }
     },
     "playground": {

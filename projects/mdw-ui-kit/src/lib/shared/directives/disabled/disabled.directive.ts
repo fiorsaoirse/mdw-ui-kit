@@ -1,5 +1,5 @@
 import { Directive, ElementRef, forwardRef, inject, InjectionToken, Input, Renderer2 } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { MdOnDestroy } from '../../services';
 import { ControllerDirective } from '../controller';
 
@@ -9,7 +9,10 @@ export const MD_DISABLED = new InjectionToken<MdDisabledControllerDirective>(
      if there is no directive was provided from upper components`,
     {
         factory: () => {
-            return new MdDisabledControllerDirective();
+            // const elementRef = inject(ElementRef);
+            const mdOnDestroy = inject(MdOnDestroy);
+
+            return new MdDisabledControllerDirective(mdOnDestroy);
         }
     }
 );
@@ -29,18 +32,25 @@ const CSS_CLASSNAME = 'md-disabled';
 export class MdDisabledControllerDirective extends ControllerDirective {
     @Input('mdDisabled') disabled: boolean;
 
-    constructor(
+    // private readonly renderer: Renderer2;
 
+    constructor(
+        // private readonly elementRef: ElementRef,
+        private readonly destroy$: MdOnDestroy
     ) {
         super();
+
+        //  this.renderer = inject(Renderer2);
+
         this.disabled = false;
 
-        this.changes$.subscribe(() => {
-            console.log('disabled directive changed, new value:', this.disabled)
-        });
+        console.log(this);
 
         // this.changes$.pipe(
-        //     takeUntil(this.destroy$)
+        //     tap(() => {
+        //         console.log('disabled directive changed, new value:', this.disabled)
+        //     }),
+        //     // takeUntil(this.destroy$)
         // ).subscribe(() => {
         //     // TODO: проверять чейнджи?
         //     // console.log('changes');

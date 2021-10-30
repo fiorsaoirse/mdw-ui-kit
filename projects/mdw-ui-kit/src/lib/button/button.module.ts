@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MdButtonDirective } from './button.directive';
+import { MdButtonDirective } from './components/button.directive';
 
 @NgModule({
     declarations: [MdButtonDirective],

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
+import { FieldTestComponent } from './field/field.component';
 
 export const routes: Routes = [
     {
@@ -10,5 +11,9 @@ export const routes: Routes = [
     {
         path: 'button',
         component: ButtonTestComponent
+    },
+    {
+        path: 'field',
+        component: FieldTestComponent
     }
 ];

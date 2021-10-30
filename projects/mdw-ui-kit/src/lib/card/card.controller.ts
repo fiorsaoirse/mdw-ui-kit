@@ -45,22 +45,22 @@ export const MD_CARD_WATCHED_PROVIDER: Provider = {
 export class MdCardWatchedController {
     constructor(
         readonly changes$: Observable<void>,
-        private readonly sizeDirecrive: MdSizeControllerDirective
+        private readonly sizeDirective: MdSizeControllerDirective
     ) { }
 
-    get isSmall(): boolean {
-        return this.sizeDirecrive.size === MdSize.Small;
+    public get isSmall(): boolean {
+        return this.sizeDirective.size === MdSize.Small;
     }
 
-    get isMedium(): boolean {
-        return this.sizeDirecrive.size === MdSize.Medium;
+    public get isMedium(): boolean {
+        return this.sizeDirective.size === MdSize.Medium;
     }
 
-    get isLarge(): boolean {
-        return this.sizeDirecrive.size === MdSize.Large;
+    public get isLarge(): boolean {
+        return this.sizeDirective.size === MdSize.Large;
     }
 
-    get size(): MdSize {
-        return this.sizeDirecrive.size;
+    public get size(): MdSize {
+        return this.sizeDirective.size;
     }
 }

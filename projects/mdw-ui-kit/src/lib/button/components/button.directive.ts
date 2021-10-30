@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
-import { MdButtonWatchedController, MD_BUTTON_WATCHED_CONTROLLER, MD_BUTTON_WATCHED_PROVIDER } from './button.controller';
+import { MdButtonWatchedController, MD_BUTTON_WATCHED_CONTROLLER, MD_BUTTON_WATCHED_PROVIDER } from '../button.controller';
 
 @Directive({
     selector: 'button[md-button]',

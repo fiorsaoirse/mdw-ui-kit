@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MdButtonDirective } from './button.directive';
-import { MdButtonModule } from './button.module';
+import { MdButtonModule } from '../button.module';
 
 @Component({
     template: `<button md-button>Test</button> `,

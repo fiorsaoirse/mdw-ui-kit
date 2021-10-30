@@ -29,9 +29,11 @@ export const MD_BADGE_WATCHED_CONTROLLER = new InjectionToken<MdBadgeWatchedCont
     'md badge watched controller'
 );
 
-// Используем провайдер для того, чтобы определить внутри фабрику, внутри которой будет
-// происходить проверка изменений (changeDetectorRef) и подписка, т.е.
-// не делать этого внутри самого MdBadgeWatchedController
+/**
+ * Используем провайдер для того, чтобы определить внутри фабрику, внутри которой будет
+   происходить проверка изменений (changeDetectorRef) и подписка, т.е.
+   не делать этого внутри самого MdBadgeWatchedController
+ */
 export const MD_BADGE_WATCHED_PROVIDER: Provider = {
     provide: MD_BADGE_WATCHED_CONTROLLER,
     deps: [
@@ -43,33 +45,35 @@ export const MD_BADGE_WATCHED_PROVIDER: Provider = {
     useFactory: mdBadgeWatchedControllerFactory
 };
 
-// WatchedController служит контейнером для всех остальных контроллеров, чтобы
-// не приходилось каждый инжектить в компонент бейджа и разруливать там
-// изменения
+/**
+ * Контроллер, который инкапсулирует в себе логику проверки свойств каждой из директив
+ * Т.е. клиентский компонент запрашивает нужное свойство у мета-контроллера, а он,
+ * в свою очередь, знает, к какой директиве обратиться. По сути, это фасад
+ * */
 export class MdBadgeWatchedController {
     constructor(
         readonly changes$: Observable<void>,
         private readonly clearableDirective: MdClearableControllerDirective,
-        private readonly sizeDirecrive: MdSizeControllerDirective
+        private readonly sizeDirective: MdSizeControllerDirective
     ) { }
 
-    get clearable(): boolean {
+    public get clearable(): boolean {
         return this.clearableDirective.clearable;
     }
 
-    get isSmall(): boolean {
-        return this.sizeDirecrive.size === MdSize.Small;
+    public get isSmall(): boolean {
+        return this.sizeDirective.size === MdSize.Small;
     }
 
-    get isMedium(): boolean {
-        return this.sizeDirecrive.size === MdSize.Medium;
+    public get isMedium(): boolean {
+        return this.sizeDirective.size === MdSize.Medium;
     }
 
-    get isLarge(): boolean {
-        return this.sizeDirecrive.size === MdSize.Large;
+    public get isLarge(): boolean {
+        return this.sizeDirective.size === MdSize.Large;
     }
 
-    get size(): MdSize {
-        return this.sizeDirecrive.size;
+    public get size(): MdSize {
+        return this.sizeDirective.size;
     }
 }

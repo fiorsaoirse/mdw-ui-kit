@@ -1,0 +1,28 @@
+<h5>Plain Field</h5>
+
+<section>
+    <md-field foo="manually set foo">
+        <input type="text"
+               mdInput
+               #fromOne="mdInputDir"
+               (focus)="fromOne.logParent()"
+               [(ngModel)]="plain">
+    </md-field>
+</section>
+
+<h5>Range Fields</h5>
+
+<section>
+    <md-field-range>
+        <input type="text"
+               class="md-field-range-from"
+               mdInput
+               #fromTwo="mdInputDir"
+               (focus)="fromTwo.logParent()"
+               [(ngModel)]="plain">
+        <input type="text"
+               class="md-field-range-to"
+               mdInput
+               [(ngModel)]="plain">
+    </md-field-range>
+</section>

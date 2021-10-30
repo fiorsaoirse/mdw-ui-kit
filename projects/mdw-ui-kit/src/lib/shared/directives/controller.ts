@@ -14,8 +14,6 @@ export abstract class ControllerDirective implements OnChanges {
     }
 
     public ngOnChanges(): void {
-        console.log('changes!');
-
         this._changes$.next({
             source: this
         });
