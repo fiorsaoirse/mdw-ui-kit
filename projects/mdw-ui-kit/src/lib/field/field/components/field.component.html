@@ -1,3 +1,10 @@
 <div class="md-field-container">
-    <ng-content></ng-content>
+    <div class="md-field-label">
+        {{ label }}
+    </div>
+    <div class="md-field-content">
+        <ng-content select="mdFieldPrefix"></ng-content>
+        <ng-content></ng-content>
+        <ng-content select="mdFieldSuffix"></ng-content>
+    </div>
 </div>

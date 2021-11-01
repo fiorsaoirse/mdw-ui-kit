@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, InjectionToken, Provider } from '@angular/core';
 import { merge, Observable } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import {
-    MdClearableControllerDirective, MdDisabledControllerDirective,
-    MdOnDestroy, MdSize, MdSizeControllerDirective, MD_CLEARABLE, MD_DISABLED, MD_SIZE, noop
+    MdDisabledControllerDirective,
+    MdOnDestroy, MdSize, MdSizeControllerDirective,
+    MD_DISABLED, MD_SIZE, noop
 } from '../../shared';
 
 const mdFieldWatchedControllerFactory = (
@@ -11,8 +12,7 @@ const mdFieldWatchedControllerFactory = (
     destroy$: MdOnDestroy,
     ...controllers: [
         MdSizeControllerDirective,
-        MdDisabledControllerDirective,
-        MdClearableControllerDirective
+        MdDisabledControllerDirective
     ]
 ) => {
 
@@ -40,8 +40,7 @@ export const MD_FIELD_WATCHED_PROVIDER: Provider = {
         ChangeDetectorRef,
         MdOnDestroy,
         MD_SIZE,
-        MD_DISABLED,
-        MD_CLEARABLE
+        MD_DISABLED
     ],
     useFactory: mdFieldWatchedControllerFactory
 };
@@ -50,16 +49,11 @@ export class MdFieldWatchedController {
     constructor(
         readonly changes$: Observable<void>,
         private readonly sizeDirective: MdSizeControllerDirective,
-        private readonly disabledDirective: MdDisabledControllerDirective,
-        private readonly clearableDirective: MdClearableControllerDirective
+        private readonly disabledDirective: MdDisabledControllerDirective
     ) { }
 
     public get disabled(): boolean {
         return this.disabledDirective.disabled;
-    }
-
-    public get clearable(): boolean {
-        return this.clearableDirective.clearable;
     }
 
     public get isSmall(): boolean {
