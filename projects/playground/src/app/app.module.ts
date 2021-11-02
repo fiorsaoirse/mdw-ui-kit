@@ -7,12 +7,8 @@ import { routes } from './app.routes';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
 import { FieldTestComponent } from './field/field.component';
-// TODO: наконфижить импорты (alias)
-import { MdBadgeModule } from '../../projects/mdw-ui-kit/src/lib/badge';
-import { MdSharedModule } from '../../projects/mdw-ui-kit/src/lib/shared';
-import { MdButtonModule } from '../../projects/mdw-ui-kit/src/lib/button';
-import { MdFieldModule } from '../../projects/mdw-ui-kit/src/lib/field/field.module';
 import { FormsModule } from '@angular/forms';
+import { MdBadgeModule, MdButtonModule, MdFieldModule, MdSharedModule } from 'mdw-ui-kit';
 
 @NgModule({
     declarations: [

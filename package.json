@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build mdw-ui-kit",
+    "build-watch": "ng build mdw-ui-kit --watch",
     "test": "ng test",
     "lint": "ng lint",
     "sync-version": "sync-json -v --property version --source package.json projects/mdw-ui-kit/package.json"

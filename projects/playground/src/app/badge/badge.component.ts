@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MdSize } from '../../../projects/mdw-ui-kit/src/lib/shared';
+import { MdSize } from 'mdw-ui-kit';
 
 @Component({
     templateUrl: './badge.component.html'
