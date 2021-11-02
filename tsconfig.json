@@ -19,6 +19,9 @@
       ],
       "tslib": [
         "node_modules/tslib/tslib.d.ts"
+      ],
+      "@angular/*": [
+        "node_modules/@angular/*"
       ]
     },
     "declaration": false,

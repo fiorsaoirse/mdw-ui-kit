@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
 import { FieldTestComponent } from './field/field.component';
-import { FormsModule } from '@angular/forms';
 import { MdBadgeModule, MdButtonModule, MdFieldModule, MdSharedModule } from 'mdw-ui-kit';
 
 @NgModule({
