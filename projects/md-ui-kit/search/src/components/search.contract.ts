@@ -1,10 +1,8 @@
-import { IIdentifiable } from 'md-ui-kit/contracts';
-
-export interface ISearchOption<T> extends Readonly<IIdentifiable> {
-    content: T;
+export class MdSelectionEvent<T, R> {
+    constructor(readonly value: T | null, readonly item?: R) {}
 }
 
-export interface ISelectedSearchOptionEvent<T = ISearchOption> {
-    readonly value: number;
-    readonly item?: T;
+export interface MdSearchContext<T, R> {
+    $implicit: T | null;
+    item?: R;
 }

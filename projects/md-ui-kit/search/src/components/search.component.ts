@@ -7,25 +7,27 @@ import {
     ContentChildren,
     EventEmitter,
     Inject,
+    Input,
     NgZone,
     Output,
     QueryList,
     Self,
 } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, FormControl, Validators } from '@angular/forms';
 import {
     EMPTY_FUNCTION,
     EMPTY_QUERY,
+    MdDisabledControllerDirective,
     MdOnDestroy,
     MD_DEBOUNCE_TIME,
+    MD_DISABLED,
 } from 'md-ui-kit/common';
-import { defer, fromEvent, merge, Observable } from 'rxjs';
+import { defer, merge, Observable } from 'rxjs';
 import {
     debounceTime,
     distinctUntilChanged,
     filter,
     first,
-    map,
     startWith,
     switchMap,
     takeUntil,
@@ -33,7 +35,7 @@ import {
 } from 'rxjs/operators';
 import { MD_MIN_SEARCH_LENGTH } from '../tokens/tokens';
 import { MdSearchOptionComponent } from './search-option/search-option.component';
-import { ISearchOption } from './search.contract';
+import { MdSelectionEvent } from './search.contract';
 
 enum SearchStates {
     FILLING = 'filling',
@@ -41,23 +43,33 @@ enum SearchStates {
     SHOWING = 'showing',
 }
 
+const defaultStringifyHandler = (item: unknown): string => {
+    return String(item) ?? '';
+};
+
 @Component({
     selector: 'md-search',
     templateUrl: './search.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [MdOnDestroy],
 })
-export class MdSearchComponent
+export class MdSearchComponent<T, R>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
-    @ContentChildren(MdSearchOptionComponent)
-    options: QueryList<MdSearchOptionComponent> = EMPTY_QUERY;
+    @Input() stringify: (item: R) => string = defaultStringifyHandler;
 
-    @Output() selectionChange: EventEmitter<ISelectedSearchItemEvent>;
+    @ContentChildren(MdSearchOptionComponent<T, R>)
+    options: QueryList<MdSearchOptionComponent<T, R>> = EMPTY_QUERY;
+
+    @Output() selectedOption: EventEmitter<MdSelectionEvent<T, R>>;
     @Output() searchInputChange: EventEmitter<string | null>;
 
     private state: SearchStates;
-    private _value: number;
+
+    private value: number | null;
+    public viewValue: string;
+
+    public inputControl: FormControl<string>;
 
     onChange: (_: any) => void = EMPTY_FUNCTION;
     onTouched: () => void = EMPTY_FUNCTION;
@@ -66,17 +78,27 @@ export class MdSearchComponent
         private readonly ngZone: NgZone,
         private readonly changeDetectorRef: ChangeDetectorRef,
         @Self() private readonly destroy$: MdOnDestroy,
+        @Inject(MD_DISABLED)
+        private readonly disabledController: MdDisabledControllerDirective,
         @Inject(MD_DEBOUNCE_TIME) private readonly debounce: number,
         @Inject(MD_MIN_SEARCH_LENGTH) private readonly minSearchLength: number,
     ) {
-        this.selectionChange = new EventEmitter<ISelectedSearchItemEvent>();
-        this.searchInputChange = new EventEmitter<string | null>();
+        this.selectedOption = new EventEmitter();
+        this.searchInputChange = new EventEmitter();
+
+        this.value = null;
+        this.viewValue = '';
 
         this.state = SearchStates.FILLING;
+
+        this.inputControl = new FormControl<string>('', {
+            nonNullable: true,
+            validators: [Validators.minLength(this.minSearchLength)],
+        });
     }
 
     writeValue(value: number): void {
-        this._value = value;
+        this.value = value;
     }
 
     registerOnChange(fn: (_: any) => void): void {
@@ -88,40 +110,35 @@ export class MdSearchComponent
     }
 
     public ngAfterViewInit(): void {
-        fromEvent(this.searchInput.nativeElement, 'input')
+        this.inputControl.valueChanges
             .pipe(
+                startWith(this.viewValue),
                 debounceTime(this.debounce),
                 distinctUntilChanged(),
-                map((event: Event) => {
-                    const target = event.target as HTMLInputElement;
-                    return target.value.trim();
-                }),
-                filter((value: string) => value.length > this.minSearchLength),
+                filter(
+                    () =>
+                        !this.disabledController.disabled &&
+                        this.inputControl.valid,
+                ),
                 takeUntil(this.destroy$),
             )
-            .subscribe((value: string) => {
-                this.searchInputChange.emit(value);
+            .subscribe((searchInputValue: string) => {
+                this.searchInputChange.emit(searchInputValue);
             });
     }
 
     public ngAfterContentInit(): void {
-        /**
-         * There we subscribe on options count changes
-         * Example: we made http request, got an array of options and set them inside
-         * so the count of options changed
-         */
         this.options.changes
             .pipe(
                 startWith(this.options),
-                tap((changes: QueryList<ISearchOption>) => {
-                    const results = changes.toArray();
-                    if (results.length) {
-                        this.state = SearchStates.SHOWING;
+                tap((changes: QueryList<MdSearchOptionComponent<T, R>>) => {
+                    if (changes.length) {
+                        // this.state =
                     }
                 }),
                 takeUntil(this.destroy$),
             )
-            .subscribe((_changes: QueryList<ISearchOption>) => {
+            .subscribe(() => {
                 // After options initializing we have to observe the stream of option selection events
                 this.trackCurrentOptionsSelections();
                 this.changeDetectorRef.markForCheck();
@@ -146,23 +163,16 @@ export class MdSearchComponent
     }
 
     /**
-     * There we define the factory of lazy Observable for current options selection event
+     * Stream with currently selected option
      */
-    private optionsSelectionChanges: Observable<ISelectedSearchItemEvent> =
-        defer(() => {
+    private optionsSelectionChanges: Observable<MdSelectionEvent<T, R>> = defer(
+        () => {
             const options = this.options;
 
-            // In case, when options have been initialized yet (for the first set, f.e.),
-            // we have to return the Observable of option selection events
             if (options) {
-                const optionEmittersObservable = options.map(
-                    (
-                        option: MdSearchOptionComponent,
-                    ): Observable<ISelectedSearchItemEvent> =>
-                        option.selectEmitter.asObservable(),
-                );
-
-                return merge(...optionEmittersObservable);
+                return merge(
+                    ...options.map((option) => option.selected.asObservable()),
+                ).pipe(first());
             }
 
             /*
@@ -174,24 +184,30 @@ export class MdSearchComponent
                 switchMap(() => this.optionsSelectionChanges),
                 first(),
             );
-        });
+        },
+    );
 
     /**
-     * This method takes the lazy Observble with stream of option selection events
-     * and subscribes on this stream to
+     * Takes the lazy stream of option selection events
      */
     private trackCurrentOptionsSelections(): void {
-        // Define trigger events when current tracking is useless - if the count of options has been changed
-        // or the component has been destroyed we have to kill this subscription and get a new one
         const triggers = merge(this.options.changes, this.destroy$);
 
-        // When we select option, the search state have to change after emitting selected value
         this.optionsSelectionChanges
             .pipe(takeUntil(triggers))
-            .subscribe((selectionEvent: ISelectedSearchItemEvent): void => {
-                this.selectedItemChange.emit(selectionEvent);
-                this.searchInput.nativeElement.value = '';
-                this.state = SearchStates.FILLING;
+            .subscribe((event) => {
+                this.onChange(event.value);
+                this.viewValue =
+                    (event.item
+                        ? this.stringify(event.item)
+                        : event.value?.toString()) ?? '';
+
+                this.inputControl.setValue('');
+
+                // this.state = SearchStates.FILLING;
+
+                this.selectedOption.emit(event);
+
                 this.changeDetectorRef.markForCheck();
             });
     }

@@ -3,41 +3,39 @@ import {
     Component,
     EventEmitter,
     HostListener,
-    Input
+    Input,
+    Output,
 } from '@angular/core';
-import { isNumber, isString } from 'md-ui-kit/contracts';
-import {
-    ISearchOption,
-    ISelectedSearchItemEvent,
-    SearchOptionContent,
-    SearchOptionType
-} from '../search.contract';
+import { MdContent, MdContext } from 'md-ui-kit/contracts';
+import { MdSearchContext, MdSelectionEvent } from '../search.contract';
 
 @Component({
     selector: 'md-search-option',
     templateUrl: './search-option.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MdSearchOptionComponent<T extends ISearchOption = ISearchOption> {
-    @Input() content: SearchOptionContent;
-    @Input() item: R;
+export class MdSearchOptionComponent<T = any, R = any> {
+    @Input() readonly value: T | null = null;
+    @Input() readonly item?: R;
 
-    get type(): SearchOptionType {
-        if (isNumber(this.content) || isString(this.content)) {
-            return 'primitive';
-        }
+    @Input() content: MdContent = ({ $implicit }: MdSearchContext<T, R>) =>
+        String($implicit);
 
-        if (this.content instanceof ComponentContent)
-    }
-
-    public readonly selectEmitter: EventEmitter<ISelectedSearchItemEvent<R>>;
+    @Output() readonly selected: EventEmitter<MdSelectionEvent<T, R>>;
 
     constructor() {
-        this.selectEmitter = new EventEmitter();
+        this.selected = new EventEmitter();
     }
 
     @HostListener('click')
     private onClick(): void {
-        this.selectEmitter.emit({ item: this.item });
+        this.selected.emit(new MdSelectionEvent(this.value, this.item));
+    }
+
+    get context(): MdContext<MdSearchContext<T, R>> {
+        return new MdContext<MdSearchContext<T, R>>({
+            $implicit: this.value,
+            item: this.item,
+        });
     }
 }

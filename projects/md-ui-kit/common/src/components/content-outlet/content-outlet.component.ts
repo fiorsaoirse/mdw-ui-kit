@@ -16,7 +16,7 @@ import {
 import { isNumber, isString } from 'md-ui-kit/utils';
 
 @Component({
-    selector: '[content-outlet]',
+    selector: '[md-content-outlet]',
     templateUrl: './content-outlet.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

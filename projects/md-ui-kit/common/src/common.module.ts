@@ -14,6 +14,7 @@ import { MdSizeControllerDirective } from './controllers/size/size';
         MdDisabledControllerDirective,
     ],
     exports: [
+        MdContentOutletComponent,
         MdRemovableControllerDirective,
         MdSizeControllerDirective,
         MdDisabledControllerDirective,
