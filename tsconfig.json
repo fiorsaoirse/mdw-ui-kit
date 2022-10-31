@@ -1,41 +1,47 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "paths": {
-      "mdw-ui-kit": [
-        "projects/mdw-ui-kit/src/*",
-        "projects/mdw-ui-kit/src"
-      ],
-      "playground": [
-        "dist/playground"
-      ],
-      "tslib": [
-        "node_modules/tslib/tslib.d.ts"
-      ],
-      "@angular/*": [
-        "node_modules/@angular/*"
-      ]
-    },
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "module": "es2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "lib": [
       "ESNext",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@fiorsaoirse/md-ui-kit/badge": [
+        "projects/md-ui-kit/badge/src"
+      ],
+      "@fiorsaoirse/md-ui-kit/common": [
+        "projects/md-ui-kit/common/src"
+      ],
+      "@fiorsaoirse/md-ui-kit/contracts": [
+        "projects/md-ui-kit/contracts/src"
+      ],
+      "@fiorsaoirse/md-ui-kit/utils": [
+        "projects/md-ui-kit/utils/src"
+      ]
+    },
   },
+  "include": [
+    "projects/mdw-ui-kit/**/*.ts"
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
