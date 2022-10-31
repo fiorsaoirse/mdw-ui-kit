@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdCommonModule } from '@fiorsaoirse/mdw-ui-kit/common';
+import { MdCommonModule } from 'md-ui-kit/common';
 import { MdBadgeComponent } from './components/badge.component';
 
 @NgModule({

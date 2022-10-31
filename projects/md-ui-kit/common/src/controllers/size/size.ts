@@ -1,5 +1,5 @@
 import { Directive, forwardRef, InjectionToken, Input } from '@angular/core';
-import { MdSize } from 'md-ui-kit/common';
+import { MdSize } from 'md-ui-kit/contracts';
 import { isString } from 'md-ui-kit/utils';
 import { MdBaseControllerDirective } from '../base/base';
 
@@ -46,9 +46,9 @@ export class MdSizeControllerDirective extends MdBaseControllerDirective {
                 default:
                     return;
             }
+        } else {
+            this._size = value;
         }
-
-        this._size = value;
     }
 
     get size(): MdSize {
@@ -57,6 +57,6 @@ export class MdSizeControllerDirective extends MdBaseControllerDirective {
 
     constructor() {
         super();
-        this.size = MdSize.Medium;
+        this._size = MdSize.Medium;
     }
 }

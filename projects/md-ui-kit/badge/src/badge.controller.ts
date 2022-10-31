@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, InjectionToken, Provider } from '@angular/core';
 import {
+    MdOnDestroy,
     MdRemovableControllerDirective,
     MdSizeControllerDirective,
     MD_REMOVABLE,
     MD_SIZE,
-} from '@fiorsaoirse/mdw-ui-kit/common';
-import { MdSize } from '@fiorsaoirse/mdw-ui-kit/contracts';
-import { noop } from '@fiorsaoirse/mdw-ui-kit/utils';
+    noop,
+} from 'md-ui-kit/common';
+import { MdSize } from 'md-ui-kit/contracts';
 import { merge, Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
@@ -34,9 +35,9 @@ export const MD_BADGE_WATCHED_CONTROLLER =
     new InjectionToken<MdBadgeWatchedController>('md badge watched controller');
 
 /**
- * Используем провайдер для того, чтобы определить внутри фабрику, внутри которой будет
-   происходить проверка изменений (changeDetectorRef) и подписка, т.е.
-   не делать этого внутри самого MdBadgeWatchedController
+ * Here we use a provider to declare a factory that calls changeDetectorRef.detectChanges()
+ * outside the meta-controller. So the controller receives only the stream with changes
+ * and doesn't take care of detecting changes
  */
 export const MD_BADGE_WATCHED_PROVIDER: Provider = {
     provide: MD_BADGE_WATCHED_CONTROLLER,
@@ -47,27 +48,27 @@ export const MD_BADGE_WATCHED_PROVIDER: Provider = {
 export class MdBadgeWatchedController {
     constructor(
         readonly changes$: Observable<void>,
-        private readonly clearableDirective: MdClearableControllerDirective,
-        private readonly sizeDirective: MdSizeControllerDirective,
+        private readonly removableController: MdRemovableControllerDirective,
+        private readonly sizeController: MdSizeControllerDirective,
     ) {}
 
-    public get clearable(): boolean {
-        return this.clearableDirective.clearable;
+    public get removable(): boolean {
+        return this.removableController.clearable;
     }
 
     public get isSmall(): boolean {
-        return this.sizeDirective.size === MdSize.Small;
+        return this.sizeController.size === MdSize.Small;
     }
 
     public get isMedium(): boolean {
-        return this.sizeDirective.size === MdSize.Medium;
+        return this.sizeController.size === MdSize.Medium;
     }
 
     public get isLarge(): boolean {
-        return this.sizeDirective.size === MdSize.Large;
+        return this.sizeController.size === MdSize.Large;
     }
 
     public get size(): MdSize {
-        return this.sizeDirective.size;
+        return this.sizeController.size;
     }
 }

@@ -8,8 +8,8 @@ import {
     OnInit,
     Renderer2,
 } from '@angular/core';
+import { extractProperty } from 'md-ui-kit/utils';
 import { takeUntil } from 'rxjs';
-import { nameOf } from '../../../../utils/src';
 import { MdOnDestroy } from '../../services/destroy/destroy.service';
 import { IMdControllerChange, MdBaseControllerDirective } from '../base/base';
 
@@ -67,7 +67,11 @@ export class MdDisabledControllerDirective
                 console.log(changes);
 
                 const disabledSimpleChange =
-                    changes[nameOf<MdDisabledControllerDirective>('disabled')];
+                    changes[
+                        extractProperty<MdDisabledControllerDirective>(
+                            'disabled',
+                        )
+                    ];
 
                 if (
                     disabledSimpleChange &&

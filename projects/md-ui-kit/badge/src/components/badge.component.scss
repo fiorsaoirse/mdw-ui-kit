@@ -4,12 +4,13 @@ $badge-color: #ffffff;
 $badge-background: #1520a6;
 
 // TODO: in common file
-.md-badge {
-    font-size: 16px;
-}
 
 .md-badge-small {
     font-size: 12px;
+}
+
+.md-badge-medium {
+    font-size: 16px;
 }
 
 .md-badge-large {
@@ -31,11 +32,5 @@ $badge-background: #1520a6;
 
     & > * {
         margin: 0 $badge-margin;
-    }
-
-    .md-badge-remove-button {
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
     }
 }

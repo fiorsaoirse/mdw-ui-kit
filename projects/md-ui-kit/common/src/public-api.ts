@@ -5,7 +5,7 @@ export {
     MD_DISABLED,
 } from './controllers/disabled/disabled';
 export {
-    MdRemovableControllerDirective,
+    MdRemovableController as MdRemovableControllerDirective,
     MD_REMOVABLE,
 } from './controllers/removable/removable';
 export { MdSizeControllerDirective, MD_SIZE } from './controllers/size/size';
