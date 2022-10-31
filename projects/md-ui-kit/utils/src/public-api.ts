@@ -6,4 +6,4 @@ export {
 export { convertToBoolean } from './services/convert-to-boolean';
 export { convertToNumber } from './services/convert-to-number';
 export { extractProperty } from './services/extract-property';
-export { isNumber, isString } from './services/guards';
+export { isNil, isNumber, isString } from './services/guards';

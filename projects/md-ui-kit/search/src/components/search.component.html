@@ -1,0 +1,13 @@
+<div class="md-search-container">
+    <div class="md-search-input-container">
+        <input class="md-search-input" type="text" />
+        <!-- TODO: as svg icon -->
+        <span class="md-search-input-clean" (click)="clearInput()">x</span>
+    </div>
+
+    <ng-container *ngIf="isInShowingState">
+        <div class="md-search-options-container">
+            <ng-content></ng-content>
+        </div>
+    </ng-container>
+</div>

@@ -1,5 +1,5 @@
 {
-  "name": "@fiorsaoirse/md-ui-kit/utils",
+  "name": "md-ui-kit/utils",
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts",

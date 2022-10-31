@@ -53,7 +53,7 @@ export class MdBadgeWatchedController {
     ) {}
 
     public get removable(): boolean {
-        return this.removableController.clearable;
+        return this.removableController.removable;
     }
 
     public get isSmall(): boolean {

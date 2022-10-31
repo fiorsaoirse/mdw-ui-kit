@@ -1,5 +1,5 @@
 {
-  "name": "md-ui-kit/contracts",
+  "name": "md-ui-kit/card",
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts",

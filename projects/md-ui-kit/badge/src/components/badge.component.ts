@@ -76,6 +76,11 @@ export class MdBadgeComponent implements OnInit, OnChanges {
         return this.controller.isLarge;
     }
 
+    @HostBinding('class.md-badge-medium')
+    private get medium(): boolean {
+        return this.controller.isMedium;
+    }
+
     @HostBinding('class.md-badge-small')
     private get small(): boolean {
         return this.controller.isSmall;

@@ -31,6 +31,12 @@
       "md-ui-kit/badge": [
         "projects/md-ui-kit/badge/src"
       ],
+      "md-ui-kit/button": [
+        "projects/md-ui-kit/button/src"
+      ],
+      "md-ui-kit/card": [
+        "projects/md-ui-kit/card/src"
+      ],
       "md-ui-kit/common": [
         "projects/md-ui-kit/common/src"
       ],
@@ -49,7 +55,6 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
     "enableIvy": true
   },
   "ts-node": {

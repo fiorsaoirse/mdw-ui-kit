@@ -1,5 +1,5 @@
 {
-  "name": "@fiorsaoirse/md-ui-kit/common",
+  "name": "md-ui-kit/common",
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts",

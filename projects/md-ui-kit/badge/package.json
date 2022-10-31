@@ -1,5 +1,5 @@
 {
-  "name": "@fiorsaoirse/md-ui-kit/badge",
+  "name": "md-ui-kit/badge",
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts",
