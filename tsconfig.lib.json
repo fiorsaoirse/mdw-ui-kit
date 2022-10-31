@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/lib",
+    "declaration": true,
+    "inlineSources": true
+  },
+  "exclude": [
+    "projects/md-ui-kit/src/test.ts",
+    "**/*.spec.ts"
+  ]
+}

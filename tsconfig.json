@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
@@ -20,32 +20,39 @@
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
       "ESNext",
       "dom"
     ],
     "paths": {
-      "@fiorsaoirse/md-ui-kit/badge": [
+      "md-ui-kit/badge": [
         "projects/md-ui-kit/badge/src"
       ],
-      "@fiorsaoirse/md-ui-kit/common": [
+      "md-ui-kit/common": [
         "projects/md-ui-kit/common/src"
       ],
-      "@fiorsaoirse/md-ui-kit/contracts": [
+      "md-ui-kit/contracts": [
         "projects/md-ui-kit/contracts/src"
       ],
-      "@fiorsaoirse/md-ui-kit/utils": [
+      "md-ui-kit/utils": [
         "projects/md-ui-kit/utils/src"
       ]
     },
   },
   "include": [
-    "projects/mdw-ui-kit/**/*.ts"
+    "projects/md-ui-kit/**/*.ts"
   ],
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
+    "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "enableIvy": true
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }
