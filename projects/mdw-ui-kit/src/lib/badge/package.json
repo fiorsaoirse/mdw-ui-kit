@@ -1,0 +1,13 @@
+{
+  "name": "@fiorsaoirse/mdw-ui-kit/badge",
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/public-api.ts",
+      "umdModuleIds": {}
+    }
+  },
+  "peerDependencies": {
+    "@angular/common": ">=14.2.0",
+    "@angular/core": ">=14.2.0"
+  }
+}

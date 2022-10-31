@@ -1,0 +1,8 @@
+<div class="md-badge-container">
+  <div class="md-badge-content">
+    <ng-content></ng-content>
+  </div>
+  <div *ngIf="clearable">
+    <button class="md-icon-button" type="button" (click)="onRemove()">X</button>
+  </div>
+</div>
