@@ -1,5 +1,5 @@
 import { Injector, Type } from '@angular/core';
-import { MD_CONTEXT } from 'md-ui-kit/common';
+import { MD_CONTEXT } from '../../tokens/context';
 
 export class MdComponentContent<T> {
     constructor(

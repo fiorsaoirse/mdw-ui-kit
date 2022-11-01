@@ -14,10 +14,7 @@
     "moduleResolution": "node",
     "strict": true,
     "alwaysStrict": true,
-    "noImplicitAny": true,
     "noImplicitThis": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "typeRoots": [

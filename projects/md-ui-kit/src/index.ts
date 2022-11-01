@@ -1,1 +1,1 @@
-export const ɵɵtsModuleIndicatorApiExtractorWorkaround = true;
+export * from './public-api';

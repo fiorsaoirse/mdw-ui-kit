@@ -15,6 +15,8 @@ import {
 } from 'md-ui-kit/contracts';
 import { isNumber, isString } from 'md-ui-kit/utils';
 
+// TODO: maybe it could be better to implement this as directive
+
 @Component({
     selector: '[md-content-outlet]',
     templateUrl: './content-outlet.component.html',

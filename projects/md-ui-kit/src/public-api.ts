@@ -1,1 +1,1 @@
-export * from './index';
+export const ɵɵtsModuleIndicatorApiExtractorWorkaround = true;

@@ -3,4 +3,5 @@ import { QueryList } from '@angular/core';
 
 export const EMPTY_QUERY = new QueryList<any>();
 export const EMPTY_ARRAY = [];
-export const EMPTY_FUNCTION = (...arg: Array<any>): void => {};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const EMPTY_FUNCTION = (..._arg: Array<any>): void => {};
