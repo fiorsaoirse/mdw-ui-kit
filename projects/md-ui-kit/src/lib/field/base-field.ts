@@ -1,25 +1,25 @@
-import { Directive, inject } from '@angular/core';
-import { Subject } from 'rxjs';
-import { MdOnDestroy, MdSize } from '../shared';
-import { FieldState } from './contracts';
+// import { Directive, inject } from '@angular/core';
+// import { Subject } from 'rxjs';
+// import { MdOnDestroy, MdSize } from '../shared';
+// import { FieldState } from './contracts';
 
-@Directive({})
-// tslint:disable-next-line: directive-class-suffix
-export abstract class BaseField {
-    protected readonly state$$: Subject<FieldState>;
+// @Directive({})
+// // tslint:disable-next-line: directive-class-suffix
+// export abstract class BaseField {
+//     protected readonly state$$: Subject<FieldState>;
 
-    abstract small: boolean;
+//     abstract small: boolean;
 
-    abstract large: boolean;
+//     abstract large: boolean;
 
-    abstract size: MdSize;
+//     abstract size: MdSize;
 
-    abstract disabled: boolean;
+//     abstract disabled: boolean;
 
-    // protected readonly destroy$: MdOnDestroy;
+//     // protected readonly destroy$: MdOnDestroy;
 
-    constructor() {
-        this.state$$ = new Subject();
-        // this.destroy$ = inject(MdOnDestroy);
-    }
-}
+//     constructor() {
+//         this.state$$ = new Subject();
+//         // this.destroy$ = inject(MdOnDestroy);
+//     }
+// }
