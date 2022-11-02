@@ -19,9 +19,9 @@ import {
     EMPTY_QUERY,
     MdDisabledControllerDirective,
     MdOnDestroy,
-    MD_DEBOUNCE_TIME,
     MD_DISABLED,
 } from 'md-ui-kit/common';
+import { MD_DEBOUNCE_TIME } from 'md-ui-kit/contracts';
 import { defer, merge, Observable } from 'rxjs';
 import {
     debounceTime,
@@ -36,6 +36,7 @@ import {
 import { MD_MIN_SEARCH_LENGTH } from '../tokens/tokens';
 import { MdSearchOptionComponent } from './search-option/search-option.component';
 import { MdSelectionEvent } from './search.contract';
+export { MD_DEBOUNCE_TIME } from 'md-ui-kit/contracts';
 
 enum SearchStates {
     FILLING = 'filling',
