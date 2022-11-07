@@ -1,33 +1,27 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { MdBadgeModule } from 'md-ui-kit/badge';
+import { MdButtonModule } from 'md-ui-kit/button';
+import { MdCommonModule } from 'md-ui-kit/common';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
-import { FieldTestComponent } from './field/field.component';
-import { MdBadgeModule, MdButtonModule, MdFieldModule, MdSharedModule } from 'mdw-ui-kit';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        BadgeTestComponent,
-        ButtonTestComponent,
-        FieldTestComponent
-    ],
+    declarations: [AppComponent, BadgeTestComponent, ButtonTestComponent],
     imports: [
         BrowserModule,
         CommonModule,
         FormsModule,
         RouterModule.forRoot(routes),
-        MdSharedModule,
+        MdCommonModule,
         MdBadgeModule,
         MdButtonModule,
-        MdFieldModule
     ],
-    providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

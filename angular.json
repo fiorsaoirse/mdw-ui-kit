@@ -71,7 +71,7 @@
             "index": "projects/playground/src/index.html",
             "main": "projects/playground/src/main.ts",
             "polyfills": "projects/playground/src/polyfills.ts",
-            "tsConfig": "projects/playground/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [],
             "styles": [
@@ -126,7 +126,7 @@
           "options": {
             "main": "projects/playground/src/test.ts",
             "polyfills": "projects/playground/src/polyfills.ts",
-            "tsConfig": "projects/playground/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [],
             "styles": [
@@ -139,8 +139,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/playground/tsconfig.app.json",
-              "projects/playground/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

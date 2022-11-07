@@ -3,7 +3,7 @@
   "version": "0.0.10",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve playground",
     "build": "ng build md-ui-kit",
     "build-watch": "ng build md-ui-kit --watch",
     "test": "ng test md-ui-kit",
