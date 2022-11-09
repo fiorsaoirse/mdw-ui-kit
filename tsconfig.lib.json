@@ -5,6 +5,11 @@
     "declaration": true,
     "inlineSources": true
   },
+  "angularCompilerOptions": {
+    "strinctMetadataInit": true,
+    "enableIvy": true,
+    "compilationMode": "partial"
+  },
   "exclude": [
     "projects/md-ui-kit/src/test.ts",
     "**/*.spec.ts"

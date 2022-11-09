@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MdSize } from 'md-ui-kit/contracts';
 
 @Component({
     templateUrl: './badge.component.html',

@@ -13,6 +13,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "strict": true,
+    "skipLibCheck": true,
     "alwaysStrict": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
@@ -46,13 +47,12 @@
     },
   },
   "include": [
-    "projects/md-ui-kit/**/*.ts"
+    "projects/**/*.ts"
   ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "enableIvy": true
+    "strictInputAccessModifiers": true
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]

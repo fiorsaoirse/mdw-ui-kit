@@ -13,6 +13,11 @@ module.exports = {
     ],
     overrides: [
         {
+            files: ['*.html'],
+            parser: '@angular-eslint/template-parser',
+            plugins: ['@angular-eslint/template'],
+        },
+        {
             files: ['*.ts'],
             parser: '@typescript-eslint/parser',
             parserOptions: {
