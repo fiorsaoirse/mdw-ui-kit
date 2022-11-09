@@ -10,10 +10,28 @@ export class BadgeTestComponent {
 
     color: typeof MdBadgeColor;
 
+    private readonly colors: ReadonlyArray<MdBadgeColor>;
+    private pointer: number;
+
     constructor() {
         this.small = MdSize.Small;
         this.large = MdSize.Large;
 
         this.color = MdBadgeColor;
+        this.colors = [
+            MdBadgeColor.Blue,
+            MdBadgeColor.Gray,
+            MdBadgeColor.Green,
+            MdBadgeColor.Yellow,
+        ];
+        this.pointer = 0;
+    }
+
+    get currentColor(): MdBadgeColor {
+        return this.colors[this.pointer];
+    }
+
+    switchColor() {
+        this.pointer = (this.pointer + 1) % this.colors.length;
     }
 }

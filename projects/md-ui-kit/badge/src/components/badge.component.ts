@@ -70,19 +70,11 @@ export class MdBadgeComponent implements OnInit, OnChanges {
         this.renderer.addClass(this.elementRef.nativeElement, initialColor);
     }
 
-    @HostBinding('class.md-badge-large')
-    private get large(): boolean {
-        return this.controller.isLarge;
-    }
-
-    @HostBinding('class.md-badge-medium')
-    private get medium(): boolean {
-        return this.controller.isMedium;
-    }
-
-    @HostBinding('class.md-badge-small')
-    private get small(): boolean {
-        return this.controller.isSmall;
+    @HostBinding('class')
+    private get classes() {
+        return {
+            [`md-badge-${this.controller.size}`]: true,
+        };
     }
 
     public get removable(): boolean {

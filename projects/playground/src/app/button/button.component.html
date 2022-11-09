@@ -1,38 +1,73 @@
-<!-- <h3>Buttons</h3>
-<section>
-    <button md-button
-            (click)="log()">One</button>
-    <button md-button
-            (click)="log()">Two</button>
-    <button md-button
-            (click)="log()">Three</button>
+<section class="playground-column">
+    <h3>Buttons</h3>
+
+    <div>Small Buttons</div>
+    <section [mdSize]="small">
+        <button md-button (click)="log()">Button1</button>
+        <button md-button [color]="color.Green" (click)="log()">Button2</button>
+        <button md-button [color]="color.Gray" (click)="log()">Button3</button>
+        <button md-button [color]="color.Yellow" (click)="log()">
+            Button4
+        </button>
+    </section>
+
+    <div>Meium Buttons</div>
+    <section>
+        <button md-button (click)="log()">Button1</button>
+        <button md-button [color]="color.Green" (click)="log()">Button2</button>
+        <button md-button [color]="color.Gray" (click)="log()">Button3</button>
+        <button md-button [color]="color.Yellow" (click)="log()">
+            Button4
+        </button>
+    </section>
+
+    <div>Large Buttons</div>
+    <section [mdSize]="large">
+        <button md-button (click)="log()">Button1</button>
+        <button md-button [color]="color.Green" (click)="log()">Button2</button>
+        <button md-button [color]="color.Gray" (click)="log()">Button3</button>
+        <button md-button [color]="color.Yellow" (click)="log()">
+            Button4
+        </button>
+    </section>
+
+    <h3>Large Disabled Buttons</h3>
+    Current disabled state: {{ disabled }}
+
+    <section class="playground-row" [mdDisabled]="disabled">
+        <button md-button (click)="log()">Button1</button>
+        <button md-button [color]="color.Green" (click)="log()">Button2</button>
+        <button md-button [color]="color.Gray" (click)="log()">Button3</button>
+        <button md-button [color]="color.Yellow" (click)="log()">
+            Button4
+        </button>
+    </section>
+
+    <button md-button (click)="toggleDisabled()">Toggle Disabled</button>
+
+    <h3>Buttons with changeable color</h3>
+
+    <section class="playground-row">
+        <button
+            md-button
+            [mdSize]="small"
+            [color]="currentColor"
+            (click)="log()"
+        >
+            Button1
+        </button>
+        <button md-button [color]="currentColor" (click)="log()">
+            Button2
+        </button>
+        <button
+            md-button
+            [color]="currentColor"
+            [mdSize]="large"
+            (click)="log()"
+        >
+            Button3
+        </button>
+    </section>
+
+    <button md-button (click)="switchColor()">Switch color</button>
 </section>
-
-<h3>Small Buttons</h3>
-<section [mdSize]="small">
-    <button md-button
-            (click)="log()">One</button>
-    <button md-button
-            (click)="log()">Two</button>
-    <button md-button
-            (click)="log()">Three</button>
-</section>
-
-<h3>Large Buttons</h3>
-<section [mdSize]="large">
-    <button md-button
-            (click)="log()">One</button>
-    <button md-button
-            (click)="log()">Two</button>
-    <button md-button
-            (click)="log()">Three</button>
-</section> -->
-
-<h3>Large Disabled Buttons</h3>
-<section [mdDisabled]="disabled"
-         [mdSize]="large">
-        <button md-button
-                (click)="log()">One</button>
-</section>
-
-<button (click)="toggleDisabled()">Toggle Disabled</button>

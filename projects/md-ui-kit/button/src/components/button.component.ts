@@ -10,8 +10,10 @@ import {
     SimpleChanges,
 } from '@angular/core';
 
+import { MdOnDestroy } from 'md-ui-kit/common';
 import { MdButtonColor } from 'md-ui-kit/contracts';
 import { extractProperty } from 'md-ui-kit/utils';
+import { takeUntil } from 'rxjs';
 import {
     MdButtonWatchedController,
     MD_BUTTON_WATCHED_CONTROLLER,
@@ -23,7 +25,7 @@ const BUTTON_CLASS = 'md-button';
 @Component({
     selector: 'button[md-button], a[md-button]',
     templateUrl: './button.component.html',
-    providers: [MD_BUTTON_WATCHED_PROVIDER],
+    providers: [MD_BUTTON_WATCHED_PROVIDER, MdOnDestroy],
 })
 export class MdButtonComponent implements OnInit, OnChanges {
     private static getColorCss(value: string): string {
@@ -35,6 +37,7 @@ export class MdButtonComponent implements OnInit, OnChanges {
     constructor(
         private readonly renderer: Renderer2,
         private readonly elementRef: ElementRef,
+        private readonly destroy$: MdOnDestroy,
         @Inject(MD_BUTTON_WATCHED_CONTROLLER)
         private readonly controller: MdButtonWatchedController,
     ) {}
@@ -62,25 +65,36 @@ export class MdButtonComponent implements OnInit, OnChanges {
         );
         this.renderer.addClass(this.elementRef.nativeElement, BUTTON_CLASS);
         this.renderer.addClass(this.elementRef.nativeElement, initialColor);
+
+        this.checkDisabled();
+
+        this.controller.changes$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+                this.checkDisabled();
+            });
     }
 
-    @HostBinding('class.md-button-large')
-    private get large(): boolean {
-        return this.controller.isLarge;
+    @HostBinding('class')
+    private get classes() {
+        return {
+            [`md-button-${this.controller.size}`]: true,
+            'md-button-disabled': this.controller.disabled,
+        };
     }
 
-    @HostBinding('class.md-button-medium')
-    private get medium(): boolean {
-        return this.controller.isMedium;
-    }
-
-    @HostBinding('class.md-button-small')
-    private get small(): boolean {
-        return this.controller.isSmall;
-    }
-
-    @HostBinding('class.md-button-disabled')
-    private get disabled(): boolean {
-        return this.controller.disabled;
+    private checkDisabled(): void {
+        if (this.controller.disabled) {
+            this.renderer.setAttribute(
+                this.elementRef.nativeElement,
+                'disabled',
+                'disabled',
+            );
+        } else {
+            this.renderer.removeAttribute(
+                this.elementRef.nativeElement,
+                'disabled',
+            );
+        }
     }
 }

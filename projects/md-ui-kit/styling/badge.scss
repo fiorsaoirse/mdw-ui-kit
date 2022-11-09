@@ -21,13 +21,23 @@
     &-large {
         @include typography-large();
     }
+
+    &-container {
+        @include flex-row();
+        align-items: baseline;
+        justify-content: space-between;
+    }
 }
 
 @mixin badge-style($class, $definitions) {
+    $background: map.get($definitions, 'background');
+    $border: map.get($definitions, 'border');
+    $color: map.get($definitions, 'content');
+
     .md-badge-#{$class} {
-        background-color: map.get($definitions, 'background');
-        border-color: map.get($definitions, 'border');
-        color: map.get($definitions, 'content');
+        background-color: $background;
+        border-color: $border;
+        color: $color;
     }
 }
 

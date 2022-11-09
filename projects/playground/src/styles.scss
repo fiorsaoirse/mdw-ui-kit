@@ -4,11 +4,11 @@ section {
     display: flex;
     gap: 10px;
 
-    .playground-row {
+    &.playground-row {
         flex-direction: row;
     }
 
-    .playground-column {
+    &.playground-column {
         flex-direction: column;
     }
 }
