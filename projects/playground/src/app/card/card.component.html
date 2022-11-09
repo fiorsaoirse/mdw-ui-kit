@@ -1,0 +1,17 @@
+<section class="playground-row">
+    <ng-container *ngFor="let cat of cats">
+        <md-card [content]="cardBody" [context]="cat.context" [width]="'33%'">
+            <div class="md-card-title">{{ cat.name }}</div>
+            <div class="md-card-subtitle">{{ cat.description }}</div>
+            <div class="md-card-footer">
+                <button md-button (click)="sayHi()">Click me!</button>
+            </div>
+        </md-card>
+    </ng-container>
+</section>
+
+<ng-template #cardBody let-cat>
+    <div>
+        <img class="image" [src]="cat" />
+    </div>
+</ng-template>

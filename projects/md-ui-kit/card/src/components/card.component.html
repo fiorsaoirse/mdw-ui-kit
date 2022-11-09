@@ -1,9 +1,11 @@
 <div class="md-card-header">
     <ng-content select=".md-card-title"></ng-content>
+    <ng-content select=".md-card-subtitle"></ng-content>
 </div>
 <div class="md-card-body">
-    <ng-content></ng-content>
+    <md-content-outlet
+        [content]="content"
+        [context]="context"
+    ></md-content-outlet>
 </div>
-<div class="md-card-footer">
-    <ng-content select=".md-card-footer"></ng-content>
-</div>
+<ng-content select=".md-card-footer"></ng-content>

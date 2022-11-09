@@ -12,3 +12,15 @@ section {
         flex-direction: column;
     }
 }
+
+.app-navigation {
+    @include flex-row();
+    margin-bottom: 30px;
+}
+
+.image {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+@include horizontal-gap('app-navigation', 'app-navigation-item', 5px);

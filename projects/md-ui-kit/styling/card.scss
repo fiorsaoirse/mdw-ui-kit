@@ -1,0 +1,34 @@
+@import 'mixins';
+
+.md-card {
+    @include flex-column();
+    gap: var(--md-point-medium);
+
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: var(--md-white);
+    background-clip: border-box;
+    border: 1px solid var(--md-black-025);
+    border-radius: var(--md-border-radius-small);
+    padding: calc(var(--md-point-large) * 0.75);
+
+    &-header {
+        @include flex-column();
+        gap: var(--md-point-small);
+    }
+
+    &-title {
+        @include typography-large();
+    }
+
+    &-subtitle {
+        @include typography-medium();
+        color: var(--md-gray);
+    }
+}
