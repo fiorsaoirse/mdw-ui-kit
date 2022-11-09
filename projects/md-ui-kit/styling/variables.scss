@@ -1,0 +1,51 @@
+:root {
+    /* points */
+    --md-point-xsmall: 4px;
+    --md-point-small: 8px;
+    --md-point-medium: 16px;
+    --md-point-large: 32px;
+    --md-point-xlarge: 64px;
+
+    /* colors */
+    --md-blue: #007bff;
+    --md-gray: #6c757d;
+    --md-green: #28a745;
+    --md-yellow: #ffc107;
+    --md-white: #ffffff;
+    --md-black: #000000;
+
+    /* typography */
+
+    --md-typo-xsmall-font-size: 10px;
+    --md-typo-xsmall-font-weight: 500;
+    --md-typo-xsmall-line-height: 12px;
+
+    --md-typo-small-font-size: 12px;
+    --md-typo-small-font-weight: 500;
+    --md-typo-small-line-height: 14px;
+
+    --md-typo-medium-font-size: 14px;
+    --md-typo-medium-font-weight: 500;
+    --md-typo-medium-line-height: 16px;
+
+    --md-typo-large-font-size: 16px;
+    --md-typo-large-font-weight: 600;
+    --md-typo-large-line-height: 20px;
+
+    --md-typo-xlarge-font-size: 20px;
+    --md-typo-xlarge-font-weight: 600;
+    --md-typo-xlarge-line-height: 32px;
+
+    /* borders */
+    --md-border-radius-small: 4px;
+    --md-border-radius-medium: 8px;
+    --md-border-radius-large: 16px;
+}
+
+/* scss variables for scss functions */
+$md-blue: #007bff;
+$md-gray: #6c757d;
+$md-green: #28a745;
+$md-yellow: #ffc107;
+$md-white: #ffffff;
+$md-black: #000000;

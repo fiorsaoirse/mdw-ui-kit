@@ -3,38 +3,38 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mdw-ui-kit": {
+    "md-ui-kit": {
       "projectType": "library",
-      "root": "projects/mdw-ui-kit",
-      "sourceRoot": "projects/mdw-ui-kit/src",
+      "root": "projects/md-ui-kit",
+      "sourceRoot": "projects/md-ui-kit/src",
       "prefix": "md",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/mdw-ui-kit/tsconfig.lib.json",
-            "project": "projects/mdw-ui-kit/ng-package.json"
+            "tsConfig": "tsconfig.lib.json",
+            "project": "projects/md-ui-kit/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/mdw-ui-kit/tsconfig.lib.prod.json"
+              "tsConfig": "projects/md-ui-kit/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/mdw-ui-kit/src/test.ts",
-            "tsConfig": "projects/mdw-ui-kit/tsconfig.spec.json",
-            "karmaConfig": "projects/mdw-ui-kit/karma.conf.js"
+            "main": "projects/md-ui-kit/src/test.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.config.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/mdw-ui-kit/tsconfig.lib.json",
-              "projects/mdw-ui-kit/tsconfig.spec.json"
+              "projects/md-ui-kit/tsconfig.lib.json",
+              "projects/md-ui-kit/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -126,7 +126,7 @@
           "options": {
             "main": "projects/playground/src/test.ts",
             "polyfills": "projects/playground/src/polyfills.ts",
-            "tsConfig": "projects/playground/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [],
             "styles": [
@@ -139,8 +139,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/playground/tsconfig.app.json",
-              "projects/playground/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -162,5 +162,7 @@
       }
     }
   },
-  "defaultProject": "mdw-ui-kit"
+  "cli": {
+    "analytics": false
+  }
 }

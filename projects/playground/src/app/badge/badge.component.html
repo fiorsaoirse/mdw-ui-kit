@@ -1,17 +1,82 @@
-<h4>Medium badge</h4>
-<section>
-    <md-badge value="Badge1"></md-badge>
-    <md-badge value="Badge2"></md-badge>
-</section>
+<section class="playground-column">
+    <h3>Plain text badge</h3>
 
-<h4>Small badge</h4>
-<section [mdSize]="small">
-    <md-badge value="Badge1"></md-badge>
-    <md-badge value="Badge2"></md-badge>
-</section>
+    <div>Small badge</div>
+    <section class="playground-row" [mdSize]="small">
+        <md-badge>Badge1</md-badge>
+        <md-badge [color]="color.Gray">Badge2</md-badge>
+        <md-badge [color]="color.Green">Badge3</md-badge>
+        <md-badge [color]="color.Yellow">Badge4</md-badge>
+    </section>
 
-<h4>Large badge</h4>
-<section [mdSize]="large">
-    <md-badge value="Badge1"></md-badge>
-    <md-badge value="Badge2"></md-badge>
+    <div>Medium badge</div>
+    <section class="playground-row">
+        <md-badge>Badge1</md-badge>
+        <md-badge [color]="color.Gray">Badge2</md-badge>
+        <md-badge [color]="color.Green">Badge3</md-badge>
+        <md-badge [color]="color.Yellow">Badge4</md-badge>
+    </section>
+
+    <div>Large badge</div>
+    <section class="playground-row" [mdSize]="large">
+        <md-badge>Badge1</md-badge>
+        <md-badge [color]="color.Gray">Badge2</md-badge>
+        <md-badge [color]="color.Green">Badge3</md-badge>
+        <md-badge [color]="color.Yellow">Badge4</md-badge>
+    </section>
+
+    <div [mdRemovable]="true">
+        <h3>Plain text badge with close</h3>
+
+        <div>Small badge</div>
+        <section class="playground-row" [mdSize]="small">
+            <md-badge>Badge1</md-badge>
+            <md-badge [color]="color.Gray">Badge2</md-badge>
+            <md-badge [color]="color.Green">Badge3</md-badge>
+            <md-badge [color]="color.Yellow">Badge4</md-badge>
+        </section>
+
+        <div>Medium badge</div>
+        <section class="playground-row">
+            <md-badge>Badge1</md-badge>
+            <md-badge [color]="color.Gray">Badge2</md-badge>
+            <md-badge [color]="color.Green">Badge3</md-badge>
+            <md-badge [color]="color.Yellow">Badge4</md-badge>
+        </section>
+
+        <div>Large badge</div>
+        <section class="playground-row" [mdSize]="large">
+            <md-badge>Badge1</md-badge>
+            <md-badge [color]="color.Gray">Badge2</md-badge>
+            <md-badge [color]="color.Green">Badge3</md-badge>
+            <md-badge [color]="color.Yellow">Badge4</md-badge>
+        </section>
+    </div>
+
+    <h3>Badges with changeable color</h3>
+    <button md-button (click)="switchColor()">Switch Color</button>
+
+    <div>Small badge</div>
+    <section class="playground-row" [mdSize]="small">
+        <md-badge [color]="currentColor">Badge1</md-badge>
+        <md-badge [color]="currentColor">Badge2</md-badge>
+        <md-badge [color]="currentColor">Badge3</md-badge>
+        <md-badge [color]="currentColor">Badge4</md-badge>
+    </section>
+
+    <div>Medium badge</div>
+    <section class="playground-row">
+        <md-badge [color]="currentColor">Badge1</md-badge>
+        <md-badge [color]="currentColor">Badge2</md-badge>
+        <md-badge [color]="currentColor">Badge3</md-badge>
+        <md-badge [color]="currentColor">Badge4</md-badge>
+    </section>
+
+    <div>Large badge</div>
+    <section class="playground-row" [mdSize]="large">
+        <md-badge [color]="currentColor">Badge1</md-badge>
+        <md-badge [color]="currentColor">Badge2</md-badge>
+        <md-badge [color]="currentColor">Badge3</md-badge>
+        <md-badge [color]="currentColor">Badge4</md-badge>
+    </section>
 </section>

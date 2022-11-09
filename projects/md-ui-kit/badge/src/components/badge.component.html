@@ -1,0 +1,11 @@
+<div class="md-badge-container">
+    <div class="md-badge-content">
+        <ng-content></ng-content>
+    </div>
+    <div *ngIf="removable">
+        <button class="md-button-icon" (click)="onRemove()">
+            <!-- TODO: add svg icon  -->
+            X
+        </button>
+    </div>
+</div>

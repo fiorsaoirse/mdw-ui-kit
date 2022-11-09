@@ -1,0 +1,13 @@
+{
+  "name": "md-ui-kit/utils",
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/index.ts",
+      "umdModuleIds": {}
+    }
+  },
+  "peerDependencies": {
+    "@angular/common": ">=14.2.0",
+    "@angular/core": ">=14.2.0"
+  }
+}

@@ -1,45 +1,60 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "paths": {
-      "mdw-ui-kit": [
-        "projects/mdw-ui-kit/src/*",
-        "projects/mdw-ui-kit/src"
-      ],
-      "playground": [
-        "dist/playground"
-      ],
-      "tslib": [
-        "node_modules/tslib/tslib.d.ts"
-      ],
-      "@angular/*": [
-        "node_modules/@angular/*"
-      ]
-    },
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "module": "es2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
       "ESNext",
       "dom"
-    ]
+    ],
+    "paths": {
+      "md-ui-kit/badge": [
+        "projects/md-ui-kit/badge/src"
+      ],
+      "md-ui-kit/button": [
+        "projects/md-ui-kit/button/src"
+      ],
+      "md-ui-kit/card": [
+        "projects/md-ui-kit/card/src"
+      ],
+      "md-ui-kit/common": [
+        "projects/md-ui-kit/common/src"
+      ],
+      "md-ui-kit/contracts": [
+        "projects/md-ui-kit/contracts/src"
+      ],
+      "md-ui-kit/utils": [
+        "projects/md-ui-kit/utils/src"
+      ]
+    },
   },
+  "include": [
+    "projects/**/*.ts"
+  ],
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
+    "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInputAccessModifiers": true
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }

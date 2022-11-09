@@ -1,0 +1,14 @@
+@import '../../md-ui-kit/styling/index.scss';
+
+section {
+    display: flex;
+    gap: 10px;
+
+    &.playground-row {
+        flex-direction: row;
+    }
+
+    &.playground-column {
+        flex-direction: column;
+    }
+}
