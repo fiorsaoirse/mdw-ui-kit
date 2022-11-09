@@ -1,0 +1,68 @@
+@use 'sass:map';
+
+@import 'mixins';
+
+.md-badge {
+    @include typography-medium();
+
+    border: 1px solid;
+    box-sizing: border-box;
+    border-radius: var(--md-border-radius-small);
+    display: inline-block;
+    padding: 0.25em 1.5em;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: baseline;
+
+    &-small {
+        @include typography-small();
+    }
+
+    &-large {
+        @include typography-large();
+    }
+}
+
+@mixin badge-style($class, $definitions) {
+    .md-badge-#{$class} {
+        background-color: map.get($definitions, 'background');
+        border-color: map.get($definitions, 'border');
+        color: map.get($definitions, 'content');
+    }
+}
+
+@include badge-style(
+    'blue',
+    (
+        'background': var(--md-blue),
+        'border': var(--md-blue),
+        'content': var(--md-white),
+    )
+);
+
+@include badge-style(
+    'gray',
+    (
+        'background': var(--md-gray),
+        'border': var(--md-gray),
+        'content': var(--md-white),
+    )
+);
+
+@include badge-style(
+    'green',
+    (
+        'background': var(--md-green),
+        'border': var(--md-green),
+        'content': var(--md-white),
+    )
+);
+
+@include badge-style(
+    'yellow',
+    (
+        'background': var(--md-yellow),
+        'border': var(--md-yellow),
+        'content': var(--md-black),
+    )
+);

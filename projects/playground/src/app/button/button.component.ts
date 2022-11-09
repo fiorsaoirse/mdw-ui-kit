@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { MdSize } from 'mdw-ui-kit';
+import { MdSize } from 'md-ui-kit/contracts';
 
 @Component({
-    templateUrl: './button.component.html'
+    templateUrl: './button.component.html',
 })
 export class ButtonTestComponent {
     small: MdSize;

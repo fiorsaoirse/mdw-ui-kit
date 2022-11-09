@@ -1,0 +1,68 @@
+@import 'variables';
+
+@mixin typography-xsmall {
+    font-size: var(--md-typo-xsmall-font-size);
+    font-weight: var(--md-typo-xsmall-font-weight);
+    line-height: var(--md-typo-xsmall-line-height);
+    font-style: normal;
+}
+
+@mixin typography-small {
+    font-size: var(--md-typo-small-font-size);
+    font-weight: var(--md-typo-small-font-weight);
+    line-height: var(--md-typo-small-line-height);
+    font-style: normal;
+}
+
+@mixin typography-medium {
+    font-size: var(--md-typo-medium-font-size);
+    font-weight: var(--md-typo-medium-font-weight);
+    line-height: var(--md-typo-medium-line-height);
+    font-style: normal;
+}
+
+@mixin typography-large {
+    font-size: var(--md-typo-large-font-size);
+    font-weight: var(--md-typo-large-font-weight);
+    line-height: var(--md-typo-large-line-height);
+    font-style: normal;
+}
+
+@mixin typography-xlarge {
+    font-size: var(--md-typo-xlarge-font-size);
+    font-weight: var(--md-typo-xlarge-font-weight);
+    line-height: var(--md-typo-xlarge-line-height);
+    font-style: normal;
+}
+
+@mixin gap($container, $items, $offset, $direction1, $direction2) {
+    .#{$container} {
+        margin-#{$direction1}: -#{$offset};
+        margin-#{$direction2}: -#{$offset};
+    }
+
+    @each $item in $items {
+        .#{$item} {
+            margin-#{$direction1}: #{$offset};
+            margin-#{$direction2}: #{$offset};
+        }
+    }
+}
+
+@mixin horizontal-gap($container, $items, $offset) {
+    @include gap($container, $items, $offset, 'left', 'right');
+}
+
+@mixin vertical-gap($container, $items, $offset) {
+    @include gap($container, $items, $offset, 'top', 'bottom');
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}

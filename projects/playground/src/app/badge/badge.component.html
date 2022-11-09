@@ -1,17 +1,27 @@
-<h4>Medium badge</h4>
-<section>
-    <md-badge value="Badge1"></md-badge>
-    <md-badge value="Badge2"></md-badge>
-</section>
+<div>
+    <h3>Plain text badge</h3>
 
-<h4>Small badge</h4>
-<section [mdSize]="small">
-    <md-badge value="Badge1"></md-badge>
-    <md-badge value="Badge2"></md-badge>
-</section>
+    <h4>Small badge</h4>
+    <section class="playground-row" [mdSize]="small">
+        <md-badge>Badge1</md-badge>
+        <md-badge [color]="color.Gray">Badge2</md-badge>
+        <md-badge [color]="color.Green">Badge3</md-badge>
+        <md-badge [color]="color.Yellow">Badge4</md-badge>
+    </section>
 
-<h4>Large badge</h4>
-<section [mdSize]="large">
-    <md-badge value="Badge1"></md-badge>
-    <md-badge value="Badge2"></md-badge>
-</section>
+    <h4>Medium badge</h4>
+    <section class="playground-row">
+        <md-badge>Badge1</md-badge>
+        <md-badge [color]="color.Gray">Badge2</md-badge>
+        <md-badge [color]="color.Green">Badge3</md-badge>
+        <md-badge [color]="color.Yellow">Badge4</md-badge>
+    </section>
+
+    <h4>Large badge</h4>
+    <section class="playground-row" [mdSize]="large">
+        <md-badge>Badge1</md-badge>
+        <md-badge [color]="color.Gray">Badge2</md-badge>
+        <md-badge [color]="color.Green">Badge3</md-badge>
+        <md-badge [color]="color.Yellow">Badge4</md-badge>
+    </section>
+</div>

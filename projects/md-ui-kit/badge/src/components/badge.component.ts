@@ -25,7 +25,6 @@ const BADGE_CLASS = 'md-badge';
 @Component({
     selector: 'md-badge',
     templateUrl: './badge.component.html',
-    styleUrls: ['./badge.component.scss'],
     providers: [MD_BADGE_WATCHED_PROVIDER],
 })
 export class MdBadgeComponent implements OnInit, OnChanges {
@@ -65,7 +64,7 @@ export class MdBadgeComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         const initialColor = MdBadgeComponent.getColorCss(
-            this.color ?? MdBadgeColor.Green,
+            this.color ?? MdBadgeColor.Blue,
         );
         this.renderer.addClass(this.elementRef.nativeElement, BADGE_CLASS);
         this.renderer.addClass(this.elementRef.nativeElement, initialColor);
