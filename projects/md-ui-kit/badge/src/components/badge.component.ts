@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     ElementRef,
     EventEmitter,
@@ -26,6 +27,7 @@ const BADGE_CLASS = 'md-badge';
     selector: 'md-badge',
     templateUrl: './badge.component.html',
     providers: [MD_BADGE_WATCHED_PROVIDER],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdBadgeComponent implements OnInit, OnChanges {
     private static getColorCss(value: string): string {

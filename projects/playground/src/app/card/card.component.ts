@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MdContext } from 'md-ui-kit/contracts';
-import { map } from 'rxjs';
+import { forkJoin, map } from 'rxjs';
 
 interface ICardItem {
     name: string;
@@ -9,7 +9,7 @@ interface ICardItem {
     context: MdContext;
 }
 
-const CAT_API = 'https://api.thecatapi.com/v1/images/search?limit=3';
+const CAT_API = 'https://api.thecatapi.com/v1/images/search';
 
 @Component({
     templateUrl: './card.component.html',
@@ -26,11 +26,14 @@ export class CardTestComponent {
 
         this.cats = [];
 
-        this.http
-            .get<Array<{ url: string }>>(CAT_API)
+        forkJoin([
+            this.http.get<Array<{ url: string }>>(CAT_API),
+            this.http.get<Array<{ url: string }>>(CAT_API),
+            this.http.get<Array<{ url: string }>>(CAT_API),
+        ])
             .pipe(
                 map((items) =>
-                    items.map((item, index) => {
+                    items.map(([item], index) => {
                         return {
                             ...data[index],
                             context: new MdContext(item.url),

@@ -1,0 +1,12 @@
+<div class="md-text-field-container" (click)="focusOnInput()">
+    <input
+        #input
+        [value]="value"
+        (change)="inputChange($event)"
+        mdPrimitiveInput
+        type="text"
+    />
+</div>
+<div class="md-text-field-label-wrapper">
+    <div class="md-text-field-label">{{ label }}</div>
+</div>

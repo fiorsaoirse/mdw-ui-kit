@@ -41,6 +41,9 @@
       "md-ui-kit/contracts": [
         "projects/md-ui-kit/contracts/src"
       ],
+      "md-ui-kit/field": [
+        "projects/md-ui-kit/field/src"
+      ],
       "md-ui-kit/utils": [
         "projects/md-ui-kit/utils/src"
       ]

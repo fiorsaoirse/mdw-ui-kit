@@ -38,9 +38,21 @@
     --md-typo-xlarge-line-height: 32px;
 
     /* borders */
-    --md-border-radius-small: 4px;
-    --md-border-radius-medium: 8px;
-    --md-border-radius-large: 16px;
+    --md-border-radius-xsmall: 0.25rem;
+    --md-border-radius-small: 0.5rem;
+    --md-border-radius-medium: 0.75rem;
+    --md-border-radius-large: 0.75rem;
+
+    /* padding */
+    --md-padding-small: 0.75rem;
+    --md-padding-medium: 0.75rem;
+    --md-padding-large: 1rem;
+
+    /* height */
+    --md-height-xsmall: 1.5rem;
+    --md-height-small: 2rem;
+    --md-height-medium: 2.75rem;
+    --md-height-large: 3.5rem;
 }
 
 /* scss variables for scss functions */

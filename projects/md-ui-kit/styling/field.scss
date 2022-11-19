@@ -1,0 +1,97 @@
+@use 'sass:map';
+
+@import 'mixins';
+
+.md-text-field {
+    @include typography-medium();
+    @include flex-column();
+
+    height: var(--md-height-medium);
+    min-height: var(--md-height-medium);
+    max-height: var(--md-height-medium);
+    line-height: 1rem;
+
+    &-container {
+        @include flex-row();
+        transition-property: box-shadow, background;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-in-out;
+        background: var(--md-white);
+        color: var(--md-black);
+        box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+
+        input {
+            transition: box-shadow 0.01s;
+            border: transparent;
+            background-color: inherit;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            border-radius: inherit;
+            background: none;
+            font-size: inherit;
+            line-height: inherit;
+            font-weight: inherit;
+            color: inherit;
+            caret-color: currentColor;
+            outline: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            word-break: keep-all;
+            -webkit-text-fill-color: currentColor;
+            border: solid transparent;
+            text-align: inherit;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-transform: inherit;
+            resize: none;
+        }
+
+        padding: 0 var(--md-padding-medium);
+        padding-top: calc(var(--md-padding-medium) * 1.5);
+    }
+
+    &-small {
+        @include typography-small();
+        padding: 0.25rem 0.5rem;
+
+        height: var(--md-height-small);
+        min-height: var(--md-height-small);
+        max-height: var(--md-height-small);
+        line-height: 1rem;
+
+        &-container {
+            padding: 0 var(--md-padding-small);
+            padding-top: calc(var(--md-padding-small) * 1.5);
+        }
+    }
+
+    &-large {
+        @include typography-large();
+        padding: 0.5rem 1rem;
+
+        height: var(--md-height-large);
+        min-height: var(--md-height-large);
+        max-height: var(--md-height-large);
+        line-height: 1.25rem;
+
+        &-container {
+            padding: 0 var(--md-padding-large);
+            padding-top: calc(var(--md-padding-large) * 1.5);
+        }
+    }
+
+    &:focus,
+    &:disabled,
+    &[disabled] {
+        outline: none;
+    }
+
+    &:disabled,
+    &[disabled] {
+        cursor: default;
+    }
+}

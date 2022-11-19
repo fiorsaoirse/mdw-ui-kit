@@ -8,11 +8,13 @@ import { MdBadgeModule } from 'md-ui-kit/badge';
 import { MdButtonModule } from 'md-ui-kit/button';
 import { MdCardModule } from 'md-ui-kit/card';
 import { MdCommonModule } from 'md-ui-kit/common';
+import { MdFieldModule } from 'md-ui-kit/field';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
 import { CardTestComponent } from './card/card.component';
+import { FieldTestComponent } from './field/field-test.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +22,7 @@ import { CardTestComponent } from './card/card.component';
         BadgeTestComponent,
         ButtonTestComponent,
         CardTestComponent,
+        FieldTestComponent,
     ],
     imports: [
         BrowserModule,
@@ -31,6 +34,7 @@ import { CardTestComponent } from './card/card.component';
         MdBadgeModule,
         MdButtonModule,
         MdCardModule,
+        MdFieldModule,
     ],
     bootstrap: [AppComponent],
 })

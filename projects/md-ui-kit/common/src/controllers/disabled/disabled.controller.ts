@@ -1,5 +1,5 @@
 import { Directive, forwardRef, InjectionToken, Input } from '@angular/core';
-import { MdBaseControllerDirective } from '../base/base';
+import { MdBaseControllerDirective } from '../base/base.controller';
 
 export const MD_DISABLED = new InjectionToken<MdDisabledControllerDirective>(
     'MdDisabledControllerDirective',

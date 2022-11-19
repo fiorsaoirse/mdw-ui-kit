@@ -6,10 +6,17 @@ section {
 
     &.playground-row {
         flex-direction: row;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     &.playground-column {
         flex-direction: column;
+    }
+
+    &.playground-col-33 {
+        display: flex;
+        flex-basis: 33%;
     }
 }
 

@@ -1,6 +1,6 @@
 import { Directive, forwardRef, InjectionToken, Input } from '@angular/core';
 import { BooleanInput, coerceBooleanInput } from 'md-ui-kit/utils';
-import { MdBaseControllerDirective } from '../base/base';
+import { MdBaseControllerDirective } from '../base/base.controller';
 
 /**
  * This token uses a factory to create the directive instance with default params

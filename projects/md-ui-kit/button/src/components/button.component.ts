@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     ElementRef,
     HostBinding,
@@ -26,6 +27,7 @@ const BUTTON_CLASS = 'md-button';
     selector: 'button[md-button], a[md-button]',
     templateUrl: './button.component.html',
     providers: [MD_BUTTON_WATCHED_PROVIDER, MdOnDestroy],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdButtonComponent implements OnInit, OnChanges {
     private static getColorCss(value: string): string {

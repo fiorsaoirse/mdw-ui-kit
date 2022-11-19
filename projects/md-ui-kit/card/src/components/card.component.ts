@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     ElementRef,
     HostBinding,
@@ -12,6 +13,7 @@ import { isNumber } from 'md-ui-kit/utils';
 @Component({
     selector: 'md-card',
     templateUrl: './card.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdCardComponent implements OnInit {
     private _width: string | null;
