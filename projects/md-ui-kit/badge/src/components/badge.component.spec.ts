@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MdBadgeColor, MdSize } from 'md-ui-kit/contracts';
-import { MdBadgeModule } from '../badge.module';
+import { MdBadgeComponent } from './badge.component';
 
 @Component({
     template: ` <md-badge (remove)="onRemove()">{{ content }}</md-badge> `,
@@ -25,7 +25,7 @@ describe('MdBadgeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MdBadgeModule],
+            imports: [MdBadgeComponent],
             declarations: [HostComponent],
         }).compileComponents();
 

@@ -5,7 +5,6 @@ import {
     HostListener,
     Input,
     Provider,
-    Renderer2,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EMPTY_FUNCTION } from 'md-ui-kit/common';
@@ -50,10 +49,7 @@ export class MdNumericInputDirective implements ControlValueAccessor {
     onChange: (_: any) => void;
     onTouched: () => void;
 
-    constructor(
-        private readonly elementRef: ElementRef,
-        private readonly renderer: Renderer2,
-    ) {
+    constructor(private readonly elementRef: ElementRef) {
         this._value = null;
         this.mode = 'string';
         this.allowNegative = true;
@@ -72,14 +68,6 @@ export class MdNumericInputDirective implements ControlValueAccessor {
 
     registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
-    }
-
-    setDisabledState(isDisabled: boolean): void {
-        this.renderer.setProperty(
-            this.elementRef.nativeElement,
-            'disabled',
-            isDisabled,
-        );
     }
 
     @HostListener('keydown', ['$event'])

@@ -50,13 +50,13 @@
     },
   },
   "include": [
-    "projects/**/*.ts"
+    "projects/**/*.ts",
+    "projects/md-ui-kit/assets/*.**"
   ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
   },
   "ts-node": {
     "require": [

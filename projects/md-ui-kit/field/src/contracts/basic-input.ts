@@ -1,7 +1,7 @@
 import { Directive, HostListener, inject } from '@angular/core';
 import { MdOnDestroy } from 'md-ui-kit/common';
 import { BooleanInput, coerceBooleanInput } from 'md-ui-kit/utils';
-import { Observable, ReplaySubject, takeUntil } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import {
     MdInputWatchedController,
     MD_INPUT_WATCHED_CONTROLLER,
@@ -10,7 +10,7 @@ import {
 import { MdFieldState } from './field-state';
 
 @Directive({
-    providers: [MD_INPUT_WATCHED_PROVIDER],
+    providers: [MdOnDestroy, MD_INPUT_WATCHED_PROVIDER],
 })
 export abstract class MdInput {
     private readonly controller: MdInputWatchedController;
@@ -20,37 +20,55 @@ export abstract class MdInput {
     public readonly fieldStateChanged: Observable<MdFieldState>;
 
     constructor() {
+        console.log('constr');
         this.controller = inject(MD_INPUT_WATCHED_CONTROLLER);
+        console.log('controller');
+
         this.destroy$ = inject(MdOnDestroy);
+        console.log('destroy', this.destroy$);
 
         this.fieldState = new ReplaySubject(1);
         this.fieldStateChanged = this.fieldState.asObservable();
 
         this.fieldState.next(MdFieldState.Filling);
 
-        this.controller.changes$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-                if (this.controller.isDisabled) {
-                    this.fieldState.next(MdFieldState.Disabled);
-                    return;
-                }
+        // this.controller.changes$
+        //     .pipe(takeUntil(this.destroy$))
+        //     .subscribe(() => {
+        //         if (this.controller.isDisabled) {
+        //             this.fieldState.next(MdFieldState.Disabled);
+        //             return;
+        //         }
 
-                if (this.controller.isReadonly) {
-                    this.fieldState.next(MdFieldState.Readonly);
-                    return;
-                }
+        //         if (this.controller.isReadonly) {
+        //             this.fieldState.next(MdFieldState.Readonly);
+        //             return;
+        //         }
 
-                this.fieldState.next(MdFieldState.Filling);
-            });
+        //         this.fieldState.next(MdFieldState.Filling);
+        //     });
     }
 
     @HostListener('focus', ['true'])
     @HostListener('blur', ['false'])
     private focusListener(focused: BooleanInput): void {
+        console.log('foo');
+
         const nextState = coerceBooleanInput(focused)
             ? MdFieldState.Focused
             : MdFieldState.Filling;
         this.fieldState.next(nextState);
     }
+
+    // public get size(): MdSize {
+    //     return this.controller.size;
+    // }
+
+    // public get isReadonly(): boolean {
+    //     return this.controller.isReadonly;
+    // }
+
+    // public get isDisabled(): boolean {
+    //     return this.controller.isDisabled;
+    // }
 }

@@ -8,6 +8,7 @@ import {
     Input,
     OnChanges,
     OnInit,
+    Optional,
     Output,
     Renderer2,
     SimpleChanges,
@@ -18,8 +19,12 @@ import {
     MD_BADGE_WATCHED_PROVIDER,
 } from '../badge.controller';
 
-import { MdBadgeColor } from 'md-ui-kit/contracts';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { MdCommonModule } from 'md-ui-kit/common';
+import { MdBadgeColor, MD_CLOSE_ICON_URL } from 'md-ui-kit/contracts';
 import { extractProperty } from 'md-ui-kit/utils';
+import { MdSvgComponent } from 'projects/md-ui-kit/svg/src/components/svg.component';
 
 const BADGE_CLASS = 'md-badge';
 
@@ -28,6 +33,8 @@ const BADGE_CLASS = 'md-badge';
     templateUrl: './badge.component.html',
     providers: [MD_BADGE_WATCHED_PROVIDER],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [BrowserModule, CommonModule, MdCommonModule, MdSvgComponent],
+    standalone: true,
 })
 export class MdBadgeComponent implements OnInit, OnChanges {
     private static getColorCss(value: string): string {
@@ -43,6 +50,9 @@ export class MdBadgeComponent implements OnInit, OnChanges {
         private readonly elementRef: ElementRef,
         @Inject(MD_BADGE_WATCHED_CONTROLLER)
         private readonly controller: MdBadgeWatchedController,
+        @Optional()
+        @Inject(MD_CLOSE_ICON_URL)
+        readonly closeIconUrl?: string,
     ) {
         this.remove = new EventEmitter();
     }

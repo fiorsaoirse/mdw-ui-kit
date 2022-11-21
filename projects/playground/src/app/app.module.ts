@@ -4,10 +4,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { MdBadgeModule } from 'md-ui-kit/badge';
+import { MdBadgeComponent } from 'md-ui-kit/badge';
 import { MdButtonModule } from 'md-ui-kit/button';
 import { MdCardModule } from 'md-ui-kit/card';
 import { MdCommonModule } from 'md-ui-kit/common';
+import { MD_CLOSE_ICON_URL } from 'md-ui-kit/contracts';
 import { MdFieldModule } from 'md-ui-kit/field';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
@@ -31,11 +32,17 @@ import { FieldTestComponent } from './field/field-test.component';
         FormsModule,
         RouterModule.forRoot(routes),
         MdCommonModule,
-        MdBadgeModule,
+        MdBadgeComponent,
         MdButtonModule,
         MdCardModule,
         MdFieldModule,
     ],
     bootstrap: [AppComponent],
+    providers: [
+        {
+            provide: MD_CLOSE_ICON_URL,
+            useValue: '/assets/icons/close-white.svg',
+        },
+    ],
 })
 export class AppModule {}

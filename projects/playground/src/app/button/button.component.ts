@@ -20,6 +20,7 @@ export class ButtonTestComponent {
         this.disabled = true;
 
         this.color = MdBadgeColor;
+
         this.colors = [
             MdBadgeColor.Blue,
             MdBadgeColor.Gray,

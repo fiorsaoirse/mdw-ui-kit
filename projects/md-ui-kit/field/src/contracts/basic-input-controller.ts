@@ -18,6 +18,8 @@ const mdInputControllerFactory = (
         MdSizeControllerDirective,
     ]
 ): MdInputWatchedController => {
+    console.log('factory');
+
     const changes$ = merge(...controllers.map(({ changes$ }) => changes$)).pipe(
         tap(() => {
             changeDetectorRef.detectChanges();

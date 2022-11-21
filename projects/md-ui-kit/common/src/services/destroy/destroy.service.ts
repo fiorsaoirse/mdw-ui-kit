@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class MdOnDestroy extends Subject<void> implements OnDestroy {
     public ngOnDestroy(): void {
         this.next();

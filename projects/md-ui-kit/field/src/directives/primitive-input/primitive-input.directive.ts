@@ -2,7 +2,7 @@ import { Directive, forwardRef } from '@angular/core';
 import { MdInput } from '../../contracts/basic-input';
 
 @Directive({
-    selector: 'mdPrimitiveInput',
+    selector: 'input[mdPrimitiveInput]',
     providers: [
         {
             provide: MdInput,
@@ -10,7 +10,7 @@ import { MdInput } from '../../contracts/basic-input';
         },
     ],
 })
-export class MdPrimitiveInputDirective<T = any> extends MdInput {
+export class MdPrimitiveInputDirective extends MdInput {
     constructor() {
         super();
     }

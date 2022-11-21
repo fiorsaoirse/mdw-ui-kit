@@ -1,8 +1,7 @@
 <div class="md-text-field-container" (click)="focusOnInput()">
     <input
-        #input
-        [value]="value"
-        (change)="inputChange($event)"
+        [(ngModel)]="value"
+        (ngModelChange)="inputChange($event)"
         mdPrimitiveInput
         type="text"
     />

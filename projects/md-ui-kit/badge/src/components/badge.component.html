@@ -4,8 +4,9 @@
     </div>
     <div *ngIf="removable">
         <button class="md-button-icon" (click)="onRemove()">
-            <!-- TODO: add svg icon  -->
-            X
+            <ng-container *ngIf="closeIconUrl">
+                <md-svg [url]="closeIconUrl"></md-svg>
+            </ng-container>
         </button>
     </div>
 </div>

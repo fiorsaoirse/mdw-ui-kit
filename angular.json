@@ -73,7 +73,9 @@
             "polyfills": "projects/playground/src/polyfills.ts",
             "tsConfig": "projects/playground/tsconfig.app.json",
             "aot": true,
-            "assets": [],
+            "assets": [
+              "projects/playground/src/assets"
+            ],
             "styles": [
               "projects/playground/src/styles.scss"
             ],
