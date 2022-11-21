@@ -4,7 +4,7 @@ import {
     DomSanitizer,
     SafeHtml,
 } from '@angular/platform-browser';
-import { MdOnDestroy } from 'md-ui-kit/common';
+import { MdCommonModule, MdOnDestroy } from 'md-ui-kit/common';
 import {
     catchError,
     Observable,
@@ -21,7 +21,8 @@ import { MdSvgService } from '../services/svg.service';
     templateUrl: './svg.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [BrowserModule],
+    imports: [BrowserModule, MdCommonModule],
+    providers: [MdOnDestroy],
 })
 export class MdSvgComponent {
     private readonly urlChanges$: ReplaySubject<void>;
@@ -49,7 +50,8 @@ export class MdSvgComponent {
 
         this.innerHtml$ = this.urlChanges$.pipe(
             switchMap(() => this.svgService.getByUrl(this.src)),
-            catchError(() => {
+            catchError((error) => {
+                console.error(error);
                 return of(this.domSanitazer.bypassSecurityTrustHtml(''));
             }),
             startWith(this.src),

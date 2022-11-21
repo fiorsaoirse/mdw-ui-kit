@@ -21,6 +21,7 @@ import { MdSizeControllerDirective } from './controllers/size/size.controller';
         MdSizeControllerDirective,
         MdDisabledControllerDirective,
         MdReadonlyControllerDirective,
+        CommonModule,
     ],
 })
 export class MdCommonModule {}

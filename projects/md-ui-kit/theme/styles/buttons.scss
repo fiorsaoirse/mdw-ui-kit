@@ -29,11 +29,6 @@
         @include flex-row();
     }
 
-    &-icon {
-        height: var(--md-point-medium);
-        width: var(--md-point-medium);
-    }
-
     &-small {
         @include typography-small();
         padding: 0.25rem 0.5rem;
@@ -56,6 +51,22 @@
     &[disabled] {
         cursor: default;
     }
+}
+
+.md-button-icon {
+    cursor: pointer;
+
+    height: var(--md-icon-medium);
+    width: var(--md-icon-medium);
+
+    &-large {
+        height: var(--md-icon-large);
+        width: var(--md-icon-large);
+    }
+}
+
+.md-svg-wrapper {
+    display: flex;
 }
 
 @mixin button-style($class, $definitions) {

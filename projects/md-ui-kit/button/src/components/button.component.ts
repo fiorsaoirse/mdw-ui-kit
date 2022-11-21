@@ -11,7 +11,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 
-import { MdOnDestroy } from 'md-ui-kit/common';
+import { MdCommonModule, MdOnDestroy } from 'md-ui-kit/common';
 import { MdButtonColor } from 'md-ui-kit/contracts';
 import { extractProperty } from 'md-ui-kit/utils';
 import { takeUntil } from 'rxjs';
@@ -26,6 +26,8 @@ const BUTTON_CLASS = 'md-button';
 @Component({
     selector: 'button[md-button], a[md-button]',
     templateUrl: './button.component.html',
+    standalone: true,
+    imports: [MdCommonModule],
     providers: [MD_BUTTON_WATCHED_PROVIDER, MdOnDestroy],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

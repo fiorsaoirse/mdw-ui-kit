@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EMPTY_FUNCTION, MdOnDestroy } from 'md-ui-kit/common';
+import { MdSize } from 'md-ui-kit/contracts';
 import { MdInput } from '../../contracts/basic-input';
 import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
 
@@ -45,13 +46,11 @@ export class MdTextFieldComponent
     onTouched: () => void;
 
     get isLabelRaisable(): boolean {
-        return false;
-
-        // return !!(
-        //     !this.isLabelOutside &&
-        //     this.input?.size &&
-        //     this.input?.size !== MdSize.Small
-        // );
+        return !!(
+            !this.isLabelOutside &&
+            this.input?.size &&
+            this.input?.size !== MdSize.Small
+        );
     }
 
     get isLabelRaised(): boolean {
@@ -93,9 +92,9 @@ export class MdTextFieldComponent
     }
 
     focusOnInput(): void {
-        // if (this.input?.isDisabled || this.input?.isReadonly) {
-        //     return;
-        // }
+        if (this.input?.isDisabled || this.input?.isReadonly) {
+            return;
+        }
 
         this.inputDomElement?.nativeElement.focus();
     }

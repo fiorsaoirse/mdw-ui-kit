@@ -19,21 +19,20 @@ import {
     MD_BADGE_WATCHED_PROVIDER,
 } from '../badge.controller';
 
-import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdCommonModule } from 'md-ui-kit/common';
+import { MdCommonModule, MdOnDestroy } from 'md-ui-kit/common';
 import { MdBadgeColor, MD_CLOSE_ICON_URL } from 'md-ui-kit/contracts';
 import { extractProperty } from 'md-ui-kit/utils';
-import { MdSvgComponent } from 'projects/md-ui-kit/svg/src/components/svg.component';
+import { MdSvgComponent } from 'projects/md-ui-kit/svg/src';
 
 const BADGE_CLASS = 'md-badge';
 
 @Component({
     selector: 'md-badge',
     templateUrl: './badge.component.html',
-    providers: [MD_BADGE_WATCHED_PROVIDER],
+    providers: [MD_BADGE_WATCHED_PROVIDER, MdOnDestroy],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [BrowserModule, CommonModule, MdCommonModule, MdSvgComponent],
+    imports: [BrowserModule, MdCommonModule, MdSvgComponent],
     standalone: true,
 })
 export class MdBadgeComponent implements OnInit, OnChanges {
@@ -87,6 +86,10 @@ export class MdBadgeComponent implements OnInit, OnChanges {
         return {
             [`md-badge-${this.controller.size}`]: true,
         };
+    }
+
+    public get size(): string {
+        return this.controller.size;
     }
 
     public get removable(): boolean {

@@ -1,7 +1,8 @@
 import { Directive, HostListener, inject } from '@angular/core';
 import { MdOnDestroy } from 'md-ui-kit/common';
+import { MdSize } from 'md-ui-kit/contracts';
 import { BooleanInput, coerceBooleanInput } from 'md-ui-kit/utils';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, takeUntil } from 'rxjs';
 import {
     MdInputWatchedController,
     MD_INPUT_WATCHED_CONTROLLER,
@@ -32,21 +33,21 @@ export abstract class MdInput {
 
         this.fieldState.next(MdFieldState.Filling);
 
-        // this.controller.changes$
-        //     .pipe(takeUntil(this.destroy$))
-        //     .subscribe(() => {
-        //         if (this.controller.isDisabled) {
-        //             this.fieldState.next(MdFieldState.Disabled);
-        //             return;
-        //         }
+        this.controller.changes$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+                if (this.controller.isDisabled) {
+                    this.fieldState.next(MdFieldState.Disabled);
+                    return;
+                }
 
-        //         if (this.controller.isReadonly) {
-        //             this.fieldState.next(MdFieldState.Readonly);
-        //             return;
-        //         }
+                if (this.controller.isReadonly) {
+                    this.fieldState.next(MdFieldState.Readonly);
+                    return;
+                }
 
-        //         this.fieldState.next(MdFieldState.Filling);
-        //     });
+                this.fieldState.next(MdFieldState.Filling);
+            });
     }
 
     @HostListener('focus', ['true'])
@@ -60,15 +61,15 @@ export abstract class MdInput {
         this.fieldState.next(nextState);
     }
 
-    // public get size(): MdSize {
-    //     return this.controller.size;
-    // }
+    public get size(): MdSize {
+        return this.controller.size;
+    }
 
-    // public get isReadonly(): boolean {
-    //     return this.controller.isReadonly;
-    // }
+    public get isReadonly(): boolean {
+        return this.controller.isReadonly;
+    }
 
-    // public get isDisabled(): boolean {
-    //     return this.controller.isDisabled;
-    // }
+    public get isDisabled(): boolean {
+        return this.controller.isDisabled;
+    }
 }

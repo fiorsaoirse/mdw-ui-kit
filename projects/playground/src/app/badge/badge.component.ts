@@ -31,7 +31,11 @@ export class BadgeTestComponent {
         return this.colors[this.pointer];
     }
 
-    switchColor() {
+    switchColor(): void {
         this.pointer = (this.pointer + 1) % this.colors.length;
+    }
+
+    log(): void {
+        console.log('removed!');
     }
 }

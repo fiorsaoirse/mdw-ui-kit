@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, SecurityContext } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { finalize, map, Observable, of, share, tap } from 'rxjs';
 
@@ -17,14 +17,16 @@ export class MdSvgService {
     }
 
     public getByUrl(url: string): Observable<SafeHtml> {
-        const safeUrl = this.domSanitazer.sanitize(
-            SecurityContext.RESOURCE_URL,
-            url,
-        );
+        const safeUrl = url;
 
-        if (!safeUrl) {
-            throw new Error('Url can not be sanitazed!');
-        }
+        // const safeUrl = this.domSanitazer.sanitize(
+        //     SecurityContext.RESOURCE_URL,
+        //     url,
+        // );
+
+        // if (!safeUrl) {
+        //     throw new Error('Url can not be sanitazed!');
+        // }
 
         if (this.cache.has(safeUrl)) {
             return of(this.cache.get(safeUrl)!);

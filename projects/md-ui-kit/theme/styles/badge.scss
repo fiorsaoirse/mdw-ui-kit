@@ -24,8 +24,9 @@
 
     &-container {
         @include flex-row();
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
+        gap: var(--md-point-xsmall);
     }
 }
 

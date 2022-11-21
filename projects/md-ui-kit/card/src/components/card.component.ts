@@ -7,12 +7,15 @@ import {
     OnInit,
     Renderer2,
 } from '@angular/core';
+import { MdCommonModule } from 'md-ui-kit/common';
 import { MdContent, MdContext } from 'md-ui-kit/contracts';
 import { isNumber } from 'md-ui-kit/utils';
 
 @Component({
     selector: 'md-card',
     templateUrl: './card.component.html',
+    standalone: true,
+    imports: [MdCommonModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdCardComponent implements OnInit {

@@ -51,7 +51,6 @@
   },
   "include": [
     "projects/**/*.ts",
-    "projects/md-ui-kit/assets/*.**"
   ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
