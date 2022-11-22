@@ -4,6 +4,7 @@ import {
     Component,
     ElementRef,
     forwardRef,
+    HostBinding,
     Input,
     Provider,
     Renderer2,
@@ -14,6 +15,7 @@ import { EMPTY_FUNCTION, MdOnDestroy } from 'md-ui-kit/common';
 import { MdSize } from 'md-ui-kit/contracts';
 import { MdInput } from '../../contracts/basic-input';
 import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
+import { MdPrimitiveInputDirective } from '../../directives/primitive-input/primitive-input.directive';
 
 const TEXT_FIELD_PROVIDER: Provider = {
     provide: NG_VALUE_ACCESSOR,
@@ -36,9 +38,7 @@ export class MdTextFieldComponent
 
     @Input() isLabelOutside = false;
 
-    @ViewChild(MdInput) private readonly input?: MdInput;
-    @ViewChild('input', { read: ElementRef })
-    private readonly inputDomElement?: ElementRef<HTMLInputElement>;
+    @ViewChild(MdInput) private readonly input?: MdPrimitiveInputDirective;
 
     value: string | null;
 
@@ -65,6 +65,15 @@ export class MdTextFieldComponent
 
         this.onChange = EMPTY_FUNCTION;
         this.onTouched = EMPTY_FUNCTION;
+    }
+
+    @HostBinding('class')
+    private get classes() {
+        return {
+            [`${HOST_CLASS}-${this.input?.size}`]: true,
+            [`${HOST_CLASS}-disabled`]: this.input?.isDisabled,
+            [`${HOST_CLASS}-readonly`]: this.input?.isReadonly,
+        };
     }
 
     ngAfterViewInit(): void {
@@ -96,6 +105,6 @@ export class MdTextFieldComponent
             return;
         }
 
-        this.inputDomElement?.nativeElement.focus();
+        this.input?.elementRef?.nativeElement.focus();
     }
 }

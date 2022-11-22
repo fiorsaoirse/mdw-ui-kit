@@ -3,13 +3,9 @@
 @import 'mixins';
 
 .md-text-field {
-    @include typography-medium();
-    @include flex-column();
-
-    height: var(--md-height-medium);
-    min-height: var(--md-height-medium);
-    max-height: var(--md-height-medium);
-    line-height: 1rem;
+    display: block;
+    width: 100%;
+    position: relative;
 
     &-container {
         @include flex-row();
@@ -19,12 +15,14 @@
         background: var(--md-white);
         color: var(--md-black);
         box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+        cursor: text;
+        position: relative;
+        width: 100%;
+        height: 100%;
 
         input {
-            transition: box-shadow 0.01s;
-            border: transparent;
-            background-color: inherit;
-            color: inherit;
+            font: inherit;
+            color: var(--md-blue-01);
             padding: 0;
             margin: 0;
             border: 0;
@@ -41,6 +39,12 @@
             appearance: none;
             word-break: keep-all;
             -webkit-text-fill-color: currentColor;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0 var(--md-padding-medium);
             border: solid transparent;
             text-align: inherit;
             box-sizing: border-box;
@@ -50,8 +54,16 @@
             resize: none;
         }
 
-        padding: 0 var(--md-padding-medium);
-        padding-top: calc(var(--md-padding-medium) * 1.5);
+        .md-text-field-label-wrapper {
+            @include flex-row();
+            position: relative;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            align-items: center;
+            overflow: hidden;
+            color: var(--md-blue-02);
+        }
     }
 
     &-small {
@@ -61,11 +73,30 @@
         height: var(--md-height-small);
         min-height: var(--md-height-small);
         max-height: var(--md-height-small);
-        line-height: 1rem;
 
         &-container {
             padding: 0 var(--md-padding-small);
             padding-top: calc(var(--md-padding-small) * 1.5);
+        }
+
+        .md-text-field-label-wrapper {
+            padding: 0 var(--md-padding-small);
+        }
+    }
+
+    &-medium {
+        @include typography-medium();
+        height: var(--md-height-medium);
+        min-height: var(--md-height-medium);
+        max-height: var(--md-height-medium);
+
+        &-container {
+            padding: 0 var(--md-padding-medium);
+            padding-top: calc(var(--md-padding-medium) * 1.5);
+        }
+
+        .md-text-field-label-wrapper {
+            padding: 0 var(--md-padding-medium);
         }
     }
 
@@ -76,11 +107,14 @@
         height: var(--md-height-large);
         min-height: var(--md-height-large);
         max-height: var(--md-height-large);
-        line-height: 1.25rem;
 
         &-container {
             padding: 0 var(--md-padding-large);
             padding-top: calc(var(--md-padding-large) * 1.5);
+        }
+
+        .md-text-field-label-wrapper {
+            padding: 0 var(--md-padding-large);
         }
     }
 

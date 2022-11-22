@@ -1,4 +1,4 @@
-import { Directive, forwardRef } from '@angular/core';
+import { Directive, ElementRef, forwardRef } from '@angular/core';
 import { MdInput } from '../../contracts/basic-input';
 
 @Directive({
@@ -11,7 +11,7 @@ import { MdInput } from '../../contracts/basic-input';
     ],
 })
 export class MdPrimitiveInputDirective extends MdInput {
-    constructor() {
+    constructor(readonly elementRef: ElementRef) {
         super();
     }
 }

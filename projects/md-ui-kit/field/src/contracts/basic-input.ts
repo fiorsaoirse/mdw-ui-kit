@@ -26,7 +26,6 @@ export abstract class MdInput {
         console.log('controller');
 
         this.destroy$ = inject(MdOnDestroy);
-        console.log('destroy', this.destroy$);
 
         this.fieldState = new ReplaySubject(1);
         this.fieldStateChanged = this.fieldState.asObservable();

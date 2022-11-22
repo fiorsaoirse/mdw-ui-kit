@@ -4,6 +4,9 @@ import {
     MdOnDestroy,
     MdReadonlyControllerDirective,
     MdSizeControllerDirective,
+    MD_DISABLED,
+    MD_READONLY,
+    MD_SIZE,
     noop,
 } from 'md-ui-kit/common';
 import { MdSize } from 'md-ui-kit/contracts';
@@ -39,13 +42,7 @@ export const MD_INPUT_WATCHED_CONTROLLER =
 export const MD_INPUT_WATCHED_PROVIDER: Provider = {
     provide: MD_INPUT_WATCHED_CONTROLLER,
     useFactory: mdInputControllerFactory,
-    deps: [
-        ChangeDetectorRef,
-        MdOnDestroy,
-        MdDisabledControllerDirective,
-        MdReadonlyControllerDirective,
-        MdSizeControllerDirective,
-    ],
+    deps: [ChangeDetectorRef, MdOnDestroy, MD_DISABLED, MD_READONLY, MD_SIZE],
 };
 
 export class MdInputWatchedController {
