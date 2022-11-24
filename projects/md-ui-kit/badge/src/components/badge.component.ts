@@ -20,10 +20,14 @@ import {
 } from '../badge.controller';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { MdCommonModule, MdOnDestroy } from 'md-ui-kit/common';
-import { MdBadgeColor, MD_CLOSE_ICON_URL } from 'md-ui-kit/contracts';
+import {
+    MdCommonModule,
+    MdOnDestroy,
+    MD_CLOSE_ICON_URL,
+} from 'md-ui-kit/common';
 import { extractProperty } from 'md-ui-kit/utils';
 import { MdSvgComponent } from 'projects/md-ui-kit/svg/src';
+import { MdBadgeColor } from '../contracts/badge-color';
 
 const BADGE_CLASS = 'md-badge';
 

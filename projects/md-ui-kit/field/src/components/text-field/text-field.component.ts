@@ -11,10 +11,10 @@ import {
     ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EMPTY_FUNCTION, MdOnDestroy } from 'md-ui-kit/common';
-import { MdSize } from 'md-ui-kit/contracts';
+import { EMPTY_FUNCTION, MdOnDestroy, MdSize } from 'md-ui-kit/common';
 import { MdInput } from '../../contracts/basic-input';
 import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
+import { MdFieldState } from '../../contracts/field-state';
 import { MdPrimitiveInputDirective } from '../../directives/primitive-input/primitive-input.directive';
 
 const TEXT_FIELD_PROVIDER: Provider = {
@@ -45,6 +45,8 @@ export class MdTextFieldComponent
     onChange: (_: any) => void;
     onTouched: () => void;
 
+    public isInputFocused: boolean;
+
     get isLabelRaisable(): boolean {
         return !!(
             !this.isLabelOutside &&
@@ -54,7 +56,7 @@ export class MdTextFieldComponent
     }
 
     get isLabelRaised(): boolean {
-        return this.isLabelRaisable && !!this.value;
+        return this.isLabelRaisable && (this.isInputFocused || !!this.value);
     }
 
     constructor(
@@ -62,6 +64,7 @@ export class MdTextFieldComponent
         private readonly renderer: Renderer2,
     ) {
         this.value = null;
+        this.isInputFocused = false;
 
         this.onChange = EMPTY_FUNCTION;
         this.onTouched = EMPTY_FUNCTION;
@@ -81,6 +84,7 @@ export class MdTextFieldComponent
 
         this.input?.fieldStateChanged.subscribe((state) => {
             console.log('state ', state);
+            this.isInputFocused = state === MdFieldState.Focused;
         });
     }
 

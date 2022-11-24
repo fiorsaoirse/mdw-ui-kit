@@ -3,13 +3,13 @@ import {
     MdDisabledControllerDirective,
     MdOnDestroy,
     MdReadonlyControllerDirective,
+    MdSize,
     MdSizeControllerDirective,
     MD_DISABLED,
     MD_READONLY,
     MD_SIZE,
     noop,
 } from 'md-ui-kit/common';
-import { MdSize } from 'md-ui-kit/contracts';
 import { merge, Observable, takeUntil, tap } from 'rxjs';
 
 const mdInputControllerFactory = (

@@ -1,6 +1,5 @@
 import { Directive, HostListener, inject } from '@angular/core';
-import { MdOnDestroy } from 'md-ui-kit/common';
-import { MdSize } from 'md-ui-kit/contracts';
+import { MdOnDestroy, MdSize } from 'md-ui-kit/common';
 import { BooleanInput, coerceBooleanInput } from 'md-ui-kit/utils';
 import { Observable, ReplaySubject, takeUntil } from 'rxjs';
 import {
@@ -21,10 +20,7 @@ export abstract class MdInput {
     public readonly fieldStateChanged: Observable<MdFieldState>;
 
     constructor() {
-        console.log('constr');
         this.controller = inject(MD_INPUT_WATCHED_CONTROLLER);
-        console.log('controller');
-
         this.destroy$ = inject(MdOnDestroy);
 
         this.fieldState = new ReplaySubject(1);
@@ -52,8 +48,6 @@ export abstract class MdInput {
     @HostListener('focus', ['true'])
     @HostListener('blur', ['false'])
     private focusListener(focused: BooleanInput): void {
-        console.log('foo');
-
         const nextState = coerceBooleanInput(focused)
             ? MdFieldState.Focused
             : MdFieldState.Filling;

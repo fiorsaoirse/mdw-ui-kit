@@ -38,9 +38,6 @@
       "md-ui-kit/common": [
         "projects/md-ui-kit/common/src"
       ],
-      "md-ui-kit/contracts": [
-        "projects/md-ui-kit/contracts/src"
-      ],
       "md-ui-kit/field": [
         "projects/md-ui-kit/field/src"
       ],

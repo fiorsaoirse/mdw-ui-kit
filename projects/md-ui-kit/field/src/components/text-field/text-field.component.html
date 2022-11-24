@@ -6,6 +6,10 @@
         type="text"
     />
     <div class="md-text-field-label-wrapper">
-        <label class="md-text-field-label">{{ label }}</label>
+        <label
+            class="md-text-field-label"
+            [ngClass]="{ 'md-text-field-label-raised': isLabelRaised }"
+            >{{ label }}</label
+        >
     </div>
 </div>
