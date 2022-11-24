@@ -2,12 +2,12 @@ import { ChangeDetectorRef, InjectionToken, Provider } from '@angular/core';
 import {
     MdOnDestroy,
     MdRemovableControllerDirective,
+    MdSize,
     MdSizeControllerDirective,
     MD_REMOVABLE,
     MD_SIZE,
     noop,
 } from 'md-ui-kit/common';
-import { MdSize } from 'md-ui-kit/contracts';
 import { merge, Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 

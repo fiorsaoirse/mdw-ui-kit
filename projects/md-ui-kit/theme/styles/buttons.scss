@@ -103,10 +103,19 @@
 );
 
 @include button-style(
-    'gray',
+    'orange',
     (
-        'background': $md-gray,
-        'border': $md-gray,
+        'background': $md-orange,
+        'border': $md-orange,
+        'content': var(--md-white),
+    )
+);
+
+@include button-style(
+    'red',
+    (
+        'background': $md-red,
+        'border': $md-red,
         'content': var(--md-white),
     )
 );

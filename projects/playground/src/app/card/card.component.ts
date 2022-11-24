@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { MdContext } from 'md-ui-kit/contracts';
+import { MdContext } from 'md-ui-kit/common';
 import { forkJoin, map } from 'rxjs';
 
 interface ICardItem {

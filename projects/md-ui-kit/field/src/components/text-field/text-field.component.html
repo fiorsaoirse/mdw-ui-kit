@@ -1,15 +1,25 @@
-<div class="md-text-field-container" (click)="focusOnInput()">
+<div
+    class="md-text-field-container"
+    [ngClass]="{ 'md-text-field-container-focused': isInputFocused }"
+    (click)="focusOnInput()"
+>
     <input
         [(ngModel)]="value"
         (ngModelChange)="inputChange($event)"
         mdPrimitiveInput
         type="text"
     />
-    <div class="md-text-field-label-wrapper">
-        <label
-            class="md-text-field-label"
-            [ngClass]="{ 'md-text-field-label-raised': isLabelRaised }"
-            >{{ label }}</label
-        >
-    </div>
+    <div
+        class="md-text-field-label-wrapper"
+        [ngClass]="{ 'md-text-field-label-wrapper-focused': isInputFocused }"
+    ></div>
 </div>
+
+<ng-template>
+    <label
+        class="md-text-field-label"
+        [ngClass]="{ 'md-text-field-label-raised': isLabelRaised }"
+    >
+        {{ label }}
+    </label>
+</ng-template>

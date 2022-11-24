@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MdBadgeColor, MdSize } from 'md-ui-kit/contracts';
+import { MdButtonColor } from 'md-ui-kit/button';
+import { MdSize } from 'md-ui-kit/common';
 
 @Component({
     templateUrl: './button.component.html',
@@ -9,9 +10,9 @@ export class ButtonTestComponent {
     large: MdSize;
     disabled: boolean;
 
-    color: typeof MdBadgeColor;
+    color: typeof MdButtonColor;
 
-    private readonly colors: ReadonlyArray<MdBadgeColor>;
+    private readonly colors: ReadonlyArray<MdButtonColor>;
     private pointer: number;
 
     constructor() {
@@ -19,18 +20,19 @@ export class ButtonTestComponent {
         this.large = MdSize.Large;
         this.disabled = true;
 
-        this.color = MdBadgeColor;
+        this.color = MdButtonColor;
 
         this.colors = [
-            MdBadgeColor.Blue,
-            MdBadgeColor.Gray,
-            MdBadgeColor.Green,
-            MdBadgeColor.Yellow,
+            MdButtonColor.Blue,
+            MdButtonColor.Orange,
+            MdButtonColor.Green,
+            MdButtonColor.Yellow,
+            MdButtonColor.Red,
         ];
         this.pointer = 0;
     }
 
-    get currentColor(): MdBadgeColor {
+    get currentColor(): MdButtonColor {
         return this.colors[this.pointer];
     }
 

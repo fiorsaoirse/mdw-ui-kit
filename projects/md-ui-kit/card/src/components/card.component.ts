@@ -7,8 +7,7 @@ import {
     OnInit,
     Renderer2,
 } from '@angular/core';
-import { MdCommonModule } from 'md-ui-kit/common';
-import { MdContent, MdContext } from 'md-ui-kit/contracts';
+import { MdCommonModule, MdContent, MdContext } from 'md-ui-kit/common';
 import { isNumber } from 'md-ui-kit/utils';
 
 @Component({

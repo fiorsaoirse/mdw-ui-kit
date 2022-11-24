@@ -1,6 +1,6 @@
 import { Directive, forwardRef, InjectionToken, Input } from '@angular/core';
-import { MdSize } from 'md-ui-kit/contracts';
 import { isString } from 'md-ui-kit/utils';
+import { MdSize } from '../../contracts/size';
 import { MdBaseControllerDirective } from '../base/base.controller';
 
 /**

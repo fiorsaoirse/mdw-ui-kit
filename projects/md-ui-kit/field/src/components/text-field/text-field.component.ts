@@ -59,6 +59,10 @@ export class MdTextFieldComponent
         return this.isLabelRaisable && (this.isInputFocused || !!this.value);
     }
 
+    get isOutside(): boolean {
+        return this.isLabelOutside || this.input?.size === MdSize.Small;
+    }
+
     constructor(
         private readonly elementRef: ElementRef,
         private readonly renderer: Renderer2,

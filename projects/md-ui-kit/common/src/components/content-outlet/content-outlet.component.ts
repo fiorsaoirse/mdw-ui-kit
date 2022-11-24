@@ -12,7 +12,7 @@ import {
     MdContentType,
     MdContext,
     MdPrimitive,
-} from 'md-ui-kit/contracts';
+} from 'md-ui-kit/common';
 import { isNumber, isString } from 'md-ui-kit/utils';
 
 // TODO: maybe it could be better to implement this as directive

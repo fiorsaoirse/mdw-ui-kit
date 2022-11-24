@@ -12,10 +12,12 @@
 
     /* colors */
     --md-blue: #007bff;
-    --md-primary: #526ed3;
+    --md-primary: #4e6bd1;
     --md-gray: #6c757d;
     --md-green: #28a745;
-    --md-yellow: #ffc107;
+    --md-yellow: #ffda6a;
+    --md-orange: #ff5507;
+    --md-red: #fa2c55;
     --md-white: #ffffff;
     --md-black: #000000;
     --md-black-025: #00000020;
@@ -46,6 +48,13 @@
     --md-typo-xlarge-font-weight: 600;
     --md-typo-xlarge-line-height: 32px;
 
+    /* placeholder */
+    --md-placeholder-small: 1em;
+    --md-placeholder-medium: 1.25em;
+    --md-placeholder-medium-focused: 0.9em;
+    --md-placeholder-large: 1.5em;
+    --md-placeholder-large-focused: 0.9em;
+
     /* borders */
     --md-border-radius-xsmall: 0.25rem;
     --md-border-radius-small: 0.5rem;
@@ -68,6 +77,8 @@
 $md-blue: #007bff;
 $md-gray: #6c757d;
 $md-green: #28a745;
-$md-yellow: #ffc107;
+$md-yellow: #ffda6a;
+$md-orange: #ff5507;
+$md-red: #fa2c55;
 $md-white: #ffffff;
 $md-black: #000000;
