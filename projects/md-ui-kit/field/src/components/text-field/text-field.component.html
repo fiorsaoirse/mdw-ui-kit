@@ -8,14 +8,18 @@
         (ngModelChange)="inputChange($event)"
         mdPrimitiveInput
         type="text"
+        class="md-text-field-input"
     />
     <div
+        *ngIf="!isOutside"
         class="md-text-field-label-wrapper"
         [ngClass]="{ 'md-text-field-label-wrapper-focused': isInputFocused }"
-    ></div>
+    >
+        <ng-template *ngTemplateOutlet="labelTemplate"></ng-template>
+    </div>
 </div>
 
-<ng-template>
+<ng-template #labelTemplate>
     <label
         class="md-text-field-label"
         [ngClass]="{ 'md-text-field-label-raised': isLabelRaised }"

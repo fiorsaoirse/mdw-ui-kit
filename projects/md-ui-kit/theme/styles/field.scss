@@ -23,7 +23,12 @@
         height: 100%;
         border-radius: var(--md-border-radius-small);
 
-        input {
+        &-focused {
+            box-shadow: none;
+            outline-color: var(--md-primary);
+        }
+
+        .md-text-field-input {
             font: inherit;
             color: var(--md-blue-01);
             margin: 0;
@@ -70,6 +75,10 @@
             &-focused {
                 color: var(--md-blue-01);
             }
+
+            .md-text-field-label-raised {
+                color: var(--md-blue-01);
+            }
         }
 
         .md-text-field-label {
@@ -81,24 +90,25 @@
                 transform: translateY(-0.5rem);
             }
         }
+    }
 
-        &-focused {
-            box-shadow: none;
-            outline-color: var(--md-primary);
-        }
+    .md-text-field-label-wrapper-focused .md-text-field-label,
+    .md-text-field-label-raised {
+        box-shadow: none;
+        outline-color: var(--md-primary);
     }
 
     &-small {
         @include typography-small();
         padding: 0.25rem 0.5rem;
 
-        height: var(--md-height-small);
-        min-height: var(--md-height-small);
-        max-height: var(--md-height-small);
+        height: calc(var(--md-height-small) * 1.2);
+        min-height: calc(var(--md-height-small) * 1.2);
+        max-height: calc(var(--md-height-small) * 1.2);
 
-        &-container {
+        .md-text-field-input {
             padding: 0 var(--md-padding-small);
-            padding-top: calc(var(--md-padding-small) * 1.5);
+            padding-top: calc(var(--md-padding-small) * 1.2);
         }
 
         .md-text-field-label-wrapper {
@@ -109,20 +119,27 @@
 
     &-medium {
         @include typography-medium();
-        height: var(--md-height-medium);
-        min-height: var(--md-height-medium);
-        max-height: var(--md-height-medium);
+        height: calc(var(--md-height-medium) * 1.2);
+        min-height: calc(var(--md-height-medium) * 1.2);
+        max-height: calc(var(--md-height-medium) * 1.2);
 
-        &-container {
+        .md-text-field-input {
             padding: 0 var(--md-padding-medium);
-            padding-top: calc(var(--md-padding-medium) * 1.5);
+            padding-top: calc(var(--md-padding-medium) * 1.2);
         }
 
         .md-text-field-label-wrapper {
             padding: 0 var(--md-padding-medium);
             font-size: var(--md-placeholder-medium);
 
-            &-focused,
+            .md-text-field-label {
+                font-size: inherit;
+            }
+
+            &-focused {
+                font-size: var(--md-placeholder-medium-focused);
+            }
+
             .md-text-field-label-raised {
                 font-size: var(--md-placeholder-medium-focused);
             }
@@ -133,23 +150,30 @@
         @include typography-large();
         padding: 0.5rem 1rem;
 
-        height: var(--md-height-large);
-        min-height: var(--md-height-large);
-        max-height: var(--md-height-large);
+        height: calc(var(--md-height-large) * 1.2);
+        min-height: calc(var(--md-height-large) * 1.2);
+        max-height: calc(var(--md-height-large) * 1.2);
 
-        &-container {
+        .md-text-field-input {
             padding: 0 var(--md-padding-large);
-            padding-top: calc(var(--md-padding-large) * 1.5);
+            padding-top: calc(var(--md-padding-large) * 1.2);
         }
 
         .md-text-field-label-wrapper {
             padding: 0 var(--md-padding-large);
             font-size: var(--md-placeholder-large);
+        }
 
-            &-focused,
-            .md-text-field-label-raised {
-                font-size: var(--md-placeholder-large-focused);
-            }
+        .md-text-field-label {
+            font-size: inherit;
+        }
+
+        &-focused {
+            font-size: var(--md-placeholder-large-focused);
+        }
+
+        .md-text-field-label-raised {
+            font-size: var(--md-placeholder-lagre-focused);
         }
     }
 
