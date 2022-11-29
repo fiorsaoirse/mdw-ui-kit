@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MdBadgeColor, MdSize } from 'md-ui-kit/contracts';
+import { MdSize } from 'md-ui-kit/common';
+import { MdBadgeColor } from '../contracts/badge-color';
 import { MdBadgeComponent } from './badge.component';
 
 @Component({

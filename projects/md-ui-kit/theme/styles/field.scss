@@ -98,6 +98,12 @@
         outline-color: var(--md-primary);
     }
 
+    &-disabled {
+        .md-text-field-container {
+            background-color: var(--md-black-025);
+        }
+    }
+
     &-small {
         @include typography-small();
         padding: 0.25rem 0.5rem;

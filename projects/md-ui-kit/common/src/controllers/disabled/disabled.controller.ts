@@ -1,4 +1,5 @@
 import { Directive, forwardRef, InjectionToken, Input } from '@angular/core';
+import { BooleanInput, coerceBooleanInput } from 'md-ui-kit/utils';
 import { MdBaseControllerDirective } from '../base/base.controller';
 
 export const MD_DISABLED = new InjectionToken<MdDisabledControllerDirective>(
@@ -20,10 +21,18 @@ export const MD_DISABLED = new InjectionToken<MdDisabledControllerDirective>(
     ],
 })
 export class MdDisabledControllerDirective extends MdBaseControllerDirective {
-    @Input('mdDisabled') disabled: boolean;
+    private _disabled: boolean;
+
+    @Input('mdDisabled') public set disabled(value: BooleanInput) {
+        this._disabled = coerceBooleanInput(value);
+    }
+
+    public get disabled(): boolean {
+        return this._disabled;
+    }
 
     constructor() {
         super();
-        this.disabled = false;
+        this._disabled = false;
     }
 }

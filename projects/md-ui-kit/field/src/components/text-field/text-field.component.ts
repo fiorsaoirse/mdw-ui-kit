@@ -87,7 +87,6 @@ export class MdTextFieldComponent
         this.renderer.addClass(this.elementRef.nativeElement, HOST_CLASS);
 
         this.input?.fieldStateChanged.subscribe((state) => {
-            console.log('state ', state);
             this.isInputFocused = state === MdFieldState.Focused;
         });
     }

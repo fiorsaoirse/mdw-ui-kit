@@ -1,0 +1,28 @@
+<section class="playground-column">
+    <ng-container *ngFor="let item of data; let odd = odd">
+        <md-accordion
+            *ngIf="odd"
+            [headerContent]="accordionHeader"
+            [headerContext]="getContext(item)"
+            [bodyContent]="accordionBody"
+            [bodyContext]="getContext(item)"
+        >
+        </md-accordion>
+
+        <md-accordion
+            *ngIf="!odd"
+            [bodyContent]="accordionBody"
+            [bodyContext]="getContext(item)"
+        >
+            Plain text header
+        </md-accordion>
+    </ng-container>
+</section>
+
+<ng-template #accordionHeader let-item>
+    {{ item.name.toUpperCase() }}
+</ng-template>
+
+<ng-template #accordionBody let-item>
+    <div>{{ item.name }} - {{ item.value }}</div>
+</ng-template>

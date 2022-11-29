@@ -26,6 +26,9 @@
       "dom"
     ],
     "paths": {
+      "md-ui-kit/accordion": [
+        "projects/md-ui-kit/accordion/src"
+      ],
       "md-ui-kit/badge": [
         "projects/md-ui-kit/badge/src"
       ],

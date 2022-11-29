@@ -1,0 +1,30 @@
+<div class="md-accordion-wrapper">
+    <div class="md-accordion-header">
+        <div *ngIf="headerContent; else plainContent">
+            <md-content-outlet
+                [content]="headerContent"
+                [context]="headerContext"
+            ></md-content-outlet>
+        </div>
+        <ng-container *ngIf="!disabled">
+            <div
+                class="md-button-icon md-button-icon-{{ size }}"
+                (click)="onStateChanged()"
+            >
+                <ng-container *ngIf="arrowIconUrl">
+                    <md-svg [url]="arrowIconUrl"></md-svg>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+    <div class="md-accordion-body" *ngIf="open">
+        <md-content-outlet
+            [content]="bodyContent"
+            [context]="bodyContext"
+        ></md-content-outlet>
+    </div>
+</div>
+
+<ng-template #plainContent>
+    <ng-content></ng-content>
+</ng-template>

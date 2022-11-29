@@ -26,7 +26,17 @@ export abstract class MdInput {
         this.fieldState = new ReplaySubject(1);
         this.fieldStateChanged = this.fieldState.asObservable();
 
-        this.fieldState.next(MdFieldState.Filling);
+        let initialState;
+
+        if (this.controller.isDisabled) {
+            initialState = MdFieldState.Disabled;
+        } else if (this.controller.isReadonly) {
+            initialState = MdFieldState.Readonly;
+        } else {
+            initialState = MdFieldState.Filling;
+        }
+
+        this.fieldState.next(initialState);
 
         this.controller.changes$
             .pipe(takeUntil(this.destroy$))

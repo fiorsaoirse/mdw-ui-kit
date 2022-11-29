@@ -6,7 +6,7 @@ import { forkJoin, map } from 'rxjs';
 interface ICardItem {
     name: string;
     description?: string;
-    context: MdContext;
+    context: MdContext<string>;
 }
 
 const CAT_API = 'https://api.thecatapi.com/v1/images/search';
