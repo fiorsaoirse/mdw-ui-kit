@@ -1,14 +1,25 @@
-<ng-container [ngSwitch]="type">
-    <ng-container *ngSwitchCase="'primitive'"> {{ content }}</ng-container>
-    <ng-container *ngSwitchCase="'function'">{{ applyContent() }}</ng-container>
-    <ng-container *ngSwitchCase="'template'">
-        <ng-container
-            *ngTemplateOutlet="content; context: context?.polymorpheusOutlet"
-        ></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="'component'">
-        <ng-container
-            *ngComponentOutlet="content; injector: injector"
-        ></ng-container>
-    </ng-container>
+<ng-container *ngIf="content | mdGuardPipe: isPrimitive as plainContent">
+    {{ plainContent }}
+</ng-container>
+
+<ng-container *ngIf="content | mdGuardPipe: isFunction as callableContent">
+    {{ callableContent(context) }}
+</ng-container>
+
+<ng-container *ngIf="content | mdGuardPipe: isTemplate as templateContent">
+    <ng-container
+        *ngTemplateOutlet="
+            templateContent;
+            context: context?.polymorpheusOutlet ?? null
+        "
+    ></ng-container>
+</ng-container>
+
+<ng-container *ngIf="content | mdGuardPipe: isComponent as componentContent">
+    <ng-container
+        *ngComponentOutlet="
+            componentContent;
+            injector: componentContent?.createInjectorWithContext()
+        "
+    ></ng-container>
 </ng-container>

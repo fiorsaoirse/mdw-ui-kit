@@ -1,0 +1,10 @@
+<div class="md-tab-header">
+    <ng-container *ngFor="let tab of tabs">
+        <md-content-outlet
+            [content]="tab.headerContent"
+            [context]="getContext(tab)"
+            (click)="onTabClicked(tab)"
+        ></md-content-outlet>
+    </ng-container>
+</div>
+<div class="md-tab-body"></div>

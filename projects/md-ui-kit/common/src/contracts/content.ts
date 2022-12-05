@@ -1,9 +1,9 @@
 import { TemplateRef } from '@angular/core';
 import { MdComponentContent } from './classes/component-content';
 
-export type MdPrimitive = string | number | null | undefined;
+export type MdGuard<T> = (value: unknown) => value is T;
 
-export type MdContentType = 'primitive' | 'function' | 'template' | 'component';
+export type MdPrimitive = string | number | null | undefined;
 
 export type MdContentHandler<T> = (context: T) => MdPrimitive;
 
