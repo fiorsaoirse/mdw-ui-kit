@@ -9,37 +9,44 @@ import {
     QueryList,
 } from '@angular/core';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { EMPTY_QUERY, MdCommonModule } from 'md-ui-kit/common';
-import { MdTabComponent } from './tab.component';
+import { EMPTY_QUERY, MdContext } from 'md-ui-kit/common';
+import { MdTabDirective } from './tab.component';
 
 @Component({
     selector: 'md-tabs',
     templateUrl: './tabs.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [BrowserModule, MdCommonModule],
-    standalone: true,
     host: {
         class: 'md-tabs',
     },
 })
-export class MdTabsComponent<T> implements AfterViewInit {
-    @ContentChildren(MdTabComponent) readonly tabs: QueryList<MdTabComponent> =
+export class MdTabsComponent implements AfterViewInit {
+    @ContentChildren(MdTabDirective) readonly tabs: QueryList<MdTabDirective> =
         EMPTY_QUERY;
 
-    @Input() activeTab: MdTabComponent | null = null;
+    @Input() activeTab: MdTabDirective | null = null;
 
-    @Output() activeTabChange = new EventEmitter<MdTabComponent>();
+    @Output() activeTabChange = new EventEmitter<MdTabDirective>();
 
     constructor() {
         this.activeTabChange = new EventEmitter();
     }
 
-    public ngAfterViewInit(): void {}
+    public ngAfterViewInit(): void {
+        if (this.tabs.length && !this.activeTab) {
+            this.activeTab = this.tabs.first;
+        }
+    }
 
-    public getContext(tab: MdTabComponent) {}
+    public isActive(tab: MdTabDirective): boolean {
+        return this.activeTab === tab;
+    }
 
-    public onTabClicked(tab: MdTabComponent): void {
+    public getContext(tab: MdTabDirective): MdContext {
+        return new MdContext(tab);
+    }
+
+    public onTabClicked(tab: MdTabDirective): void {
         this.activeTab = tab;
         this.activeTabChange.emit(tab);
     }

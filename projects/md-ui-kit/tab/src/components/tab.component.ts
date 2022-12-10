@@ -1,9 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Inject,
-    Input,
-} from '@angular/core';
+import { Directive, Inject, Input, TemplateRef } from '@angular/core';
 
 import {
     MdContent,
@@ -12,19 +7,18 @@ import {
     MD_DISABLED,
 } from 'md-ui-kit/common';
 
-@Component({
-    selector: 'md-tab',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+@Directive({
+    selector: 'md-tab:not(ng-container):not(ng-template)',
     host: {
         class: 'md-tab',
     },
-    template: '<ng-content></ng-content>',
 })
-export class MdTabComponent {
+export class MdTabDirective<T = any> {
     @Input() headerContent: MdContent = ({ $implicit }) => String($implicit);
     @Input() headerContext: MdContext | null = null;
 
     constructor(
+        public readonly templateRef: TemplateRef<T>,
         @Inject(MD_DISABLED)
         private readonly disabledDirective: MdDisabledControllerDirective,
     ) {}
