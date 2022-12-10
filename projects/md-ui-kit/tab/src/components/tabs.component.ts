@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { EMPTY_QUERY, MdContext } from 'md-ui-kit/common';
-import { MdTabDirective } from './tab.component';
+import { MdTabDirective } from '../directives/tab.directive';
 
 @Component({
     selector: 'md-tabs',

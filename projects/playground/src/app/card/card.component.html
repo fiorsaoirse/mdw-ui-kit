@@ -1,8 +1,17 @@
 <section class="playground-row">
-    <ng-container *ngFor="let cat of cats">
-        <md-card [content]="cardBody" [context]="cat.context" [width]="'33%'">
-            <div class="md-card-title">{{ cat.name }}</div>
-            <div class="md-card-subtitle">{{ cat.description }}</div>
+    <ng-container
+        *ngFor="let cat of cats$ | async; let last = last; trackBy: trackBy"
+    >
+        <ng-container *ngIf="last">
+            <div mdLazyObserved (reached)="loadMore$.next()"></div>
+        </ng-container>
+        <md-card
+            [content]="cardBody"
+            [context]="cat.context"
+            basis="calc(33% - 10px)"
+        >
+            <div class="md-card-title">{{ cat.breed }}</div>
+            <div class="md-card-subtitle">{{ cat.temperament }}</div>
             <div class="md-card-footer">
                 <button md-button (click)="sayHi()">Click me!</button>
             </div>

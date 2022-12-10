@@ -44,6 +44,12 @@
       "md-ui-kit/field": [
         "projects/md-ui-kit/field/src"
       ],
+      "md-ui-kit/tabs": [
+        "projects/md-ui-kit/tabs/src"
+      ],
+      "md-ui-kit/lazy-observed": [
+        "projects/md-ui-kit/lazy-observed/src"
+      ],
       "md-ui-kit/utils": [
         "projects/md-ui-kit/utils/src"
       ]

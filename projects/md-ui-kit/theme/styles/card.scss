@@ -18,6 +18,9 @@
     border-radius: var(--md-border-radius-small);
     padding: calc(var(--md-point-large) * 0.75);
 
+    flex: 0 0 100%;
+    box-sizing: border-box;
+
     &-header {
         @include flex-column();
         gap: var(--md-point-small);

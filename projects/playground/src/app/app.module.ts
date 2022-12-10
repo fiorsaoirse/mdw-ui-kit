@@ -14,6 +14,7 @@ import {
     MD_CLOSE_ICON_URL,
 } from 'md-ui-kit/common';
 import { MdFieldModule } from 'md-ui-kit/field';
+import { MdLazyObservedDirective } from 'md-ui-kit/lazy-observed';
 import { AccordionTestComponent } from './accordion/accordion.component';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
@@ -43,6 +44,7 @@ import { FieldTestComponent } from './field/field-test.component';
         MdCardComponent,
         MdAccordionComponent,
         MdFieldModule,
+        MdLazyObservedDirective,
     ],
     bootstrap: [AppComponent],
     providers: [

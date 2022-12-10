@@ -22,7 +22,7 @@ import { isNil, isNumber, isString } from 'md-ui-kit/utils';
 })
 export class MdContentOutletComponent<T> {
     @Input() content: MdContent<T>;
-    @Input() context: MdContext<T> | null;
+    @Input() context?: MdContext<T> | null;
 
     constructor() {
         this.content = null;

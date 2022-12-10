@@ -18,29 +18,29 @@ import { isNumber } from 'md-ui-kit/utils';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdCardComponent implements OnInit {
-    private _width: string | null;
+    private _basis: string | null;
 
     constructor(
         private readonly elementRef: ElementRef,
         private readonly renderer: Renderer2,
     ) {
-        this._width = null;
+        this._basis = null;
     }
 
     @Input() content: MdContent;
     @Input() context: MdContext | null = null;
 
-    @Input() set width(value: string | number) {
+    @Input() set basis(value: string | number) {
         if (isNumber(value)) {
-            this._width = `${value}px`;
+            this._basis = `${value}px`;
         } else {
-            this._width = value;
+            this._basis = value;
         }
     }
 
-    @HostBinding('style.width')
+    @HostBinding('style.flex-basis')
     private get cardWidth(): string | null {
-        return this._width;
+        return this._basis;
     }
 
     ngOnInit(): void {
