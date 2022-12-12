@@ -6,22 +6,29 @@ import {
     Component,
     ContentChildren,
     EventEmitter,
+    forwardRef,
     Inject,
     Input,
     NgZone,
     Output,
+    Provider,
     QueryList,
     Self,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, Validators } from '@angular/forms';
+import {
+    ControlValueAccessor,
+    FormControl,
+    FormGroup,
+    NG_VALUE_ACCESSOR,
+    Validators,
+} from '@angular/forms';
 import {
     EMPTY_FUNCTION,
     EMPTY_QUERY,
-    MdDisabledControllerDirective,
+    MdContent,
     MdOnDestroy,
-    MD_DISABLED,
+    MD_DEBOUNCE_TIME,
 } from 'md-ui-kit/common';
-import { MD_DEBOUNCE_TIME } from 'md-ui-kit/contracts';
 import { defer, merge, Observable } from 'rxjs';
 import {
     debounceTime,
@@ -33,10 +40,15 @@ import {
     takeUntil,
     tap,
 } from 'rxjs/operators';
-import { MD_MIN_SEARCH_LENGTH } from '../tokens/tokens';
-import { MdSearchOptionComponent } from './search-option/search-option.component';
-import { MdSelectionEvent } from './search.contract';
-export { MD_DEBOUNCE_TIME } from 'md-ui-kit/contracts';
+import {
+    MdComboBoxWatchedController,
+    MD_COMBO_BOX_WATCHED_CONTROLLER,
+    MD_COMBO_BOX_WATCHED_PROVIDER,
+} from '../combo-box.controller';
+import { MD_MIN_COMBO_BOX_SEARCH_LENGTH } from '../tokens/tokens';
+import { MdComboBoxOptionComponent } from './combo-box-option/combo-box-option.component';
+import { MdComboBoxContext, MdSelectionEvent } from './combo-box.contract';
+export { MD_DEBOUNCE_TIME } from 'md-ui-kit/common';
 
 enum SearchStates {
     FILLING = 'filling',
@@ -45,32 +57,44 @@ enum SearchStates {
 }
 
 const defaultStringifyHandler = (item: unknown): string => {
-    return String(item) ?? '';
+    return item ? String(item) : '';
+};
+
+const MD_COMBO_BOX_VALUE_ACCESSOR: Provider = {
+    provide: NG_VALUE_ACCESSOR,
+    multi: true,
+    useExisting: forwardRef(() => MdComboBoxComponent),
 };
 
 @Component({
-    selector: 'md-search',
-    templateUrl: './search.component.html',
+    selector: 'md-combo-box',
+    templateUrl: './combo-box.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [MdOnDestroy],
+    providers: [
+        MdOnDestroy,
+        MD_COMBO_BOX_WATCHED_PROVIDER,
+        MD_COMBO_BOX_VALUE_ACCESSOR,
+    ],
 })
-export class MdSearchComponent<T, R>
+export class MdComboBoxComponent<T, R>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
-    @Input() stringify: (item: R) => string = defaultStringifyHandler;
+    @Input() label: string;
+    @Input() stringify: (item: T | null) => string = defaultStringifyHandler;
+    @Input() content: MdContent = ({ $implicit }) => String($implicit);
 
-    @ContentChildren(MdSearchOptionComponent<T, R>)
-    options: QueryList<MdSearchOptionComponent<T, R>> = EMPTY_QUERY;
+    @ContentChildren(MdComboBoxOptionComponent<T, R>)
+    options: QueryList<MdComboBoxOptionComponent<T, R>> = EMPTY_QUERY;
 
-    @Output() selectedOption: EventEmitter<MdSelectionEvent<T, R>>;
+    @Output() selectionChange: EventEmitter<MdSelectionEvent<T, R>>;
     @Output() searchInputChange: EventEmitter<string | null>;
 
     private state: SearchStates;
 
-    private value: number | null;
-    public viewValue: string;
+    private value: T | null;
+    private selectedItem?: R;
 
-    public inputControl: FormControl<string>;
+    public formGroup: FormGroup<{ inputControl: FormControl<string> }>;
 
     onChange: (_: any) => void = EMPTY_FUNCTION;
     onTouched: () => void = EMPTY_FUNCTION;
@@ -79,26 +103,39 @@ export class MdSearchComponent<T, R>
         private readonly ngZone: NgZone,
         private readonly changeDetectorRef: ChangeDetectorRef,
         @Self() private readonly destroy$: MdOnDestroy,
-        @Inject(MD_DISABLED)
-        private readonly disabledController: MdDisabledControllerDirective,
+        @Inject(MD_COMBO_BOX_WATCHED_CONTROLLER)
+        private readonly watchedController: MdComboBoxWatchedController,
         @Inject(MD_DEBOUNCE_TIME) private readonly debounce: number,
-        @Inject(MD_MIN_SEARCH_LENGTH) private readonly minSearchLength: number,
+        @Inject(MD_MIN_COMBO_BOX_SEARCH_LENGTH)
+        private readonly minSearchLength: number,
     ) {
-        this.selectedOption = new EventEmitter();
+        this.selectionChange = new EventEmitter();
         this.searchInputChange = new EventEmitter();
 
         this.value = null;
-        this.viewValue = '';
+        this.label = '';
 
         this.state = SearchStates.FILLING;
 
-        this.inputControl = new FormControl<string>('', {
-            nonNullable: true,
-            validators: [Validators.minLength(this.minSearchLength)],
+        const initialValue = this.stringify(this.value);
+
+        this.formGroup = new FormGroup({
+            inputControl: new FormControl(initialValue, {
+                nonNullable: true,
+                validators: [Validators.minLength(this.minSearchLength)],
+            }),
         });
     }
 
-    writeValue(value: number): void {
+    get context(): MdComboBoxContext<T, R> | null {
+        if (!this.value) {
+            return null;
+        }
+
+        return new MdComboBoxContext(this.value, this.selectedItem);
+    }
+
+    writeValue(value: T): void {
         this.value = value;
     }
 
@@ -111,15 +148,16 @@ export class MdSearchComponent<T, R>
     }
 
     public ngAfterViewInit(): void {
-        this.inputControl.valueChanges
+        const control = this.formGroup.get('inputControl');
+        control?.valueChanges
             .pipe(
-                startWith(this.viewValue),
                 debounceTime(this.debounce),
                 distinctUntilChanged(),
                 filter(
                     () =>
-                        !this.disabledController.disabled &&
-                        this.inputControl.valid,
+                        !this.watchedController.disabled &&
+                        !this.watchedController.readonly &&
+                        this.formGroup.valid,
                 ),
                 takeUntil(this.destroy$),
             )
@@ -132,7 +170,7 @@ export class MdSearchComponent<T, R>
         this.options.changes
             .pipe(
                 startWith(this.options),
-                tap((changes: QueryList<MdSearchOptionComponent<T, R>>) => {
+                tap((changes: QueryList<MdComboBoxOptionComponent<T, R>>) => {
                     if (changes.length) {
                         // this.state =
                     }
@@ -198,17 +236,11 @@ export class MdSearchComponent<T, R>
             .pipe(takeUntil(triggers))
             .subscribe((event) => {
                 this.onChange(event.value);
-                this.viewValue =
-                    (event.item
-                        ? this.stringify(event.item)
-                        : event.value?.toString()) ?? '';
-
-                this.inputControl.setValue('');
+                this.selectedItem = event.item;
 
                 // this.state = SearchStates.FILLING;
 
-                this.selectedOption.emit(event);
-
+                this.selectionChange.emit(event);
                 this.changeDetectorRef.markForCheck();
             });
     }

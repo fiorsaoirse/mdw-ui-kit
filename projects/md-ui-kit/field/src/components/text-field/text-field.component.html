@@ -10,6 +10,14 @@
         type="text"
         class="md-text-field-input"
     />
+
+    <!-- <div
+        *ngIf="isInputHidden"
+        class="md-text-field-input md-text-field-input-template"
+    >
+        <ng-content select="fieldContent"></ng-content>
+    </div> -->
+
     <div
         *ngIf="!isOutside"
         class="md-text-field-label-wrapper"

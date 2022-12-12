@@ -3,6 +3,7 @@ import { AccordionTestComponent } from './accordion/accordion.component';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
 import { CardTestComponent } from './card/card.component';
+import { ComboBoxTestComponent } from './combo-box/combo-box-test.component';
 import { FieldTestComponent } from './field/field-test.component';
 
 export const routes: Routes = [
@@ -25,5 +26,9 @@ export const routes: Routes = [
     {
         path: 'field',
         component: FieldTestComponent,
+    },
+    {
+        path: 'combo-box',
+        component: ComboBoxTestComponent,
     },
 ];

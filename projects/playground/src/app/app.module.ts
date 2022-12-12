@@ -15,12 +15,14 @@ import {
 } from 'md-ui-kit/common';
 import { MdFieldModule } from 'md-ui-kit/field';
 import { MdLazyObservedDirective } from 'md-ui-kit/lazy-observed';
+import { MdComboBoxModule } from 'projects/md-ui-kit/combo-box/src';
 import { AccordionTestComponent } from './accordion/accordion.component';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
 import { CardTestComponent } from './card/card.component';
+import { ComboBoxTestComponent } from './combo-box/combo-box-test.component';
 import { FieldTestComponent } from './field/field-test.component';
 
 @NgModule({
@@ -31,6 +33,7 @@ import { FieldTestComponent } from './field/field-test.component';
         ButtonTestComponent,
         CardTestComponent,
         FieldTestComponent,
+        ComboBoxTestComponent,
     ],
     imports: [
         BrowserModule,
@@ -45,6 +48,7 @@ import { FieldTestComponent } from './field/field-test.component';
         MdAccordionComponent,
         MdFieldModule,
         MdLazyObservedDirective,
+        MdComboBoxModule,
     ],
     bootstrap: [AppComponent],
     providers: [

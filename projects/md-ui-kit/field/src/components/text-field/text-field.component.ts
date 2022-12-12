@@ -2,16 +2,23 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
+    ContentChildren,
     ElementRef,
     forwardRef,
     HostBinding,
     Input,
     Provider,
+    QueryList,
     Renderer2,
     ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EMPTY_FUNCTION, MdOnDestroy, MdSize } from 'md-ui-kit/common';
+import {
+    EMPTY_FUNCTION,
+    MdContentOutletComponent,
+    MdOnDestroy,
+    MdSize,
+} from 'md-ui-kit/common';
 import { MdInput } from '../../contracts/basic-input';
 import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
 import { MdFieldState } from '../../contracts/field-state';
@@ -35,10 +42,12 @@ export class MdTextFieldComponent
     implements ControlValueAccessor, AfterViewInit
 {
     @Input() label = '';
-
     @Input() isLabelOutside = false;
 
     @ViewChild(MdInput) private readonly input?: MdPrimitiveInputDirective;
+
+    @ContentChildren(MdContentOutletComponent, { descendants: true })
+    readonly content?: QueryList<unknown>;
 
     value: string | null;
 
@@ -61,6 +70,10 @@ export class MdTextFieldComponent
 
     get isOutside(): boolean {
         return this.isLabelOutside || this.input?.size === MdSize.Small;
+    }
+
+    get isInputHidden(): boolean {
+        return !!this.content?.length;
     }
 
     constructor(
