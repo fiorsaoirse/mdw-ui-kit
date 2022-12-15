@@ -60,8 +60,8 @@ enum SearchStates {
     SHOWING = 'showing',
 }
 
-const defaultStringifyHandler = (item: unknown): string => {
-    return item ? String(item) : '';
+const defaultStringifyHandler = (item: unknown): string | null => {
+    return item ? String(item) : null;
 };
 
 const MD_COMBO_BOX_VALUE_ACCESSOR: Provider = {
@@ -87,7 +87,8 @@ export class MdComboBoxComponent<T, R>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
     @Input() label: string;
-    @Input() stringify: (item: T | null) => string = defaultStringifyHandler;
+    @Input() stringify: (item: T | null) => string | null =
+        defaultStringifyHandler;
     @Input() content: MdContent = ({ $implicit }) => String($implicit);
 
     @ViewChild(MdInput) private readonly input?: MdInput;
@@ -104,7 +105,7 @@ export class MdComboBoxComponent<T, R>
     private selectedItem?: R;
 
     public showContent: boolean;
-    public formGroup: FormGroup<{ inputControl: FormControl<string> }>;
+    public formGroup: FormGroup<{ inputControl: FormControl<string | null> }>;
 
     onChange: (_: any) => void = EMPTY_FUNCTION;
     onTouched: () => void = EMPTY_FUNCTION;
@@ -133,7 +134,6 @@ export class MdComboBoxComponent<T, R>
 
         this.formGroup = new FormGroup({
             inputControl: new FormControl(initialValue, {
-                nonNullable: true,
                 validators: [Validators.minLength(this.minSearchLength)],
             }),
         });
@@ -179,7 +179,7 @@ export class MdComboBoxComponent<T, R>
                 ),
                 takeUntil(this.destroy$),
             )
-            .subscribe((searchInputValue: string) => {
+            .subscribe((searchInputValue: string | null) => {
                 this.searchInputChange.emit(searchInputValue);
             });
 

@@ -13,5 +13,5 @@ export const isNumericString = (value: unknown): boolean => {
 };
 
 export const isNil = (value: unknown): value is null => {
-    return value === undefined && value === null;
+    return value === undefined || value === null;
 };

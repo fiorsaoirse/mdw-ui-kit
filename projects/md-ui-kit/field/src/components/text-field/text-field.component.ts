@@ -57,6 +57,7 @@ export class MdTextFieldComponent
     onTouched: () => void;
 
     public isInputFocused: boolean;
+    public isInputHidden: boolean;
 
     get isLabelRaisable(): boolean {
         return !!(
@@ -76,22 +77,13 @@ export class MdTextFieldComponent
         return this.isLabelOutside || this.input?.size === MdSize.Small;
     }
 
-    get isInputHidden(): boolean {
-        console.log(this.value);
-        console.log(this.isInputFocused);
-        console.log(this.content?.length);
-
-        return (
-            !isNil(this.value) && !this.isInputFocused && !!this.content?.length
-        );
-    }
-
     constructor(
         private readonly elementRef: ElementRef,
         private readonly renderer: Renderer2,
     ) {
         this.value = null;
         this.isInputFocused = false;
+        this.isInputHidden = false;
 
         this.onChange = EMPTY_FUNCTION;
         this.onTouched = EMPTY_FUNCTION;
@@ -111,11 +103,13 @@ export class MdTextFieldComponent
 
         this.input?.fieldStateChanged.subscribe((state) => {
             this.isInputFocused = state === MdFieldState.Focused;
+            this.checkInputVisibility();
         });
     }
 
-    writeValue(value: string): void {
+    writeValue(value: string | null): void {
         this.value = value;
+        this.checkInputVisibility();
     }
 
     registerOnChange(fn: (_: any) => void): void {
@@ -136,5 +130,9 @@ export class MdTextFieldComponent
         }
 
         this.input?.elementRef?.nativeElement.focus();
+    }
+
+    private checkInputVisibility(): void {
+        this.isInputHidden = !!this.content?.length && !isNil(this.value);
     }
 }
