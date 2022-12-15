@@ -1,11 +1,12 @@
 <div class="md-combo-box-container" [formGroup]="formGroup">
     <div class="md-combo-box-input-container">
         <md-text-field [label]="label" formControlName="inputControl">
-            <md-content-outlet
-                ngProjectAs="fieldContent"
-                [content]="content"
-                [context]="context"
-            ></md-content-outlet>
+            <div *ngIf="showContent" ngProjectAs="fieldContent">
+                <md-content-outlet
+                    [content]="content"
+                    [context]="context"
+                ></md-content-outlet>
+            </div>
         </md-text-field>
     </div>
 

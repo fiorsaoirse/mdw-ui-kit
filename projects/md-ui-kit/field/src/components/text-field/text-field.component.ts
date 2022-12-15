@@ -15,10 +15,12 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
     EMPTY_FUNCTION,
+    EMPTY_QUERY,
     MdContentOutletComponent,
     MdOnDestroy,
     MdSize,
 } from 'md-ui-kit/common';
+import { isNil } from 'md-ui-kit/utils';
 import { MdInput } from '../../contracts/basic-input';
 import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
 import { MdFieldState } from '../../contracts/field-state';
@@ -47,7 +49,7 @@ export class MdTextFieldComponent
     @ViewChild(MdInput) private readonly input?: MdPrimitiveInputDirective;
 
     @ContentChildren(MdContentOutletComponent, { descendants: true })
-    readonly content?: QueryList<unknown>;
+    readonly content?: QueryList<unknown> = EMPTY_QUERY;
 
     value: string | null;
 
@@ -65,7 +67,9 @@ export class MdTextFieldComponent
     }
 
     get isLabelRaised(): boolean {
-        return this.isLabelRaisable && (this.isInputFocused || !!this.value);
+        return (
+            this.isLabelRaisable && (this.isInputFocused || !isNil(this.value))
+        );
     }
 
     get isOutside(): boolean {
@@ -73,7 +77,13 @@ export class MdTextFieldComponent
     }
 
     get isInputHidden(): boolean {
-        return !!this.content?.length;
+        console.log(this.value);
+        console.log(this.isInputFocused);
+        console.log(this.content?.length);
+
+        return (
+            !isNil(this.value) && !this.isInputFocused && !!this.content?.length
+        );
     }
 
     constructor(

@@ -14,6 +14,7 @@ import {
     Provider,
     QueryList,
     Self,
+    ViewChild,
 } from '@angular/core';
 import {
     ControlValueAccessor,
@@ -29,6 +30,9 @@ import {
     MdOnDestroy,
     MD_DEBOUNCE_TIME,
 } from 'md-ui-kit/common';
+import { MdInput } from 'md-ui-kit/field';
+import { isNil } from 'md-ui-kit/utils';
+import { MdFieldState } from 'projects/md-ui-kit/field/src/contracts/field-state';
 import { defer, merge, Observable } from 'rxjs';
 import {
     debounceTime,
@@ -75,6 +79,9 @@ const MD_COMBO_BOX_VALUE_ACCESSOR: Provider = {
         MD_COMBO_BOX_WATCHED_PROVIDER,
         MD_COMBO_BOX_VALUE_ACCESSOR,
     ],
+    host: {
+        class: 'md-combo-box',
+    },
 })
 export class MdComboBoxComponent<T, R>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
@@ -82,6 +89,8 @@ export class MdComboBoxComponent<T, R>
     @Input() label: string;
     @Input() stringify: (item: T | null) => string = defaultStringifyHandler;
     @Input() content: MdContent = ({ $implicit }) => String($implicit);
+
+    @ViewChild(MdInput) private readonly input?: MdInput;
 
     @ContentChildren(MdComboBoxOptionComponent<T, R>)
     options: QueryList<MdComboBoxOptionComponent<T, R>> = EMPTY_QUERY;
@@ -94,6 +103,7 @@ export class MdComboBoxComponent<T, R>
     private value: T | null;
     private selectedItem?: R;
 
+    public showContent: boolean;
     public formGroup: FormGroup<{ inputControl: FormControl<string> }>;
 
     onChange: (_: any) => void = EMPTY_FUNCTION;
@@ -115,6 +125,8 @@ export class MdComboBoxComponent<T, R>
         this.value = null;
         this.label = '';
 
+        this.showContent = false;
+
         this.state = SearchStates.FILLING;
 
         const initialValue = this.stringify(this.value);
@@ -129,7 +141,12 @@ export class MdComboBoxComponent<T, R>
 
     get context(): MdComboBoxContext<T, R> | null {
         if (!this.value) {
-            return null;
+            const o = new MdComboBoxContext(null, {
+                id: 1,
+                name: 'foo',
+            });
+
+            return o as any;
         }
 
         return new MdComboBoxContext(this.value, this.selectedItem);
@@ -137,6 +154,7 @@ export class MdComboBoxComponent<T, R>
 
     writeValue(value: T): void {
         this.value = value;
+        this.showContent = !isNil(this.value);
     }
 
     registerOnChange(fn: (_: any) => void): void {
@@ -164,6 +182,12 @@ export class MdComboBoxComponent<T, R>
             .subscribe((searchInputValue: string) => {
                 this.searchInputChange.emit(searchInputValue);
             });
+
+        this.input?.fieldStateChanged
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((state: MdFieldState) => {
+                this.showContent = state !== MdFieldState.Focused;
+            });
     }
 
     public ngAfterContentInit(): void {
@@ -185,6 +209,7 @@ export class MdComboBoxComponent<T, R>
     }
 
     public clearInput(): void {
+        this.showContent = false;
         this.state = SearchStates.FILLING;
         this.searchInputChange.emit(null);
     }
@@ -237,6 +262,8 @@ export class MdComboBoxComponent<T, R>
             .subscribe((event) => {
                 this.onChange(event.value);
                 this.selectedItem = event.item;
+
+                this.showContent = true;
 
                 // this.state = SearchStates.FILLING;
 

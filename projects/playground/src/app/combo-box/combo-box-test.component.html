@@ -2,11 +2,7 @@ Value: {{ value }}
 
 <section class="playground-row">
     <div class="playground-col-33">
-        <md-combo-box
-            label="Combo-box"
-            [content]="selectionTemplate"
-            [(ngModel)]="value"
-        >
+        <md-combo-box label="Combo-box" [content]="plain" [(ngModel)]="value">
             <ng-container *ngFor="let item of data$ | async">
                 <md-combo-box-option
                     [content]="optionTemplate"
@@ -18,9 +14,29 @@ Value: {{ value }}
     </div>
 </section>
 
+<!-- <section class="playground-row">
+    <div class="playground-col-33">
+        <md-combo-box label="Combo-box" [(ngModel)]="value">
+            <ng-container *ngFor="let item of data$ | async">
+                <md-combo-box-option
+                    [content]="optionTemplate"
+                    [value]="item.id"
+                    [item]="item"
+                ></md-combo-box-option>
+            </ng-container>
+        </md-combo-box>
+    </div>
+</section> -->
+
 <button md-button (click)="update()">Update</button>
 
-<ng-template #selectionTemplate let-item="item">
+<ng-template #plain let-value let-item="selectedItem">
+    {{ value }}
+    ***
+    {{ item | json }}
+</ng-template>
+
+<ng-template #selectionTemplate let-item="selectedItem">
     <div>Id: {{ item.id }} Name: {{ item.name }}</div>
 </ng-template>
 

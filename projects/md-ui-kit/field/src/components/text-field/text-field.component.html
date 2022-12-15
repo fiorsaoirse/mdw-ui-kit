@@ -1,9 +1,11 @@
+{{ isInputHidden }}
 <div
     class="md-text-field-container"
     [ngClass]="{ 'md-text-field-container-focused': isInputFocused }"
     (click)="focusOnInput()"
 >
     <input
+        *ngIf="!isInputHidden"
         [(ngModel)]="value"
         (ngModelChange)="inputChange($event)"
         mdPrimitiveInput
@@ -11,12 +13,12 @@
         class="md-text-field-input"
     />
 
-    <!-- <div
+    <div
         *ngIf="isInputHidden"
         class="md-text-field-input md-text-field-input-template"
     >
         <ng-content select="fieldContent"></ng-content>
-    </div> -->
+    </div>
 
     <div
         *ngIf="!isOutside"
