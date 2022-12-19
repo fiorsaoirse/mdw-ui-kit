@@ -21,6 +21,7 @@ import {
     MdSize,
 } from 'md-ui-kit/common';
 import { isNil } from 'md-ui-kit/utils';
+import { Observable, ReplaySubject } from 'rxjs';
 import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
 import { MdFieldState } from '../../contracts/field-state';
 import { MdInput } from '../../public-api';
@@ -45,6 +46,9 @@ export class MdTextFieldComponent
     @Input() label = '';
     @Input() isLabelOutside = false;
 
+    /**
+     * TODO: add ability to set input from outside as content
+     */
     @ViewChild(MdInput)
     private readonly input?: MdInput;
 
@@ -58,6 +62,9 @@ export class MdTextFieldComponent
 
     public isInputFocused: boolean;
     public isInputHidden: boolean;
+
+    private readonly fieldState$$: ReplaySubject<MdFieldState>;
+    public readonly fieldState$: Observable<MdFieldState>;
 
     get isLabelRaisable(): boolean {
         return !!(
@@ -87,6 +94,9 @@ export class MdTextFieldComponent
 
         this.onChange = EMPTY_FUNCTION;
         this.onTouched = EMPTY_FUNCTION;
+
+        this.fieldState$$ = new ReplaySubject(1);
+        this.fieldState$ = this.fieldState$$.asObservable();
     }
 
     @HostBinding('class')
@@ -101,9 +111,11 @@ export class MdTextFieldComponent
     ngAfterViewInit(): void {
         this.renderer.addClass(this.elementRef.nativeElement, HOST_CLASS);
 
-        this.input?.fieldStateChanged.subscribe((state) => {
+        this.input?.fieldState$.subscribe((state) => {
             this.isInputFocused = state === MdFieldState.Focused;
             this.checkInputVisibility();
+
+            this.fieldState$$.next(state);
         });
     }
 
@@ -133,6 +145,8 @@ export class MdTextFieldComponent
     }
 
     private checkInputVisibility(): void {
+        console.log(!!this.content?.length);
+
         this.isInputHidden = !!this.content?.length && !isNil(this.value);
     }
 }

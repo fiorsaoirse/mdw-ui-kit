@@ -30,7 +30,7 @@ import {
     MdOnDestroy,
     MD_DEBOUNCE_TIME,
 } from 'md-ui-kit/common';
-import { MdInput } from 'md-ui-kit/field';
+import { MdTextFieldComponent } from 'md-ui-kit/field';
 import { isNil } from 'md-ui-kit/utils';
 import { MdFieldState } from 'projects/md-ui-kit/field/src/contracts/field-state';
 import { defer, merge, Observable } from 'rxjs';
@@ -61,6 +61,7 @@ enum SearchStates {
 }
 
 const defaultStringifyHandler = (item: unknown): string | null => {
+    console.log('default ', item);
     return item ? String(item) : null;
 };
 
@@ -91,7 +92,8 @@ export class MdComboBoxComponent<T, R>
         defaultStringifyHandler;
     @Input() content: MdContent = ({ $implicit }) => String($implicit);
 
-    @ViewChild(MdInput) private readonly input?: MdInput;
+    @ViewChild(MdTextFieldComponent)
+    private readonly textField?: MdTextFieldComponent;
 
     @ContentChildren(MdComboBoxOptionComponent<T, R>)
     options: QueryList<MdComboBoxOptionComponent<T, R>> = EMPTY_QUERY;
@@ -178,9 +180,7 @@ export class MdComboBoxComponent<T, R>
                 this.searchInputChange.emit(searchInputValue);
             });
 
-        console.log('input ', this.input);
-
-        this.input?.fieldStateChanged
+        this.textField?.fieldState$
             .pipe(takeUntil(this.destroy$))
             .subscribe((state: MdFieldState) => {
                 console.log(state);
@@ -272,15 +272,21 @@ export class MdComboBoxComponent<T, R>
         this.optionsSelectionChanges
             .pipe(takeUntil(triggers))
             .subscribe((event) => {
-                this.onChange(event.value);
+                this.value = event.value;
                 this.selectedItem = event.item;
 
                 this.showContent = !isNil(event.value);
 
+                this.formGroup.patchValue({
+                    inputControl: this.stringify(this.value),
+                });
+
                 this.state = SearchStates.NONE;
 
+                this.onChange(event.value);
+
                 this.selectionChange.emit(event);
-                this.changeDetectorRef.markForCheck();
+                this.changeDetectorRef.detectChanges();
             });
     }
 }

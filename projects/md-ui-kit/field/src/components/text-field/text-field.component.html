@@ -1,3 +1,4 @@
+<ng-container *ngIf="content?.changes | async"></ng-container>
 <div
     class="md-text-field-container"
     [ngClass]="{ 'md-text-field-container-focused': isInputFocused }"

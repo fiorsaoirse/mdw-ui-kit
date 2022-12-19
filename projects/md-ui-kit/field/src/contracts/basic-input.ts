@@ -15,18 +15,18 @@ import { MdFieldState } from './field-state';
 export abstract class MdInput {
     private readonly controller: MdInputWatchedController;
     private readonly destroy$: MdOnDestroy;
-    private readonly fieldState: ReplaySubject<MdFieldState>;
+    private readonly fieldState$$: ReplaySubject<MdFieldState>;
 
     public readonly elementRef: ElementRef;
-    public readonly fieldStateChanged: Observable<MdFieldState>;
+    public readonly fieldState$: Observable<MdFieldState>;
 
     constructor() {
         this.controller = inject(MD_INPUT_WATCHED_CONTROLLER);
         this.destroy$ = inject(MdOnDestroy);
         this.elementRef = inject(ElementRef);
 
-        this.fieldState = new ReplaySubject(1);
-        this.fieldStateChanged = this.fieldState.asObservable();
+        this.fieldState$$ = new ReplaySubject(1);
+        this.fieldState$ = this.fieldState$$.asObservable();
 
         let initialState;
 
@@ -38,22 +38,22 @@ export abstract class MdInput {
             initialState = MdFieldState.None;
         }
 
-        this.fieldState.next(initialState);
+        this.fieldState$$.next(initialState);
 
         this.controller.changes$
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
                 if (this.controller.isDisabled) {
-                    this.fieldState.next(MdFieldState.Disabled);
+                    this.fieldState$$.next(MdFieldState.Disabled);
                     return;
                 }
 
                 if (this.controller.isReadonly) {
-                    this.fieldState.next(MdFieldState.Readonly);
+                    this.fieldState$$.next(MdFieldState.Readonly);
                     return;
                 }
 
-                this.fieldState.next(MdFieldState.None);
+                this.fieldState$$.next(MdFieldState.None);
             });
     }
 
@@ -64,9 +64,7 @@ export abstract class MdInput {
             ? MdFieldState.Focused
             : MdFieldState.None;
 
-        console.log('nextState ', nextState);
-
-        this.fieldState.next(nextState);
+        this.fieldState$$.next(nextState);
     }
 
     public get size(): MdSize {

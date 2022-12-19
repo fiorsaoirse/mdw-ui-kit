@@ -34,8 +34,9 @@ Value: {{ value }}
     </div>
 </section> -->
 
-<ng-template #selectionTemplate let-item="item">
-    <div>Id: {{ item.id }} Name: {{ item.name }}</div>
+<ng-template #selectionTemplate let-value let-item="item">
+    <!-- <div>Id: {{ item.id }} Name: {{ item.name }}</div> -->
+    {{ value }}
 </ng-template>
 
 <ng-template #optionTemplate let-item="item">
