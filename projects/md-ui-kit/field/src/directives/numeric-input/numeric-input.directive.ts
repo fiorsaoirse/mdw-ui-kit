@@ -1,6 +1,5 @@
 import {
     Directive,
-    ElementRef,
     forwardRef,
     HostListener,
     Input,
@@ -8,6 +7,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EMPTY_FUNCTION } from 'md-ui-kit/common';
+import { MdInput } from 'md-ui-kit/field';
 import { coerceNumericInput, isNil, isString } from 'md-ui-kit/utils';
 import { NAVIGATION_KEYS } from '../../constants/navigation-keys';
 import { NUMBER_KEYS } from '../../constants/number-keys';
@@ -22,9 +22,18 @@ const MD_NUMERIC_INPUT_VALUE_ACCESSOR: Provider = {
 
 @Directive({
     selector: 'input[mdNumericInput]',
-    providers: [MD_NUMERIC_INPUT_VALUE_ACCESSOR],
+    providers: [
+        MD_NUMERIC_INPUT_VALUE_ACCESSOR,
+        {
+            provide: MdInput,
+            useExisting: forwardRef(() => MdNumericInputDirective),
+        },
+    ],
 })
-export class MdNumericInputDirective implements ControlValueAccessor {
+export class MdNumericInputDirective
+    extends MdInput
+    implements ControlValueAccessor
+{
     private _value: string | number | null;
 
     set value(x: string | number | null) {
@@ -49,7 +58,9 @@ export class MdNumericInputDirective implements ControlValueAccessor {
     onChange: (_: any) => void;
     onTouched: () => void;
 
-    constructor(private readonly elementRef: ElementRef) {
+    constructor() {
+        super();
+
         this._value = null;
         this.mode = 'string';
         this.allowNegative = true;

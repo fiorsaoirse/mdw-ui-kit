@@ -1,6 +1,6 @@
 export enum MdFieldState {
-    Filling = 'filling',
-    Focused = 'focused',
     Disabled = 'disabled',
+    Focused = 'focused',
     Readonly = 'readonly',
+    None = 'none',
 }

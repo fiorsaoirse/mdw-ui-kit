@@ -55,7 +55,7 @@ import { MdComboBoxContext, MdSelectionEvent } from './combo-box.contract';
 export { MD_DEBOUNCE_TIME } from 'md-ui-kit/common';
 
 enum SearchStates {
-    FILLING = 'filling',
+    NONE = 'none',
     SEARCHING = 'searching',
     SHOWING = 'showing',
 }
@@ -128,7 +128,7 @@ export class MdComboBoxComponent<T, R>
 
         this.showContent = false;
 
-        this.state = SearchStates.FILLING;
+        this.state = SearchStates.NONE;
 
         const initialValue = this.stringify(this.value);
 
@@ -141,12 +141,7 @@ export class MdComboBoxComponent<T, R>
 
     get context(): MdComboBoxContext<T, R> | null {
         if (!this.value) {
-            const o = new MdComboBoxContext(null, {
-                id: 1,
-                name: 'foo',
-            });
-
-            return o as any;
+            return null;
         }
 
         return new MdComboBoxContext(this.value, this.selectedItem);
@@ -172,10 +167,10 @@ export class MdComboBoxComponent<T, R>
                 debounceTime(this.debounce),
                 distinctUntilChanged(),
                 filter(
-                    () =>
+                    (value: string | null) =>
                         !this.watchedController.disabled &&
                         !this.watchedController.readonly &&
-                        this.formGroup.valid,
+                        (!value || this.formGroup.valid),
                 ),
                 takeUntil(this.destroy$),
             )
@@ -183,10 +178,26 @@ export class MdComboBoxComponent<T, R>
                 this.searchInputChange.emit(searchInputValue);
             });
 
+        console.log('input ', this.input);
+
         this.input?.fieldStateChanged
             .pipe(takeUntil(this.destroy$))
             .subscribe((state: MdFieldState) => {
+                console.log(state);
+
                 this.showContent = state !== MdFieldState.Focused;
+
+                console.log(this.value);
+
+                if (isNil(this.value)) {
+                    console.log('show list or reset');
+
+                    if (state === MdFieldState.Focused) {
+                        this.state = SearchStates.SHOWING;
+                    } else {
+                        this.state = SearchStates.NONE;
+                    }
+                }
             });
     }
 
@@ -195,9 +206,10 @@ export class MdComboBoxComponent<T, R>
             .pipe(
                 startWith(this.options),
                 tap((changes: QueryList<MdComboBoxOptionComponent<T, R>>) => {
-                    if (changes.length) {
-                        // this.state =
-                    }
+                    this.state =
+                        changes.length && this.formGroup.touched
+                            ? SearchStates.SHOWING
+                            : SearchStates.NONE;
                 }),
                 takeUntil(this.destroy$),
             )
@@ -210,12 +222,12 @@ export class MdComboBoxComponent<T, R>
 
     public clearInput(): void {
         this.showContent = false;
-        this.state = SearchStates.FILLING;
+        this.state = SearchStates.NONE;
         this.searchInputChange.emit(null);
     }
 
     public get isInFillingState(): boolean {
-        return this.state === SearchStates.FILLING;
+        return this.state === SearchStates.NONE;
     }
 
     public get isInSearchingState(): boolean {
@@ -263,9 +275,9 @@ export class MdComboBoxComponent<T, R>
                 this.onChange(event.value);
                 this.selectedItem = event.item;
 
-                this.showContent = true;
+                this.showContent = !isNil(event.value);
 
-                // this.state = SearchStates.FILLING;
+                this.state = SearchStates.NONE;
 
                 this.selectionChange.emit(event);
                 this.changeDetectorRef.markForCheck();

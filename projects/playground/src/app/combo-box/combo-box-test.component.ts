@@ -6,6 +6,14 @@ interface IItem {
     name: string;
 }
 
+const ITEMS: Array<IItem> = [
+    { id: 1, name: 'One' },
+    { id: 2, name: 'Two' },
+    { id: 3, name: 'Three' },
+    { id: 4, name: 'Four' },
+    { id: 5, name: 'Five' },
+];
+
 @Component({
     templateUrl: './combo-box-test.component.html',
 })
@@ -16,21 +24,23 @@ export class ComboBoxTestComponent {
     value: number | null;
 
     constructor() {
-        this.data$$ = new BehaviorSubject([] as ReadonlyArray<IItem>);
+        this.data$$ = new BehaviorSubject(ITEMS as ReadonlyArray<IItem>);
         this.data$ = this.data$$.asObservable();
 
         this.value = null;
     }
 
-    update(): void {
-        const items: Array<IItem> = [
-            { id: 1, name: 'One' },
-            { id: 2, name: 'Two' },
-            { id: 3, name: 'Three' },
-            { id: 4, name: 'Four' },
-            { id: 5, name: 'Five' },
-        ];
+    search(value: string | null): void {
+        console.log('search for: ', value);
 
-        this.data$$.next(items);
+        const filtered = !!value
+            ? ITEMS.filter((item) => item.name.match(value))
+            : ITEMS;
+
+        this.data$$.next(filtered);
+    }
+
+    selected(item: any): void {
+        console.log('selected: ', item);
     }
 }

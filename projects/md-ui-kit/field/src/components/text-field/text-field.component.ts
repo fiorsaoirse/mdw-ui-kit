@@ -21,10 +21,9 @@ import {
     MdSize,
 } from 'md-ui-kit/common';
 import { isNil } from 'md-ui-kit/utils';
-import { MdInput } from '../../contracts/basic-input';
 import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
 import { MdFieldState } from '../../contracts/field-state';
-import { MdPrimitiveInputDirective } from '../../directives/primitive-input/primitive-input.directive';
+import { MdInput } from '../../public-api';
 
 const TEXT_FIELD_PROVIDER: Provider = {
     provide: NG_VALUE_ACCESSOR,
@@ -46,7 +45,8 @@ export class MdTextFieldComponent
     @Input() label = '';
     @Input() isLabelOutside = false;
 
-    @ViewChild(MdInput) private readonly input?: MdPrimitiveInputDirective;
+    @ViewChild(MdInput)
+    private readonly input?: MdInput;
 
     @ContentChildren(MdContentOutletComponent, { descendants: true })
     readonly content?: QueryList<unknown> = EMPTY_QUERY;
