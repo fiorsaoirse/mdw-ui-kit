@@ -1,0 +1,39 @@
+<ng-container *ngIf="content?.changes | async"></ng-container>
+<div
+    class="md-text-field-container"
+    [ngClass]="{ 'md-text-field-container-focused': isInputFocused }"
+    (click)="focusOnInput()"
+>
+    <input
+        *ngIf="!isInputHidden"
+        [(ngModel)]="value"
+        (ngModelChange)="inputChange($event)"
+        mdPrimitiveInput
+        type="text"
+        class="md-text-field-input"
+    />
+
+    <div
+        *ngIf="isInputHidden"
+        class="md-text-field-input md-text-field-input-template"
+    >
+        <ng-content select="fieldContent"></ng-content>
+    </div>
+
+    <div
+        *ngIf="!isOutside"
+        class="md-text-field-label-wrapper"
+        [ngClass]="{ 'md-text-field-label-wrapper-focused': isInputFocused }"
+    >
+        <ng-template *ngTemplateOutlet="labelTemplate"></ng-template>
+    </div>
+</div>
+
+<ng-template #labelTemplate>
+    <label
+        class="md-text-field-label"
+        [ngClass]="{ 'md-text-field-label-raised': isLabelRaised }"
+    >
+        {{ label }}
+    </label>
+</ng-template>

@@ -1,0 +1,26 @@
+<section class="playground-row">
+    <ng-container
+        *ngFor="let cat of cats$ | async; let last = last; trackBy: trackBy"
+    >
+        <ng-container *ngIf="last">
+            <div mdLazyObserved (reached)="loadMore$.next()"></div>
+        </ng-container>
+        <md-card
+            [content]="cardBody"
+            [context]="cat.context"
+            basis="calc(33% - 10px)"
+        >
+            <div class="md-card-title">{{ cat.breed }}</div>
+            <div class="md-card-subtitle">{{ cat.temperament }}</div>
+            <div class="md-card-footer">
+                <button md-button (click)="sayHi()">Click me!</button>
+            </div>
+        </md-card>
+    </ng-container>
+</section>
+
+<ng-template #cardBody let-cat>
+    <div>
+        <img class="image" [src]="cat" />
+    </div>
+</ng-template>

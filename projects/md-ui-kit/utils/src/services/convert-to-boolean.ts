@@ -8,5 +8,9 @@ export const convertToBoolean = (
         return false;
     }
 
+    if (value === '') {
+        return true;
+    }
+
     return !!(value ?? defaultValue);
 };

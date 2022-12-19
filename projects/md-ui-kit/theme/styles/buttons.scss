@@ -1,0 +1,139 @@
+@use 'sass:map';
+
+@import 'mixins';
+
+@mixin button() {
+    background-image: none;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--md-border-radius-small);
+    max-width: fit-content;
+    height: var(--md-point-large);
+}
+
+.md-button {
+    @include typography-medium();
+    @include button();
+
+    &-content {
+        @include flex-row();
+    }
+
+    &-small {
+        @include typography-small();
+        padding: 0.25rem 0.5rem;
+        height: calc(var(--md-point-large) * 0.85);
+    }
+
+    &-large {
+        @include typography-large();
+        padding: 0.5rem 1rem;
+        height: calc(var(--md-point-large) * 1.25);
+    }
+
+    &:focus,
+    &:disabled,
+    &[disabled] {
+        outline: none;
+    }
+
+    &:disabled,
+    &[disabled] {
+        cursor: default;
+    }
+}
+
+.md-button-icon {
+    cursor: pointer;
+
+    height: var(--md-icon-medium);
+    width: var(--md-icon-medium);
+
+    &-large {
+        height: var(--md-icon-large);
+        width: var(--md-icon-large);
+    }
+}
+
+.md-svg-wrapper {
+    display: flex;
+}
+
+@mixin button-style($class, $definitions) {
+    $background: map.get($definitions, 'background');
+    $border: map.get($definitions, 'border');
+    $content: map.get($definitions, 'content');
+
+    .md-button-#{$class} {
+        background-color: $background;
+        border-color: $border;
+        color: $content;
+
+        &:hover:not(:disabled) {
+            background-color: darken($background, 5%);
+            border-color: darken($border, 5%);
+        }
+
+        &:disabled,
+        &[disabled],
+        &-disabled {
+            background-color: lighten($background, 25%);
+            border-color: lighten($border, 25%);
+        }
+    }
+}
+
+@include button-style(
+    'blue',
+    (
+        'background': $md-blue,
+        'border': $md-blue,
+        'content': var(--md-white),
+    )
+);
+
+@include button-style(
+    'orange',
+    (
+        'background': $md-orange,
+        'border': $md-orange,
+        'content': var(--md-white),
+    )
+);
+
+@include button-style(
+    'red',
+    (
+        'background': $md-red,
+        'border': $md-red,
+        'content': var(--md-white),
+    )
+);
+
+@include button-style(
+    'green',
+    (
+        'background': $md-green,
+        'border': $md-green,
+        'content': var(--md-white),
+    )
+);
+
+@include button-style(
+    'yellow',
+    (
+        'background': $md-yellow,
+        'border': $md-yellow,
+        'content': var(--md-black),
+    )
+);

@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     ElementRef,
     HostBinding,
@@ -10,8 +11,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 
-import { MdOnDestroy } from 'md-ui-kit/common';
-import { MdButtonColor } from 'md-ui-kit/contracts';
+import { MdCommonModule, MdOnDestroy } from 'md-ui-kit/common';
 import { extractProperty } from 'md-ui-kit/utils';
 import { takeUntil } from 'rxjs';
 import {
@@ -19,13 +19,17 @@ import {
     MD_BUTTON_WATCHED_CONTROLLER,
     MD_BUTTON_WATCHED_PROVIDER,
 } from '../button.controller';
+import { MdButtonColor } from '../contracts/button-color';
 
 const BUTTON_CLASS = 'md-button';
 
 @Component({
     selector: 'button[md-button], a[md-button]',
     templateUrl: './button.component.html',
+    standalone: true,
+    imports: [MdCommonModule],
     providers: [MD_BUTTON_WATCHED_PROVIDER, MdOnDestroy],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdButtonComponent implements OnInit, OnChanges {
     private static getColorCss(value: string): string {

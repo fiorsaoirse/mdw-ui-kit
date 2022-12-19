@@ -1,27 +1,65 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { MdBadgeModule } from 'md-ui-kit/badge';
-import { MdButtonModule } from 'md-ui-kit/button';
-import { MdCommonModule } from 'md-ui-kit/common';
+import { MdAccordionComponent } from 'md-ui-kit/accordion';
+import { MdBadgeComponent } from 'md-ui-kit/badge';
+import { MdButtonComponent } from 'md-ui-kit/button';
+import { MdCardComponent } from 'md-ui-kit/card';
+import {
+    MdCommonModule,
+    MD_ARROW_ICON_URL,
+    MD_CLOSE_ICON_URL,
+} from 'md-ui-kit/common';
+import { MdFieldModule } from 'md-ui-kit/field';
+import { MdLazyObservedDirective } from 'md-ui-kit/lazy-observed';
+import { MdComboBoxModule } from 'projects/md-ui-kit/combo-box/src';
+import { AccordionTestComponent } from './accordion/accordion.component';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
+import { CardTestComponent } from './card/card.component';
+import { ComboBoxTestComponent } from './combo-box/combo-box-test.component';
+import { FieldTestComponent } from './field/field-test.component';
 
 @NgModule({
-    declarations: [AppComponent, BadgeTestComponent, ButtonTestComponent],
+    declarations: [
+        AppComponent,
+        AccordionTestComponent,
+        BadgeTestComponent,
+        ButtonTestComponent,
+        CardTestComponent,
+        FieldTestComponent,
+        ComboBoxTestComponent,
+    ],
     imports: [
         BrowserModule,
         CommonModule,
+        HttpClientModule,
         FormsModule,
         RouterModule.forRoot(routes),
         MdCommonModule,
-        MdBadgeModule,
-        MdButtonModule,
+        MdBadgeComponent,
+        MdButtonComponent,
+        MdCardComponent,
+        MdAccordionComponent,
+        MdFieldModule,
+        MdLazyObservedDirective,
+        MdComboBoxModule,
     ],
     bootstrap: [AppComponent],
+    providers: [
+        {
+            provide: MD_CLOSE_ICON_URL,
+            useValue: '/assets/icons/close.svg',
+        },
+        {
+            provide: MD_ARROW_ICON_URL,
+            useValue: '/assets/icons/chevron.svg',
+        },
+    ],
 })
 export class AppModule {}

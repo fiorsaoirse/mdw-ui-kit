@@ -1,0 +1,3 @@
+<ng-container *ngIf="innerHtml$ | async as iconSrc">
+    <div class="md-svg-wrapper" *ngIf="iconSrc" [innerHtml]="iconSrc"></div>
+</ng-container>

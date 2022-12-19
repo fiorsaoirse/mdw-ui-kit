@@ -2,10 +2,14 @@
     <div class="md-badge-content">
         <ng-content></ng-content>
     </div>
-    <div *ngIf="removable">
-        <button class="md-button-icon" (click)="onRemove()">
-            <!-- TODO: add svg icon  -->
-            X
-        </button>
-    </div>
+    <ng-container *ngIf="removable">
+        <div
+            class="md-button-icon md-button-icon-{{ size }}"
+            (click)="onRemove()"
+        >
+            <ng-container *ngIf="closeIconUrl">
+                <md-svg [url]="closeIconUrl"></md-svg>
+            </ng-container>
+        </div>
+    </ng-container>
 </div>

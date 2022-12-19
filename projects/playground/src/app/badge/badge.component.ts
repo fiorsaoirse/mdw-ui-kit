@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MdBadgeColor, MdSize } from 'md-ui-kit/contracts';
+import { MdBadgeColor } from 'md-ui-kit/badge';
+import { MdSize } from 'md-ui-kit/common';
 
 @Component({
     templateUrl: './badge.component.html',
@@ -31,7 +32,11 @@ export class BadgeTestComponent {
         return this.colors[this.pointer];
     }
 
-    switchColor() {
+    switchColor(): void {
         this.pointer = (this.pointer + 1) % this.colors.length;
+    }
+
+    log(): void {
+        console.log('removed!');
     }
 }

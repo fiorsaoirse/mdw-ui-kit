@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     ElementRef,
     EventEmitter,
@@ -7,6 +8,7 @@ import {
     Input,
     OnChanges,
     OnInit,
+    Optional,
     Output,
     Renderer2,
     SimpleChanges,
@@ -17,15 +19,25 @@ import {
     MD_BADGE_WATCHED_PROVIDER,
 } from '../badge.controller';
 
-import { MdBadgeColor } from 'md-ui-kit/contracts';
+import { BrowserModule } from '@angular/platform-browser';
+import {
+    MdCommonModule,
+    MdOnDestroy,
+    MD_CLOSE_ICON_URL,
+} from 'md-ui-kit/common';
 import { extractProperty } from 'md-ui-kit/utils';
+import { MdSvgComponent } from 'projects/md-ui-kit/svg/src';
+import { MdBadgeColor } from '../contracts/badge-color';
 
 const BADGE_CLASS = 'md-badge';
 
 @Component({
     selector: 'md-badge',
     templateUrl: './badge.component.html',
-    providers: [MD_BADGE_WATCHED_PROVIDER],
+    providers: [MD_BADGE_WATCHED_PROVIDER, MdOnDestroy],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [BrowserModule, MdCommonModule, MdSvgComponent],
+    standalone: true,
 })
 export class MdBadgeComponent implements OnInit, OnChanges {
     private static getColorCss(value: string): string {
@@ -41,6 +53,9 @@ export class MdBadgeComponent implements OnInit, OnChanges {
         private readonly elementRef: ElementRef,
         @Inject(MD_BADGE_WATCHED_CONTROLLER)
         private readonly controller: MdBadgeWatchedController,
+        @Optional()
+        @Inject(MD_CLOSE_ICON_URL)
+        readonly closeIconUrl?: string,
     ) {
         this.remove = new EventEmitter();
     }
@@ -75,6 +90,10 @@ export class MdBadgeComponent implements OnInit, OnChanges {
         return {
             [`md-badge-${this.controller.size}`]: true,
         };
+    }
+
+    public get size(): string {
+        return this.controller.size;
     }
 
     public get removable(): boolean {

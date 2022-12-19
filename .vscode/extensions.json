@@ -1,5 +1,8 @@
 {
   "recommendations": [
-    "angular.ng-template"
+    "angular.ng-template",
+    "editorconfig.editorconfig",
+    "stylelint.vscode-stylelint",
+    "esbenp.prettier-vscode"
   ]
 }

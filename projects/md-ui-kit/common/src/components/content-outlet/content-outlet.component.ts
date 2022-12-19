@@ -1,7 +1,6 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    Injector,
     Input,
     TemplateRef,
 } from '@angular/core';
@@ -9,57 +8,40 @@ import {
     MdComponentContent,
     MdContent,
     MdContentHandler,
-    MdContentType,
     MdContext,
     MdPrimitive,
-} from 'md-ui-kit/contracts';
-import { isNumber, isString } from 'md-ui-kit/utils';
+} from 'md-ui-kit/common';
+import { isNil, isNumber, isString } from 'md-ui-kit/utils';
 
 // TODO: maybe it could be better to implement this as directive
 
 @Component({
-    selector: '[md-content-outlet]',
+    selector: 'md-content-outlet',
     templateUrl: './content-outlet.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MdContentOutletComponent {
-    @Input() content: MdContent;
-    @Input() context: MdContext | null;
+export class MdContentOutletComponent<T> {
+    @Input() content: MdContent<T>;
+    @Input() context?: MdContext<T> | null;
 
-    constructor(readonly injector: Injector) {
+    constructor() {
         this.content = null;
         this.context = null;
     }
 
-    get type(): MdContentType {
-        if (this.content instanceof MdComponentContent) {
-            return 'component';
-        }
-
-        if (this.content instanceof TemplateRef) {
-            return 'template';
-        }
-
-        if (isFunction(this.content)) {
-            return 'function';
-        }
-
-        if (isNumber(this.content) || isString(this.content)) {
-            return 'primitive';
-        }
-
-        throw new Error('Unknown type of content!');
+    isPrimitive<T>(value: unknown): value is MdPrimitive {
+        return isString(value) || isNumber(value) || isNil(value);
     }
 
-    public applyContent(): MdPrimitive | never {
-        if (isFunction(this.content)) {
-            return this.content(this.context);
-        }
-
-        throw new Error('Content is not a callable!');
+    isFunction<T>(value: unknown): value is MdContentHandler<T> {
+        return !isNil(value) && typeof value === 'function';
     }
-}
 
-function isFunction<T>(value: unknown): value is MdContentHandler<T> {
-    return typeof value === 'function';
+    isTemplate<T>(value: unknown): value is TemplateRef<T> {
+        return !isNil(value) && value instanceof TemplateRef;
+    }
+
+    isComponent<T>(value: unknown): value is MdComponentContent<T> {
+        return !isNil(value) && value instanceof MdComponentContent;
+    }
 }

@@ -1,14 +1,36 @@
-@import '../../md-ui-kit/styling/index.scss';
+@import '../../md-ui-kit/theme/index.scss';
 
 section {
     display: flex;
     gap: 10px;
+    position: relative;
+    width: 100%;
 
     &.playground-row {
         flex-direction: row;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
     }
 
     &.playground-column {
         flex-direction: column;
     }
+
+    .playground-col-33 {
+        display: flex;
+        flex-basis: 33%;
+    }
 }
+
+.app-navigation {
+    @include flex-row();
+    margin-bottom: 30px;
+}
+
+.image {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+@include horizontal-gap('app-navigation', 'app-navigation-item', 5px);

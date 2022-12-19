@@ -1,0 +1,19 @@
+<div class="md-combo-box-container" [formGroup]="formGroup">
+    <div class="md-combo-box-input-container">
+        <md-text-field [label]="label" formControlName="inputControl">
+            <div *ngIf="showContent" ngProjectAs="fieldContent">
+                <md-content-outlet
+                    [content]="content"
+                    [context]="context"
+                ></md-content-outlet>
+            </div>
+        </md-text-field>
+    </div>
+
+    <!-- <ng-container *ngIf="isInShowingState"> -->
+    <ng-container>
+        <div class="md-combo-box-options-container">
+            <ng-content></ng-content>
+        </div>
+    </ng-container>
+</div>

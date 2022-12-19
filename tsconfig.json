@@ -26,6 +26,9 @@
       "dom"
     ],
     "paths": {
+      "md-ui-kit/accordion": [
+        "projects/md-ui-kit/accordion/src"
+      ],
       "md-ui-kit/badge": [
         "projects/md-ui-kit/badge/src"
       ],
@@ -38,8 +41,14 @@
       "md-ui-kit/common": [
         "projects/md-ui-kit/common/src"
       ],
-      "md-ui-kit/contracts": [
-        "projects/md-ui-kit/contracts/src"
+      "md-ui-kit/field": [
+        "projects/md-ui-kit/field/src"
+      ],
+      "md-ui-kit/tabs": [
+        "projects/md-ui-kit/tabs/src"
+      ],
+      "md-ui-kit/lazy-observed": [
+        "projects/md-ui-kit/lazy-observed/src"
       ],
       "md-ui-kit/utils": [
         "projects/md-ui-kit/utils/src"
@@ -47,14 +56,17 @@
     },
   },
   "include": [
-    "projects/**/*.ts"
+    "projects/**/*.ts",
   ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   },
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
+    "require": [
+      "tsconfig-paths/register"
+    ]
   }
 }

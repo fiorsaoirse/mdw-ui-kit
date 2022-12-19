@@ -1,8 +1,16 @@
 import { Routes } from '@angular/router';
+import { AccordionTestComponent } from './accordion/accordion.component';
 import { BadgeTestComponent } from './badge/badge.component';
 import { ButtonTestComponent } from './button/button.component';
+import { CardTestComponent } from './card/card.component';
+import { ComboBoxTestComponent } from './combo-box/combo-box-test.component';
+import { FieldTestComponent } from './field/field-test.component';
 
 export const routes: Routes = [
+    {
+        path: 'accordion',
+        component: AccordionTestComponent,
+    },
     {
         path: 'badge',
         component: BadgeTestComponent,
@@ -10,5 +18,17 @@ export const routes: Routes = [
     {
         path: 'button',
         component: ButtonTestComponent,
+    },
+    {
+        path: 'card',
+        component: CardTestComponent,
+    },
+    {
+        path: 'field',
+        component: FieldTestComponent,
+    },
+    {
+        path: 'combo-box',
+        component: ComboBoxTestComponent,
     },
 ];
