@@ -14,9 +14,13 @@
         </md-text-field>
     </div>
 
-    <ng-container *ngIf="open">
+    <ng-container *ngIf="open$ | async">
         <div class="md-combo-box-options-container">
-            <ng-content></ng-content>
+            <ng-template *ngTemplateOutlet="options"></ng-template>
         </div>
     </ng-container>
 </div>
+
+<ng-template #options>
+    <ng-content></ng-content>
+</ng-template>

@@ -3,10 +3,12 @@ import {
     MdDisabledControllerDirective,
     MdOnDestroy,
     MdReadonlyControllerDirective,
+    MdRemovableControllerDirective,
     MdSize,
     MdSizeControllerDirective,
     MD_DISABLED,
     MD_READONLY,
+    MD_REMOVABLE,
     MD_SIZE,
     noop,
 } from 'md-ui-kit/common';
@@ -19,6 +21,7 @@ const mdTextFieldControllerFactory = (
         MdDisabledControllerDirective,
         MdReadonlyControllerDirective,
         MdSizeControllerDirective,
+        MdRemovableControllerDirective,
     ]
 ): MdTextFieldWatchedController => {
     const changes$ = merge(...controllers.map(({ changes$ }) => changes$)).pipe(
@@ -42,7 +45,14 @@ export const MD_TEXTFIELD_WATCHED_CONTROLLER =
 export const MD_TEXTFIELD_WATCHED_PROVIDER: Provider = {
     provide: MD_TEXTFIELD_WATCHED_CONTROLLER,
     useFactory: mdTextFieldControllerFactory,
-    deps: [ChangeDetectorRef, MdOnDestroy, MD_DISABLED, MD_READONLY, MD_SIZE],
+    deps: [
+        ChangeDetectorRef,
+        MdOnDestroy,
+        MD_DISABLED,
+        MD_READONLY,
+        MD_SIZE,
+        MD_REMOVABLE,
+    ],
 };
 
 export class MdTextFieldWatchedController {
@@ -51,6 +61,7 @@ export class MdTextFieldWatchedController {
         private readonly disabledController: MdDisabledControllerDirective,
         private readonly readonlyController: MdReadonlyControllerDirective,
         private readonly sizeController: MdSizeControllerDirective,
+        private readonly removableController: MdRemovableControllerDirective,
     ) {}
 
     public get isDisabled(): boolean {
@@ -63,5 +74,9 @@ export class MdTextFieldWatchedController {
 
     public get size(): MdSize {
         return this.sizeController.size;
+    }
+
+    public get removable(): boolean {
+        return this.removableController.removable;
     }
 }

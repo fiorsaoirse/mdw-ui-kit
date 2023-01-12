@@ -65,11 +65,15 @@
             padding: 0 var(--md-padding-medium);
             margin: 0 $medium-margin;
 
-            &-template {
+            &-template > * {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
             }
         }
 
-        .md-text-field-label-wrapper {
+        .md-text-field-content {
             @include flex-row();
             position: relative;
             width: 100%;
@@ -77,33 +81,25 @@
             flex: 1;
             box-sizing: border-box;
             align-items: center;
+        }
+
+        .md-text-field-label {
+            flex-grow: 1;
             overflow: hidden;
             color: var(--md-blue-03);
+            transition-property: transform;
+            transition-duration: 0.3s;
+            transition-timing-function: ease-in-out;
 
             &-focused {
                 color: var(--md-blue-01);
             }
 
-            .md-text-field-label-raised {
-                color: var(--md-blue-01);
-            }
-        }
-
-        .md-text-field-label {
-            transition-property: transform;
-            transition-duration: 0.3s;
-            transition-timing-function: ease-in-out;
-
             &-raised {
+                color: var(--md-blue-01);
                 transform: translateY(-0.5rem);
             }
         }
-    }
-
-    .md-text-field-label-wrapper-focused .md-text-field-label,
-    .md-text-field-label-raised {
-        box-shadow: none;
-        outline-color: var(--md-primary);
     }
 
     &-disabled {
@@ -125,7 +121,7 @@
             padding-top: calc(var(--md-padding-small) * 1.2);
         }
 
-        .md-text-field-label-wrapper {
+        .md-text-field-content {
             padding: 0 var(--md-padding-small);
             font-size: var(--md-placeholder-small);
         }
@@ -139,10 +135,10 @@
 
         .md-text-field-input {
             padding: 0 var(--md-padding-medium);
-            padding-top: calc(var(--md-padding-medium) * 1.3);
+            padding-top: calc(var(--md-padding-medium) * 1.8);
         }
 
-        .md-text-field-label-wrapper {
+        .md-text-field-content {
             padding: 0 var(--md-padding-medium);
             font-size: var(--md-placeholder-medium);
 
@@ -173,7 +169,7 @@
             padding-top: calc(var(--md-padding-large) * 1.2);
         }
 
-        .md-text-field-label-wrapper {
+        .md-text-field-content {
             padding: 0 var(--md-padding-large);
             font-size: var(--md-placeholder-large);
         }

@@ -9,7 +9,7 @@ export class MdSvgService {
     private readonly requestCache: Map<string, Observable<string>>;
 
     constructor(
-        private readonly domSanitazer: DomSanitizer,
+        private readonly domSanitizer: DomSanitizer,
         private readonly httpClient: HttpClient,
     ) {
         this.cache = new Map();
@@ -19,29 +19,20 @@ export class MdSvgService {
     public getByUrl(url: string): Observable<SafeHtml> {
         const safeUrl = url;
 
-        // const safeUrl = this.domSanitazer.sanitize(
-        //     SecurityContext.RESOURCE_URL,
-        //     url,
-        // );
-
-        // if (!safeUrl) {
-        //     throw new Error('Url can not be sanitazed!');
-        // }
-
         if (this.cache.has(safeUrl)) {
             return of(this.cache.get(safeUrl)!);
         }
 
         return this.loadByUrl(safeUrl).pipe(
-            map((svgSource: string) => this.sanitaze(svgSource)),
+            map((svgSource: string) => this.sanitize(svgSource)),
             tap((safeSource: SafeHtml) => {
                 this.cache.set(safeUrl, safeSource);
             }),
         );
     }
 
-    private sanitaze(svgSource: string): SafeHtml {
-        return this.domSanitazer.bypassSecurityTrustHtml(svgSource);
+    private sanitize(svgSource: string): SafeHtml {
+        return this.domSanitizer.bypassSecurityTrustHtml(svgSource);
     }
 
     private loadByUrl(url: string): Observable<string> {

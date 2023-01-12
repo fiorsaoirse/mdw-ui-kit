@@ -8,6 +8,7 @@ import {
     HostBinding,
     Inject,
     Input,
+    Optional,
     Provider,
     QueryList,
     Renderer2,
@@ -20,6 +21,7 @@ import {
     MdContentOutletComponent,
     MdOnDestroy,
     MdSize,
+    MD_CLOSE_ICON_URL,
 } from 'md-ui-kit/common';
 import { isNil } from 'md-ui-kit/utils';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -91,7 +93,30 @@ export class MdTextFieldComponent
     }
 
     get isInputHidden(): boolean {
-        return !!this.content?.length && !isNil(this.value);
+        return (
+            !this.isInputFocused && !!this.content?.length && !isNil(this.value)
+        );
+    }
+
+    get nativeFocusableElement(): HTMLInputElement | null {
+        if (!this.input) {
+            return null;
+        }
+
+        const { nativeElement } = this.input.elementRef;
+
+        return nativeElement as HTMLInputElement | null;
+    }
+
+    get hasClearButton(): boolean {
+        return (
+            !(this.controller.isDisabled || this.controller.isReadonly) &&
+            this.controller.removable
+        );
+    }
+
+    get size(): MdSize {
+        return this.controller.size;
     }
 
     constructor(
@@ -99,6 +124,9 @@ export class MdTextFieldComponent
         private readonly renderer: Renderer2,
         @Inject(MD_TEXTFIELD_WATCHED_CONTROLLER)
         private readonly controller: MdTextFieldWatchedController,
+        @Optional()
+        @Inject(MD_CLOSE_ICON_URL)
+        readonly closeIconUrl?: string,
     ) {
         this.value = null;
         this.isInputFocused = false;
@@ -142,7 +170,7 @@ export class MdTextFieldComponent
     }
 
     inputChange(value: string): void {
-        this.onChange(value);
+        this.updateValue(value);
     }
 
     focusOnInput(): void {
@@ -150,6 +178,28 @@ export class MdTextFieldComponent
             return;
         }
 
+        this.isInputFocused = true;
+
         this.input?.elementRef?.nativeElement.focus();
+    }
+
+    clear(event: MouseEvent): void {
+        if (!this.value) {
+            return;
+        }
+
+        this.updateValue(null);
+
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    private updateValue(value: string | null): void {
+        this.value = value;
+        this.onChange(value);
+
+        if (this.nativeFocusableElement) {
+            this.nativeFocusableElement.value = value ?? '';
+        }
     }
 }

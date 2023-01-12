@@ -23,6 +23,9 @@ import { MdSvgService } from '../services/svg.service';
     standalone: true,
     imports: [BrowserModule, MdCommonModule],
     providers: [MdOnDestroy],
+    host: {
+        class: 'md-svg',
+    },
 })
 export class MdSvgComponent {
     private readonly urlChanges$: ReplaySubject<void>;
@@ -40,7 +43,7 @@ export class MdSvgComponent {
     }
 
     constructor(
-        private readonly domSanitazer: DomSanitizer,
+        private readonly domSanitizer: DomSanitizer,
         private readonly svgService: MdSvgService,
         private readonly destroy$: MdOnDestroy,
     ) {
@@ -52,7 +55,7 @@ export class MdSvgComponent {
             switchMap(() => this.svgService.getByUrl(this.src)),
             catchError((error) => {
                 console.error(error);
-                return of(this.domSanitazer.bypassSecurityTrustHtml(''));
+                return of(this.domSanitizer.bypassSecurityTrustHtml(''));
             }),
             startWith(this.src),
             takeUntil(this.destroy$),
