@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MD_MIN_COMBO_BOX_SEARCH_LENGTH } from 'projects/md-ui-kit/combo-box/src';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 interface IItem {
@@ -16,6 +17,7 @@ const ITEMS: Array<IItem> = [
 
 @Component({
     templateUrl: './combo-box-test.component.html',
+    providers: [{ provide: MD_MIN_COMBO_BOX_SEARCH_LENGTH, useValue: 1 }],
 })
 export class ComboBoxTestComponent {
     private data$$: BehaviorSubject<ReadonlyArray<IItem>>;
@@ -34,7 +36,7 @@ export class ComboBoxTestComponent {
         console.log('search for: ', value);
 
         const filtered = !!value
-            ? ITEMS.filter((item) => item.name.match(value))
+            ? ITEMS.filter((item) => item.name.match(new RegExp(value, 'i')))
             : ITEMS;
 
         this.data$$.next(filtered);
@@ -42,5 +44,9 @@ export class ComboBoxTestComponent {
 
     selected(item: any): void {
         console.log('selected: ', item);
+    }
+
+    log(): void {
+        console.log('current value: ', this.value);
     }
 }

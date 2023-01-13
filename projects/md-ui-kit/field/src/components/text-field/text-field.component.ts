@@ -111,7 +111,8 @@ export class MdTextFieldComponent
     get hasClearButton(): boolean {
         return (
             !(this.controller.isDisabled || this.controller.isReadonly) &&
-            this.controller.removable
+            this.controller.removable &&
+            !isNil(this.value)
         );
     }
 
@@ -158,7 +159,7 @@ export class MdTextFieldComponent
     }
 
     writeValue(value: string | null): void {
-        this.value = value;
+        this.updateValue(value);
     }
 
     registerOnChange(fn: (_: any) => void): void {

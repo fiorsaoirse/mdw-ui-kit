@@ -42,7 +42,6 @@ import {
     startWith,
     switchMap,
     takeUntil,
-    tap,
 } from 'rxjs/operators';
 import {
     MdComboBoxWatchedController,
@@ -54,8 +53,8 @@ import { MdComboBoxOptionComponent } from './combo-box-option/combo-box-option.c
 import { MdComboBoxContext, MdSelectionEvent } from './combo-box.contract';
 export { MD_DEBOUNCE_TIME } from 'md-ui-kit/common';
 
-const defaultStringifyHandler = (item: unknown): string | null => {
-    return item ? String(item) : null;
+const defaultStringifyHandler = (item: unknown): string => {
+    return item ? String(item) : '';
 };
 
 const MD_COMBO_BOX_VALUE_ACCESSOR: Provider = {
@@ -81,8 +80,7 @@ export class MdComboBoxComponent<T, R>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
     @Input() label: string;
-    @Input() stringify: (item: T | null) => string | null =
-        defaultStringifyHandler;
+    @Input() stringify: (item: T | null) => string = defaultStringifyHandler;
     @Input() content: MdContent = ({ $implicit }) => String($implicit);
 
     @ViewChild(MdTextFieldComponent)
@@ -144,18 +142,16 @@ export class MdComboBoxComponent<T, R>
         return new MdComboBoxContext(this.value, this.selectedItem);
     }
 
-    writeValue(value: T): void {
-        console.log('write value ', value);
-
+    public writeValue(value: T): void {
         this.value = value;
         this.showContent = !isNil(this.value);
     }
 
-    registerOnChange(fn: (_: any) => void): void {
+    public registerOnChange(fn: (_: any) => void): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => void): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
@@ -174,39 +170,29 @@ export class MdComboBoxComponent<T, R>
                 takeUntil(this.destroy$),
             )
             .subscribe((searchInputValue: string | null) => {
+                if (!searchInputValue) {
+                    this.clear();
+                }
+
                 this.searchInputChange.emit(searchInputValue);
             });
 
         this.textField?.fieldState$
             .pipe(takeUntil(this.destroy$))
             .subscribe((state: MdFieldState) => {
-                // this.showContent = state !== MdFieldState.Focused;
-
                 setTimeout(() => {
-                    console.log('timeout');
-                    console.log(state);
+                    const current = this.open$$.getValue();
 
-                    if (state !== MdFieldState.Focused) {
-                        this.open$$.next(false);
+                    if (current && state !== MdFieldState.Focused) {
+                        this.closeDropdown();
                     }
-                }, 800);
+                }, 300);
             });
     }
 
     public ngAfterContentInit(): void {
         this.options.changes
-            .pipe(
-                startWith(this.options),
-                tap((changes: QueryList<MdComboBoxOptionComponent<T, R>>) => {
-                    console.log('options changes ', changes);
-
-                    // this.state =
-                    //     changes.length && this.formGroup.touched
-                    //         ? ComboBoxState.Open
-                    //         : ComboBoxState.Closed;
-                }),
-                takeUntil(this.destroy$),
-            )
+            .pipe(startWith(this.options), takeUntil(this.destroy$))
             .subscribe(() => {
                 // After options initializing we have to observe the stream of option selection events
                 this.trackCurrentOptionsSelections();
@@ -214,15 +200,20 @@ export class MdComboBoxComponent<T, R>
             });
     }
 
-    public clearInput(): void {
-        this.showContent = false;
-        this.closeDropdown();
-        this.searchInputChange.emit(null);
-    }
-
     public toggle(): void {
         const current = this.open$$.getValue();
         this.open$$.next(!current);
+    }
+
+    private clear(): void {
+        this.value = null;
+        this.selectedItem = undefined;
+
+        this.showContent = false;
+        this.formGroup.reset();
+
+        this.onChange(this.value);
+        this.closeDropdown();
     }
 
     /**
@@ -259,13 +250,8 @@ export class MdComboBoxComponent<T, R>
         this.optionsSelectionChanges
             .pipe(takeUntil(triggers))
             .subscribe((event) => {
-                console.log('CLICK');
-
                 this.value = event.value;
                 this.selectedItem = event.item;
-
-                console.log(this.value);
-                console.log(this.selectedItem);
 
                 this.showContent = !isNil(event.value);
 

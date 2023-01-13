@@ -10,6 +10,9 @@
         mdPrimitiveInput
         type="text"
         class="md-text-field-input"
+        [ngClass]="{
+            'md-text-field-input-hidden': isInputHidden
+        }"
     />
 
     <div
