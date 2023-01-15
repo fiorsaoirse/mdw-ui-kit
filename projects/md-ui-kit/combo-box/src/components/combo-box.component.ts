@@ -53,8 +53,8 @@ import { MdComboBoxOptionComponent } from './combo-box-option/combo-box-option.c
 import { MdComboBoxContext, MdSelectionEvent } from './combo-box.contract';
 export { MD_DEBOUNCE_TIME } from 'md-ui-kit/common';
 
-const defaultStringifyHandler = (item: unknown): string => {
-    return item ? String(item) : '';
+const defaultStringifyHandler = (item: unknown): string | null => {
+    return item ? String(item) : null;
 };
 
 const MD_COMBO_BOX_VALUE_ACCESSOR: Provider = {
@@ -80,7 +80,8 @@ export class MdComboBoxComponent<T, R>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
     @Input() label: string;
-    @Input() stringify: (item: T | null) => string = defaultStringifyHandler;
+    @Input() stringify: (item: T | null) => string | null =
+        defaultStringifyHandler;
     @Input() content: MdContent = ({ $implicit }) => String($implicit);
 
     @ViewChild(MdTextFieldComponent)

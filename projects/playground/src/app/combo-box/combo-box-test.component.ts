@@ -33,10 +33,13 @@ export class ComboBoxTestComponent {
     }
 
     search(value: string | null): void {
-        console.log('search for: ', value);
-
         const filtered = !!value
-            ? ITEMS.filter((item) => item.name.match(new RegExp(value, 'i')))
+            ? ITEMS.filter((item) => {
+                  return (
+                      item.name.match(new RegExp(value, 'i')) ||
+                      item.id.toString() === value
+                  );
+              })
             : ITEMS;
 
         this.data$$.next(filtered);
