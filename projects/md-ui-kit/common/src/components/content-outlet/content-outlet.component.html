@@ -18,8 +18,8 @@
 <ng-container *ngIf="content | mdGuardPipe: isComponent as componentContent">
     <ng-container
         *ngComponentOutlet="
-            componentContent;
-            injector: componentContent?.createInjectorWithContext()
+            componentContent.component;
+            injector: componentContent?.createInjectorWithContext(context)
         "
     ></ng-container>
 </ng-container>

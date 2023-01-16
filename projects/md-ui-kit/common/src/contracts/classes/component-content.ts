@@ -7,13 +7,13 @@ export class MdComponentContent<T> {
         private readonly injector: Injector | null = null,
     ) {}
 
-    createInjectorWithContext<C>(injector: Injector, useValue?: C): Injector {
+    createInjectorWithContext<C>(context?: C, injector?: Injector): Injector {
         return Injector.create({
             parent: this.injector || injector,
             providers: [
                 {
                     provide: MD_CONTEXT,
-                    useValue,
+                    useValue: context,
                 },
             ],
         });

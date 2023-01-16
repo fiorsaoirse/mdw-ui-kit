@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, inject } from '@angular/core';
-import { MdOnDestroy, MdSize } from 'md-ui-kit/common';
+import { MdOnDestroy } from 'md-ui-kit/common';
 import { BooleanInput, coerceBooleanInput } from 'md-ui-kit/utils';
 import { Observable, ReplaySubject, takeUntil } from 'rxjs';
 import {
@@ -65,10 +65,6 @@ export abstract class MdInput {
             : MdFieldState.None;
 
         this.fieldState$$.next(nextState);
-    }
-
-    public get size(): MdSize {
-        return this.controller.size;
     }
 
     public get isReadonly(): boolean {

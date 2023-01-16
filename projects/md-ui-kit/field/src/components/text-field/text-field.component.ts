@@ -6,7 +6,9 @@ import {
     ElementRef,
     forwardRef,
     HostBinding,
+    Inject,
     Input,
+    Optional,
     Provider,
     QueryList,
     Renderer2,
@@ -19,12 +21,17 @@ import {
     MdContentOutletComponent,
     MdOnDestroy,
     MdSize,
+    MD_CLOSE_ICON_URL,
 } from 'md-ui-kit/common';
 import { isNil } from 'md-ui-kit/utils';
 import { Observable, ReplaySubject } from 'rxjs';
-import { MD_INPUT_WATCHED_PROVIDER } from '../../contracts/basic-input-controller';
 import { MdFieldState } from '../../contracts/field-state';
 import { MdInput } from '../../public-api';
+import {
+    MdTextFieldWatchedController,
+    MD_TEXTFIELD_WATCHED_CONTROLLER,
+    MD_TEXTFIELD_WATCHED_PROVIDER,
+} from './text-field.controller';
 
 const TEXT_FIELD_PROVIDER: Provider = {
     provide: NG_VALUE_ACCESSOR,
@@ -37,7 +44,11 @@ const HOST_CLASS = 'md-text-field';
 @Component({
     selector: 'md-text-field',
     templateUrl: './text-field.component.html',
-    providers: [TEXT_FIELD_PROVIDER, MD_INPUT_WATCHED_PROVIDER, MdOnDestroy],
+    providers: [
+        TEXT_FIELD_PROVIDER,
+        MD_TEXTFIELD_WATCHED_PROVIDER,
+        MdOnDestroy,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdTextFieldComponent
@@ -61,7 +72,6 @@ export class MdTextFieldComponent
     onTouched: () => void;
 
     public isInputFocused: boolean;
-    public isInputHidden: boolean;
 
     private readonly fieldState$$: ReplaySubject<MdFieldState>;
     public readonly fieldState$: Observable<MdFieldState>;
@@ -69,28 +79,58 @@ export class MdTextFieldComponent
     get isLabelRaisable(): boolean {
         return !!(
             !this.isLabelOutside &&
-            this.input?.size &&
-            this.input?.size !== MdSize.Small
+            this.controller?.size &&
+            this.controller?.size !== MdSize.Small
         );
     }
 
     get isLabelRaised(): boolean {
-        return (
-            this.isLabelRaisable && (this.isInputFocused || !isNil(this.value))
-        );
+        return this.isLabelRaisable && (this.isInputFocused || !!this.value);
     }
 
     get isOutside(): boolean {
-        return this.isLabelOutside || this.input?.size === MdSize.Small;
+        return this.isLabelOutside || this.controller?.size === MdSize.Small;
+    }
+
+    get isInputHidden(): boolean {
+        return (
+            !this.isInputFocused && !!this.content?.length && !isNil(this.value)
+        );
+    }
+
+    get nativeFocusableElement(): HTMLInputElement | null {
+        if (!this.input) {
+            return null;
+        }
+
+        const { nativeElement } = this.input.elementRef;
+
+        return nativeElement as HTMLInputElement | null;
+    }
+
+    get hasClearButton(): boolean {
+        return (
+            !(this.controller.isDisabled || this.controller.isReadonly) &&
+            this.controller.removable &&
+            !isNil(this.value)
+        );
+    }
+
+    get size(): MdSize {
+        return this.controller.size;
     }
 
     constructor(
         private readonly elementRef: ElementRef,
         private readonly renderer: Renderer2,
+        @Inject(MD_TEXTFIELD_WATCHED_CONTROLLER)
+        private readonly controller: MdTextFieldWatchedController,
+        @Optional()
+        @Inject(MD_CLOSE_ICON_URL)
+        readonly closeIconUrl?: string,
     ) {
         this.value = null;
         this.isInputFocused = false;
-        this.isInputHidden = false;
 
         this.onChange = EMPTY_FUNCTION;
         this.onTouched = EMPTY_FUNCTION;
@@ -102,9 +142,9 @@ export class MdTextFieldComponent
     @HostBinding('class')
     private get classes() {
         return {
-            [`${HOST_CLASS}-${this.input?.size}`]: true,
-            [`${HOST_CLASS}-disabled`]: this.input?.isDisabled,
-            [`${HOST_CLASS}-readonly`]: this.input?.isReadonly,
+            [`${HOST_CLASS}-${this.controller.size}`]: true,
+            [`${HOST_CLASS}-disabled`]: this.controller.isDisabled,
+            [`${HOST_CLASS}-readonly`]: this.controller.isReadonly,
         };
     }
 
@@ -113,15 +153,13 @@ export class MdTextFieldComponent
 
         this.input?.fieldState$.subscribe((state) => {
             this.isInputFocused = state === MdFieldState.Focused;
-            this.checkInputVisibility();
 
             this.fieldState$$.next(state);
         });
     }
 
     writeValue(value: string | null): void {
-        this.value = value;
-        this.checkInputVisibility();
+        this.updateValue(value);
     }
 
     registerOnChange(fn: (_: any) => void): void {
@@ -133,7 +171,7 @@ export class MdTextFieldComponent
     }
 
     inputChange(value: string): void {
-        this.onChange(value);
+        this.updateValue(value);
     }
 
     focusOnInput(): void {
@@ -141,12 +179,28 @@ export class MdTextFieldComponent
             return;
         }
 
+        this.isInputFocused = true;
+
         this.input?.elementRef?.nativeElement.focus();
     }
 
-    private checkInputVisibility(): void {
-        console.log(!!this.content?.length);
+    clear(event: MouseEvent): void {
+        if (!this.value) {
+            return;
+        }
 
-        this.isInputHidden = !!this.content?.length && !isNil(this.value);
+        this.updateValue(null);
+
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    private updateValue(value: string | null): void {
+        this.value = value;
+        this.onChange(value);
+
+        if (this.nativeFocusableElement) {
+            this.nativeFocusableElement.value = value ?? '';
+        }
     }
 }

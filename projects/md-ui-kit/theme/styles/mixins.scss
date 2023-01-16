@@ -66,3 +66,16 @@
     display: flex;
     flex-direction: column;
 }
+
+@mixin md-icon {
+    display: flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    color: var(--md-blue-03);
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    pointer-events: none;
+}

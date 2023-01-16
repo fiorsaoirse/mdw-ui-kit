@@ -33,7 +33,7 @@ import {
 import { MdTextFieldComponent } from 'md-ui-kit/field';
 import { isNil } from 'md-ui-kit/utils';
 import { MdFieldState } from 'projects/md-ui-kit/field/src/contracts/field-state';
-import { defer, merge, Observable } from 'rxjs';
+import { BehaviorSubject, defer, merge, Observable } from 'rxjs';
 import {
     debounceTime,
     distinctUntilChanged,
@@ -42,7 +42,6 @@ import {
     startWith,
     switchMap,
     takeUntil,
-    tap,
 } from 'rxjs/operators';
 import {
     MdComboBoxWatchedController,
@@ -54,14 +53,7 @@ import { MdComboBoxOptionComponent } from './combo-box-option/combo-box-option.c
 import { MdComboBoxContext, MdSelectionEvent } from './combo-box.contract';
 export { MD_DEBOUNCE_TIME } from 'md-ui-kit/common';
 
-enum SearchStates {
-    NONE = 'none',
-    SEARCHING = 'searching',
-    SHOWING = 'showing',
-}
-
 const defaultStringifyHandler = (item: unknown): string | null => {
-    console.log('default ', item);
     return item ? String(item) : null;
 };
 
@@ -101,10 +93,11 @@ export class MdComboBoxComponent<T, R>
     @Output() selectionChange: EventEmitter<MdSelectionEvent<T, R>>;
     @Output() searchInputChange: EventEmitter<string | null>;
 
-    private state: SearchStates;
-
     private value: T | null;
     private selectedItem?: R;
+
+    private open$$: BehaviorSubject<boolean>;
+    public open$: Observable<boolean>;
 
     public showContent: boolean;
     public formGroup: FormGroup<{ inputControl: FormControl<string | null> }>;
@@ -130,7 +123,8 @@ export class MdComboBoxComponent<T, R>
 
         this.showContent = false;
 
-        this.state = SearchStates.NONE;
+        this.open$$ = new BehaviorSubject(false);
+        this.open$ = this.open$$.asObservable();
 
         const initialValue = this.stringify(this.value);
 
@@ -149,16 +143,16 @@ export class MdComboBoxComponent<T, R>
         return new MdComboBoxContext(this.value, this.selectedItem);
     }
 
-    writeValue(value: T): void {
+    public writeValue(value: T): void {
         this.value = value;
         this.showContent = !isNil(this.value);
     }
 
-    registerOnChange(fn: (_: any) => void): void {
+    public registerOnChange(fn: (_: any) => void): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => void): void {
+    public registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
@@ -177,42 +171,29 @@ export class MdComboBoxComponent<T, R>
                 takeUntil(this.destroy$),
             )
             .subscribe((searchInputValue: string | null) => {
+                if (!searchInputValue) {
+                    this.clear();
+                }
+
                 this.searchInputChange.emit(searchInputValue);
             });
 
         this.textField?.fieldState$
             .pipe(takeUntil(this.destroy$))
             .subscribe((state: MdFieldState) => {
-                console.log(state);
+                setTimeout(() => {
+                    const current = this.open$$.getValue();
 
-                this.showContent = state !== MdFieldState.Focused;
-
-                console.log(this.value);
-
-                if (isNil(this.value)) {
-                    console.log('show list or reset');
-
-                    if (state === MdFieldState.Focused) {
-                        this.state = SearchStates.SHOWING;
-                    } else {
-                        this.state = SearchStates.NONE;
+                    if (current && state !== MdFieldState.Focused) {
+                        this.closeDropdown();
                     }
-                }
+                }, 300);
             });
     }
 
     public ngAfterContentInit(): void {
         this.options.changes
-            .pipe(
-                startWith(this.options),
-                tap((changes: QueryList<MdComboBoxOptionComponent<T, R>>) => {
-                    this.state =
-                        changes.length && this.formGroup.touched
-                            ? SearchStates.SHOWING
-                            : SearchStates.NONE;
-                }),
-                takeUntil(this.destroy$),
-            )
+            .pipe(startWith(this.options), takeUntil(this.destroy$))
             .subscribe(() => {
                 // After options initializing we have to observe the stream of option selection events
                 this.trackCurrentOptionsSelections();
@@ -220,22 +201,20 @@ export class MdComboBoxComponent<T, R>
             });
     }
 
-    public clearInput(): void {
+    public toggle(): void {
+        const current = this.open$$.getValue();
+        this.open$$.next(!current);
+    }
+
+    private clear(): void {
+        this.value = null;
+        this.selectedItem = undefined;
+
         this.showContent = false;
-        this.state = SearchStates.NONE;
-        this.searchInputChange.emit(null);
-    }
+        this.formGroup.reset();
 
-    public get isInFillingState(): boolean {
-        return this.state === SearchStates.NONE;
-    }
-
-    public get isInSearchingState(): boolean {
-        return this.state === SearchStates.SEARCHING;
-    }
-
-    public get isInShowingState(): boolean {
-        return this.state === SearchStates.SHOWING;
+        this.onChange(this.value);
+        this.closeDropdown();
     }
 
     /**
@@ -248,7 +227,7 @@ export class MdComboBoxComponent<T, R>
             if (options) {
                 return merge(
                     ...options.map((option) => option.selected.asObservable()),
-                ).pipe(first());
+                );
             }
 
             /*
@@ -281,12 +260,15 @@ export class MdComboBoxComponent<T, R>
                     inputControl: this.stringify(this.value),
                 });
 
-                this.state = SearchStates.NONE;
-
+                this.closeDropdown();
                 this.onChange(event.value);
 
                 this.selectionChange.emit(event);
                 this.changeDetectorRef.detectChanges();
             });
+    }
+
+    private closeDropdown(): void {
+        this.open$$.next(false);
     }
 }

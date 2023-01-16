@@ -16,17 +16,32 @@
 
     &-small {
         @include typography-small();
+
+        .md-badge-container {
+            gap: var(--md-point-xsmall);
+        }
+    }
+
+    &-medium {
+        @include typography-medium();
+
+        .md-badge-container {
+            gap: var(--md-point-small);
+        }
     }
 
     &-large {
         @include typography-large();
+
+        .md-badge-container {
+            gap: var(--md-point-medium);
+        }
     }
 
     &-container {
         @include flex-row();
         align-items: center;
         justify-content: space-between;
-        gap: var(--md-point-xsmall);
     }
 }
 

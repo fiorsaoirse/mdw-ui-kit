@@ -5,12 +5,14 @@
     (click)="focusOnInput()"
 >
     <input
-        *ngIf="!isInputHidden"
-        [(ngModel)]="value"
+        [ngModel]="value"
         (ngModelChange)="inputChange($event)"
         mdPrimitiveInput
         type="text"
         class="md-text-field-input"
+        [ngClass]="{
+            'md-text-field-input-hidden': isInputHidden
+        }"
     />
 
     <div
@@ -20,19 +22,30 @@
         <ng-content select="fieldContent"></ng-content>
     </div>
 
-    <div
-        *ngIf="!isOutside"
-        class="md-text-field-label-wrapper"
-        [ngClass]="{ 'md-text-field-label-wrapper-focused': isInputFocused }"
-    >
-        <ng-template *ngTemplateOutlet="labelTemplate"></ng-template>
+    <div class="md-text-field-content">
+        <ng-container *ngIf="!isOutside">
+            <ng-template *ngTemplateOutlet="labelTemplate"></ng-template>
+        </ng-container>
+
+        <div
+            *ngIf="hasClearButton"
+            class="md-clickable-icon"
+            (click)="clear($event)"
+        >
+            <ng-container *ngIf="closeIconUrl">
+                <md-svg [url]="closeIconUrl"></md-svg>
+            </ng-container>
+        </div>
     </div>
 </div>
 
 <ng-template #labelTemplate>
     <label
         class="md-text-field-label"
-        [ngClass]="{ 'md-text-field-label-raised': isLabelRaised }"
+        [ngClass]="{
+            'md-text-field-label-raised': isLabelRaised,
+            'md-text-field-label-focused': isInputFocused
+        }"
     >
         {{ label }}
     </label>
