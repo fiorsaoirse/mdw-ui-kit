@@ -19,6 +19,7 @@ export {
     MdSizeControllerDirective,
     MD_SIZE,
 } from './controllers/size/size.controller';
+export { MdGuardPipe } from './pipes';
 export { MdOnDestroy } from './services/destroy/destroy.service';
 export { noop } from './services/rxjs/noop';
 export * from './tokens';

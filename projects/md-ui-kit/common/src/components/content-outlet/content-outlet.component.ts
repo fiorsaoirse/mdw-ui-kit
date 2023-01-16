@@ -4,14 +4,14 @@ import {
     Input,
     TemplateRef,
 } from '@angular/core';
+import { isNil, isNumber, isString } from 'md-ui-kit/utils';
 import {
     MdComponentContent,
     MdContent,
     MdContentHandler,
     MdContext,
     MdPrimitive,
-} from 'md-ui-kit/common';
-import { isNil, isNumber, isString } from 'md-ui-kit/utils';
+} from '../../contracts';
 
 // TODO: maybe it could be better to implement this as directive
 
