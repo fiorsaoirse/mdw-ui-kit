@@ -1,9 +1,6 @@
 <div class="md-tab-header">
     <ng-container *ngFor="let tab of tabs">
-        <div
-            class="md-tab-header"
-            [ngClass]="{ 'md-tab-header-active': isActive(tab) }"
-        >
+        <div>
             <md-content-outlet
                 [content]="tab.headerContent"
                 [context]="getContext(tab)"

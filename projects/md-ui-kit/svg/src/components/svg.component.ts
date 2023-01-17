@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import {
-    BrowserModule,
-    DomSanitizer,
-    SafeHtml,
-} from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MdCommonModule, MdOnDestroy } from 'md-ui-kit/common';
 import {
     catchError,
@@ -21,7 +17,7 @@ import { MdSvgService } from '../services/svg.service';
     templateUrl: './svg.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [BrowserModule, MdCommonModule],
+    imports: [MdCommonModule],
     providers: [MdOnDestroy],
     host: {
         class: 'md-svg',

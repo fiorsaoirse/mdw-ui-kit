@@ -25,8 +25,8 @@ import {
     MdOnDestroy,
     MD_CLOSE_ICON_URL,
 } from 'md-ui-kit/common';
+import { MdSvgComponent } from 'md-ui-kit/svg';
 import { extractProperty } from 'md-ui-kit/utils';
-import { MdSvgComponent } from 'projects/md-ui-kit/svg/src';
 import { MdBadgeColor } from '../contracts/badge-color';
 
 const BADGE_CLASS = 'md-badge';

@@ -52,6 +52,9 @@
       ],
       "md-ui-kit/utils": [
         "projects/md-ui-kit/utils/src"
+      ],
+      "md-ui-kit/svg": [
+        "projects/md-ui-kit/svg/src"
       ]
     },
   },

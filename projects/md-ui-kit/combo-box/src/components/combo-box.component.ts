@@ -30,9 +30,8 @@ import {
     MdOnDestroy,
     MD_DEBOUNCE_TIME,
 } from 'md-ui-kit/common';
-import { MdTextFieldComponent } from 'md-ui-kit/field';
+import { MdFieldState, MdTextFieldComponent } from 'md-ui-kit/field';
 import { isNil } from 'md-ui-kit/utils';
-import { MdFieldState } from 'projects/md-ui-kit/field/src/contracts/field-state';
 import { BehaviorSubject, defer, merge, Observable } from 'rxjs';
 import {
     debounceTime,
