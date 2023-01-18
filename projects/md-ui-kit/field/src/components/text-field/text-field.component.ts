@@ -112,7 +112,7 @@ export class MdTextFieldComponent
         return (
             !(this.controller.isDisabled || this.controller.isReadonly) &&
             this.controller.removable &&
-            !isNil(this.value)
+            !this.value
         );
     }
 

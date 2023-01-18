@@ -1,31 +1,21 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "ESNext",
-    "moduleResolution": "node",
     "strict": true,
-    "skipLibCheck": true,
-    "alwaysStrict": true,
-    "noImplicitThis": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "ESNext",
-      "dom"
-    ],
     "paths": {
+      "md-ui-kit": [
+        "projects/md-ui-kit/src"
+      ],
+      "md-ui-kit/*": [
+        "projects/md-ui-kit/src/*"
+      ],
       "md-ui-kit/accordion": [
         "projects/md-ui-kit/accordion/src"
       ],
@@ -44,6 +34,9 @@
       "md-ui-kit/field": [
         "projects/md-ui-kit/field/src"
       ],
+      "md-ui-kit/svg": [
+        "projects/md-ui-kit/svg/src"
+      ],
       "md-ui-kit/tabs": [
         "projects/md-ui-kit/tabs/src"
       ],
@@ -52,24 +45,27 @@
       ],
       "md-ui-kit/utils": [
         "projects/md-ui-kit/utils/src"
-      ],
-      "md-ui-kit/svg": [
-        "projects/md-ui-kit/svg/src"
       ]
     },
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
   },
-  "include": [
-    "projects/**/*.ts",
-  ],
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
+    "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  },
-  "ts-node": {
-    "require": [
-      "tsconfig-paths/register"
-    ]
   }
 }
