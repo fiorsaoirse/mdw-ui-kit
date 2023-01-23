@@ -6,6 +6,7 @@
     "start": "ng serve playground",
     "build": "ng build md-ui-kit",
     "build-watch": "ng build md-ui-kit --watch",
+    "pack-lib": "cd dist && npm pack",
     "test": "ng test md-ui-kit",
     "lint": "eslint \"projects/md-ui-kit/**/*.{html,ts}",
     "lint:fix": "eslint \"projects/md-ui-kit/**/*.{html,ts} --fix",
