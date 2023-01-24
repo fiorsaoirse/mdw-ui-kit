@@ -1,4 +1,4 @@
-@import '../../md-ui-kit/theme/index.scss';
+@import "../../md-ui-kit/theme/index";
 
 section {
     display: flex;
@@ -7,10 +7,9 @@ section {
     width: 100%;
 
     &.playground-row {
-        flex-direction: row;
         margin-top: 20px;
         margin-bottom: 20px;
-        flex-wrap: wrap;
+        flex-flow: row wrap;
     }
 
     &.playground-column {
@@ -24,7 +23,8 @@ section {
 }
 
 .app-navigation {
-    @include flex-row();
+    @include flex-row;
+
     margin-bottom: 30px;
 }
 
@@ -33,4 +33,4 @@ section {
     max-height: 200px;
 }
 
-@include horizontal-gap('app-navigation', 'app-navigation-item', 5px);
+@include horizontal-gap("app-navigation", "app-navigation-item", 5px);

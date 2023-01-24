@@ -1,13 +1,13 @@
 {
-  "name": "md-ui-kit/svg",
-  "ngPackage": {
-    "lib": {
-      "entryFile": "src/index.ts",
-      "umdModuleIds": {}
+    "name": "md-ui-kit/svg",
+    "ngPackage": {
+        "lib": {
+            "entryFile": "src/index.ts",
+            "umdModuleIds": {}
+        }
+    },
+    "peerDependencies": {
+        "@angular/common": ">=15.0.0",
+        "@angular/core": ">=15.0.0"
     }
-  },
-  "peerDependencies": {
-    "@angular/common": ">=15.0.0",
-    "@angular/core": ">=15.0.0"
-  }
 }

@@ -1,12 +1,12 @@
-<ng-container *ngIf="content | mdGuardPipe: isPrimitive as plainContent">
+<ng-container *ngIf="content | mdGuardPipe : isPrimitive as plainContent">
     {{ plainContent }}
 </ng-container>
 
-<ng-container *ngIf="content | mdGuardPipe: isFunction as callableContent">
+<ng-container *ngIf="content | mdGuardPipe : isFunction as callableContent">
     {{ callableContent(context) }}
 </ng-container>
 
-<ng-container *ngIf="content | mdGuardPipe: isTemplate as templateContent">
+<ng-container *ngIf="content | mdGuardPipe : isTemplate as templateContent">
     <ng-container
         *ngTemplateOutlet="
             templateContent;
@@ -15,7 +15,7 @@
     ></ng-container>
 </ng-container>
 
-<ng-container *ngIf="content | mdGuardPipe: isComponent as componentContent">
+<ng-container *ngIf="content | mdGuardPipe : isComponent as componentContent">
     <ng-container
         *ngComponentOutlet="
             componentContent.component;

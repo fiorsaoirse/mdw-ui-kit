@@ -19,34 +19,29 @@
     --md-yellow: #ffda6a;
     --md-orange: #ff5507;
     --md-red: #fa2c55;
-    --md-white: #ffffff;
-    --md-black: #000000;
+    --md-white: #fff;
+    --md-black: #000;
     --md-black-025: #00000020;
     --md-black-065: #000000a6;
     --md-blue-01: #1b1f3b;
-    --md-blue-02: rgba(27, 31, 59, 0.65);
-    --md-blue-03: rgba(27, 31, 59, 0.4);
-
-    --md-focus: rgba(0, 0, 0, 0.04);
+    --md-blue-02: rgb(27 31 59 / 65%);
+    --md-blue-03: rgb(27 31 59 / 40%);
+    --md-focus: rgb(0 0 0 / 4%);
 
     /* typography */
 
     --md-typo-xsmall-font-size: 10px;
     --md-typo-xsmall-font-weight: 500;
     --md-typo-xsmall-line-height: 12px;
-
     --md-typo-small-font-size: 12px;
     --md-typo-small-font-weight: 500;
     --md-typo-small-line-height: 14px;
-
     --md-typo-medium-font-size: 14px;
     --md-typo-medium-font-weight: 500;
     --md-typo-medium-line-height: 16px;
-
     --md-typo-large-font-size: 16px;
     --md-typo-large-font-weight: 600;
     --md-typo-large-line-height: 24px;
-
     --md-typo-xlarge-font-size: 20px;
     --md-typo-xlarge-font-weight: 600;
     --md-typo-xlarge-line-height: 32px;
@@ -83,5 +78,5 @@ $md-green: #28a745;
 $md-yellow: #ffda6a;
 $md-orange: #ff5507;
 $md-red: #fa2c55;
-$md-white: #ffffff;
-$md-black: #000000;
+$md-white: #fff;
+$md-black: #000;
