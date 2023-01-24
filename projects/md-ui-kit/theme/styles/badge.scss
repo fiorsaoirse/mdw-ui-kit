@@ -1,5 +1,5 @@
-@use "sass:map";
-@import "mixins";
+// @use 'sass:map';
+@import 'mixins';
 
 .md-badge {
     @include typography-medium;
@@ -46,9 +46,9 @@
 }
 
 @mixin badge-style($class, $definitions) {
-    $background: map.get($definitions, "background");
-    $border: map.get($definitions, "border");
-    $color: map.get($definitions, "content");
+    $background: map.get($definitions, 'background');
+    $border: map.get($definitions, 'border');
+    $color: map.get($definitions, 'content');
 
     .md-badge-#{$class} {
         background-color: $background;
@@ -58,34 +58,34 @@
 }
 
 @include badge-style(
-    "blue",
+    'blue',
     (
-        "background": var(--md-blue),
-        "border": var(--md-blue),
-        "content": var(--md-white),
+        'background': var(--md-blue),
+        'border': var(--md-blue),
+        'content': var(--md-white),
     )
 );
 @include badge-style(
-    "gray",
+    'gray',
     (
-        "background": var(--md-gray),
-        "border": var(--md-gray),
-        "content": var(--md-white),
+        'background': var(--md-gray),
+        'border': var(--md-gray),
+        'content': var(--md-white),
     )
 );
 @include badge-style(
-    "green",
+    'green',
     (
-        "background": var(--md-green),
-        "border": var(--md-green),
-        "content": var(--md-white),
+        'background': var(--md-green),
+        'border': var(--md-green),
+        'content': var(--md-white),
     )
 );
 @include badge-style(
-    "yellow",
+    'yellow',
     (
-        "background": var(--md-yellow),
-        "border": var(--md-yellow),
-        "content": var(--md-black),
+        'background': var(--md-yellow),
+        'border': var(--md-yellow),
+        'content': var(--md-black),
     )
 );

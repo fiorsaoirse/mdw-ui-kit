@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 @mixin typography-xsmall {
     font-size: var(--md-typo-xsmall-font-size);
@@ -50,11 +50,11 @@
 }
 
 @mixin horizontal-gap($container, $items, $offset) {
-    @include gap($container, $items, $offset, "left", "right");
+    @include gap($container, $items, $offset, 'left', 'right');
 }
 
 @mixin vertical-gap($container, $items, $offset) {
-    @include gap($container, $items, $offset, "top", "bottom");
+    @include gap($container, $items, $offset, 'top', 'bottom');
 }
 
 @mixin flex-row {

@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .md-accordion-header {
     @include flex-row;

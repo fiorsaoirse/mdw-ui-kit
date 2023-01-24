@@ -1,5 +1,5 @@
-@use "sass:map";
-@import "mixins";
+// @use 'sass:map';
+@import 'mixins';
 
 @mixin button() {
     background-image: none;
@@ -67,9 +67,9 @@
 }
 
 @mixin button-style($class, $definitions) {
-    $background: map.get($definitions, "background");
-    $border: map.get($definitions, "border");
-    $content: map.get($definitions, "content");
+    $background: map.get($definitions, 'background');
+    $border: map.get($definitions, 'border');
+    $content: map.get($definitions, 'content');
 
     .md-button-#{$class} {
         background-color: $background;
@@ -77,56 +77,56 @@
         color: $content;
 
         &:hover:not(:disabled) {
-            background-color: color.adjust($background, -5%);
-            border-color: color.adjust($border, -5%);
+            background-color: color.adjust($background, $lightness: -5%);
+            border-color: color.adjust($border, $lightness: -5%);
         }
 
         &:disabled,
         &[disabled],
         &-disabled {
-            background-color: color.adjust($background, 25%);
-            border-color: color.adjust($border, 25%);
+            background-color: color.adjust($background, $lightness: 25%);
+            border-color: color.adjust($border, $lightness: 25%);
         }
     }
 }
 
 @include button-style(
-    "blue",
-  (
-        "background": $md-blue,
-        "border": $md-blue,
-        "content": var(--md-white),
+    'blue',
+    (
+        'background': $md-blue,
+        'border': $md-blue,
+        'content': var(--md-white),
     )
 );
 @include button-style(
-    "orange",
-  (
-        "background": $md-orange,
-        "border": $md-orange,
-        "content": var(--md-white),
+    'orange',
+    (
+        'background': $md-orange,
+        'border': $md-orange,
+        'content': var(--md-white),
     )
 );
 @include button-style(
-    "red",
-  (
-        "background": $md-red,
-        "border": $md-red,
-        "content": var(--md-white),
+    'red',
+    (
+        'background': $md-red,
+        'border': $md-red,
+        'content': var(--md-white),
     )
 );
 @include button-style(
-    "green",
-  (
-        "background": $md-green,
-        "border": $md-green,
-        "content": var(--md-white),
+    'green',
+    (
+        'background': $md-green,
+        'border': $md-green,
+        'content': var(--md-white),
     )
 );
 @include button-style(
-    "yellow",
-  (
-        "background": $md-yellow,
-        "border": $md-yellow,
-        "content": var(--md-black),
+    'yellow',
+    (
+        'background': $md-yellow,
+        'border': $md-yellow,
+        'content': var(--md-black),
     )
 );

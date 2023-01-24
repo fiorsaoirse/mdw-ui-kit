@@ -1,4 +1,4 @@
-@import "../../md-ui-kit/theme/index";
+@import '../../md-ui-kit/theme/index';
 
 section {
     display: flex;
@@ -33,4 +33,4 @@ section {
     max-height: 200px;
 }
 
-@include horizontal-gap("app-navigation", "app-navigation-item", 5px);
+@include horizontal-gap('app-navigation', 'app-navigation-item', 5px);
