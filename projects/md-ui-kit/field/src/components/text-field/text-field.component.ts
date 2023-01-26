@@ -112,7 +112,7 @@ export class MdTextFieldComponent
         return (
             !(this.controller.isDisabled || this.controller.isReadonly) &&
             this.controller.removable &&
-            !this.value
+            !!this.value
         );
     }
 
@@ -174,14 +174,24 @@ export class MdTextFieldComponent
         this.updateValue(value);
     }
 
-    focusOnInput(): void {
+    mouseDown(event: MouseEvent): void {
         if (this.input?.isDisabled || this.input?.isReadonly) {
             return;
         }
 
-        this.isInputFocused = true;
+        const { nativeFocusableElement } = this;
 
-        this.input?.elementRef?.nativeElement.focus();
+        if (
+            !nativeFocusableElement ||
+            event.target === nativeFocusableElement
+        ) {
+            return;
+        }
+
+        this.isInputFocused = !!this.input && true;
+
+        event.preventDefault();
+        nativeFocusableElement.focus();
     }
 
     clear(event: MouseEvent): void {

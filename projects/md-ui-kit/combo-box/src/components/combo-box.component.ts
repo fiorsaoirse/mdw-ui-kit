@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
     AfterContentInit,
     AfterViewInit,
@@ -5,8 +6,10 @@ import {
     ChangeDetectorRef,
     Component,
     ContentChildren,
+    ElementRef,
     EventEmitter,
     forwardRef,
+    HostListener,
     Inject,
     Input,
     NgZone,
@@ -30,9 +33,9 @@ import {
     MdOnDestroy,
     MD_DEBOUNCE_TIME,
 } from 'md-ui-kit/common';
-import { MdFieldState, MdTextFieldComponent } from 'md-ui-kit/field';
+import { MdTextFieldComponent } from 'md-ui-kit/field';
 import { isNil } from 'md-ui-kit/utils';
-import { BehaviorSubject, defer, merge, Observable } from 'rxjs';
+import { BehaviorSubject, defer, fromEvent, merge, Observable } from 'rxjs';
 import {
     debounceTime,
     distinctUntilChanged,
@@ -41,6 +44,7 @@ import {
     startWith,
     switchMap,
     takeUntil,
+    tap,
 } from 'rxjs/operators';
 import {
     MdComboBoxWatchedController,
@@ -96,6 +100,7 @@ export class MdComboBoxComponent<T, R>
     private selectedItem?: R;
 
     private open$$: BehaviorSubject<boolean>;
+
     public open$: Observable<boolean>;
 
     public showContent: boolean;
@@ -107,7 +112,9 @@ export class MdComboBoxComponent<T, R>
     constructor(
         private readonly ngZone: NgZone,
         private readonly changeDetectorRef: ChangeDetectorRef,
+        private readonly elementRef: ElementRef,
         @Self() private readonly destroy$: MdOnDestroy,
+        @Inject(DOCUMENT) private readonly document: Document,
         @Inject(MD_COMBO_BOX_WATCHED_CONTROLLER)
         private readonly watchedController: MdComboBoxWatchedController,
         @Inject(MD_DEBOUNCE_TIME) private readonly debounce: number,
@@ -123,7 +130,11 @@ export class MdComboBoxComponent<T, R>
         this.showContent = false;
 
         this.open$$ = new BehaviorSubject(false);
-        this.open$ = this.open$$.asObservable();
+        this.open$ = this.open$$.asObservable().pipe(
+            tap((val) => {
+                console.log('open$ ', val);
+            }),
+        );
 
         const initialValue = this.stringify(this.value);
 
@@ -132,6 +143,10 @@ export class MdComboBoxComponent<T, R>
                 validators: [Validators.minLength(this.minSearchLength)],
             }),
         });
+    }
+
+    get open(): boolean {
+        return this.open$$.value;
     }
 
     get context(): MdComboBoxContext<T, R> | null {
@@ -177,17 +192,27 @@ export class MdComboBoxComponent<T, R>
                 this.searchInputChange.emit(searchInputValue);
             });
 
-        this.textField?.fieldState$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((state: MdFieldState) => {
-                setTimeout(() => {
-                    const current = this.open$$.getValue();
+        this.ngZone.runOutsideAngular(() => {
+            fromEvent(this.document, 'click')
+                .pipe(
+                    filter((event) => {
+                        const target = event.target as HTMLElement;
 
-                    if (current && state !== MdFieldState.Focused) {
-                        this.closeDropdown();
-                    }
-                }, 300);
-            });
+                        return !(
+                            this.elementRef.nativeElement as HTMLElement
+                        ).contains(target);
+                    }),
+                    takeUntil(this.destroy$),
+                )
+                .subscribe(() => {
+                    this.closeDropdown();
+                });
+        });
+    }
+
+    @HostListener('keydown.esc', ['$event'])
+    onKeyDownEsc(event: Event): void {
+        this.closeDropdown();
     }
 
     public ngAfterContentInit(): void {
@@ -202,7 +227,8 @@ export class MdComboBoxComponent<T, R>
 
     public toggle(): void {
         const current = this.open$$.getValue();
-        this.open$$.next(!current);
+        const next = !!this.options.length && !current;
+        this.open$$.next(next);
     }
 
     private clear(): void {
@@ -268,6 +294,14 @@ export class MdComboBoxComponent<T, R>
     }
 
     private closeDropdown(): void {
+        const isOpen = this.open;
+        console.log('is open now: ', isOpen);
+
+        if (!isOpen) {
+            return;
+        }
+
+        console.log('closing');
         this.open$$.next(false);
     }
 }

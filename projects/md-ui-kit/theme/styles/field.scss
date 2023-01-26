@@ -90,6 +90,8 @@
             transition-property: transform;
             transition-duration: 0.3s;
             transition-timing-function: ease-in-out;
+            user-select: none;
+            pointer-events: none;
 
             &-focused {
                 color: var(--md-blue-01);

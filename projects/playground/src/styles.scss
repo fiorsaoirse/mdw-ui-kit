@@ -5,21 +5,21 @@ section {
     gap: 10px;
     position: relative;
     width: 100%;
+}
 
-    &.playground-row {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        flex-flow: row wrap;
-    }
+.playground-row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-flow: row wrap;
+}
 
-    &.playground-column {
-        flex-direction: column;
-    }
+.playground-column {
+    flex-direction: column;
+}
 
-    .playground-col-33 {
-        display: flex;
-        flex-basis: 33%;
-    }
+.playground-col-33 {
+    display: flex;
+    flex-basis: 33%;
 }
 
 .app-navigation {
