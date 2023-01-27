@@ -44,7 +44,6 @@ import {
     startWith,
     switchMap,
     takeUntil,
-    tap,
 } from 'rxjs/operators';
 import {
     MdComboBoxWatchedController,
@@ -130,11 +129,7 @@ export class MdComboBoxComponent<T, R>
         this.showContent = false;
 
         this.open$$ = new BehaviorSubject(false);
-        this.open$ = this.open$$.asObservable().pipe(
-            tap((val) => {
-                console.log('open$ ', val);
-            }),
-        );
+        this.open$ = this.open$$.asObservable();
 
         const initialValue = this.stringify(this.value);
 
@@ -296,14 +291,10 @@ export class MdComboBoxComponent<T, R>
     }
 
     private closeDropdown(): void {
-        const isOpen = this.open;
-        console.log('is open now: ', isOpen);
-
-        if (!isOpen) {
+        if (!this.open) {
             return;
         }
 
-        console.log('closing');
         this.open$$.next(false);
     }
 }
