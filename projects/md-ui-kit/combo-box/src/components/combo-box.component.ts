@@ -205,7 +205,9 @@ export class MdComboBoxComponent<T, R>
                     takeUntil(this.destroy$),
                 )
                 .subscribe(() => {
-                    this.closeDropdown();
+                    this.ngZone.run(() => {
+                        this.closeDropdown();
+                    });
                 });
         });
     }
