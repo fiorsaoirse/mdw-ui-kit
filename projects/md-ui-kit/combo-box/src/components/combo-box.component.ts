@@ -78,7 +78,7 @@ const MD_COMBO_BOX_VALUE_ACCESSOR: Provider = {
         class: 'md-combo-box',
     },
 })
-export class MdComboBoxComponent<T, R>
+export class MdComboBoxComponent<T, R = any>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
     @Input() label: string;
