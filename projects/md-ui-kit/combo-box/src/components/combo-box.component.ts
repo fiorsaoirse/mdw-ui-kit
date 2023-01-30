@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
     AfterContentInit,
     AfterViewInit,
@@ -5,8 +6,10 @@ import {
     ChangeDetectorRef,
     Component,
     ContentChildren,
+    ElementRef,
     EventEmitter,
     forwardRef,
+    HostListener,
     Inject,
     Input,
     NgZone,
@@ -32,8 +35,7 @@ import {
 } from 'md-ui-kit/common';
 import { MdTextFieldComponent } from 'md-ui-kit/field';
 import { isNil } from 'md-ui-kit/utils';
-import { MdFieldState } from 'projects/md-ui-kit/field/src/contracts/field-state';
-import { BehaviorSubject, defer, merge, Observable } from 'rxjs';
+import { BehaviorSubject, defer, fromEvent, merge, Observable } from 'rxjs';
 import {
     debounceTime,
     distinctUntilChanged,
@@ -76,7 +78,7 @@ const MD_COMBO_BOX_VALUE_ACCESSOR: Provider = {
         class: 'md-combo-box',
     },
 })
-export class MdComboBoxComponent<T, R>
+export class MdComboBoxComponent<T, R = any>
     implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
     @Input() label: string;
@@ -97,6 +99,7 @@ export class MdComboBoxComponent<T, R>
     private selectedItem?: R;
 
     private open$$: BehaviorSubject<boolean>;
+
     public open$: Observable<boolean>;
 
     public showContent: boolean;
@@ -108,7 +111,9 @@ export class MdComboBoxComponent<T, R>
     constructor(
         private readonly ngZone: NgZone,
         private readonly changeDetectorRef: ChangeDetectorRef,
+        private readonly elementRef: ElementRef,
         @Self() private readonly destroy$: MdOnDestroy,
+        @Inject(DOCUMENT) private readonly document: Document,
         @Inject(MD_COMBO_BOX_WATCHED_CONTROLLER)
         private readonly watchedController: MdComboBoxWatchedController,
         @Inject(MD_DEBOUNCE_TIME) private readonly debounce: number,
@@ -133,6 +138,10 @@ export class MdComboBoxComponent<T, R>
                 validators: [Validators.minLength(this.minSearchLength)],
             }),
         });
+    }
+
+    get open(): boolean {
+        return this.open$$.value;
     }
 
     get context(): MdComboBoxContext<T, R> | null {
@@ -178,17 +187,29 @@ export class MdComboBoxComponent<T, R>
                 this.searchInputChange.emit(searchInputValue);
             });
 
-        this.textField?.fieldState$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((state: MdFieldState) => {
-                setTimeout(() => {
-                    const current = this.open$$.getValue();
+        this.ngZone.runOutsideAngular(() => {
+            fromEvent(this.document, 'click')
+                .pipe(
+                    filter((event) => {
+                        const target = event.target as HTMLElement;
 
-                    if (current && state !== MdFieldState.Focused) {
+                        return !(
+                            this.elementRef.nativeElement as HTMLElement
+                        ).contains(target);
+                    }),
+                    takeUntil(this.destroy$),
+                )
+                .subscribe(() => {
+                    this.ngZone.run(() => {
                         this.closeDropdown();
-                    }
-                }, 300);
-            });
+                    });
+                });
+        });
+    }
+
+    @HostListener('keydown.esc', ['$event'])
+    onKeyDownEsc(event: Event): void {
+        this.closeDropdown();
     }
 
     public ngAfterContentInit(): void {
@@ -203,7 +224,11 @@ export class MdComboBoxComponent<T, R>
 
     public toggle(): void {
         const current = this.open$$.getValue();
-        this.open$$.next(!current);
+        const next = !!this.options.length && !current;
+
+        console.log('next ', next);
+
+        this.open$$.next(next);
     }
 
     private clear(): void {
@@ -224,7 +249,7 @@ export class MdComboBoxComponent<T, R>
         () => {
             const options = this.options;
 
-            if (options) {
+            if (options.length) {
                 return merge(
                     ...options.map((option) => option.selected.asObservable()),
                 );
@@ -269,6 +294,10 @@ export class MdComboBoxComponent<T, R>
     }
 
     private closeDropdown(): void {
+        if (!this.open) {
+            return;
+        }
+
         this.open$$.next(false);
     }
 }

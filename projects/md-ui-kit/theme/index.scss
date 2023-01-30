@@ -1,20 +1,23 @@
-@import 'styles/accordion.scss';
+@use 'sass:map';
+@use 'sass:color';
+
+@import 'styles/accordion';
 @import 'styles/badge';
 @import 'styles/buttons';
 @import 'styles/card';
 @import 'styles/field';
-@import 'styles/combo-box.scss';
+@import 'styles/combo-box';
 
 html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .md-icon {
-    @include md-icon();
+    @include md-icon;
 }
 
 .md-clickable-icon {
-    @include md-icon();
+    @include md-icon;
 
     pointer-events: auto;
 }

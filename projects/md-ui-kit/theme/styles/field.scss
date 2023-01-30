@@ -1,5 +1,4 @@
-@use 'sass:map';
-
+// @use 'sass:map';
 @import 'mixins';
 
 .md-text-field {
@@ -12,7 +11,8 @@
     $large-margin: -0.25rem;
 
     &-container {
-        @include flex-row();
+        @include flex-row;
+
         transition-property: box-shadow, outline-color;
         transition-duration: 0.3s;
         transition-timing-function: ease-in-out;
@@ -34,22 +34,17 @@
 
         .md-text-field-input {
             font: inherit;
-            color: var(--md-blue-01);
-            margin: 0;
-            border: 0;
             border-radius: inherit;
             background: none;
             font-size: inherit;
             line-height: inherit;
             font-weight: inherit;
             color: inherit;
-            caret-color: currentColor;
+            caret-color: currentcolor;
             outline: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
             appearance: none;
             word-break: keep-all;
-            -webkit-text-fill-color: currentColor;
+            -webkit-text-fill-color: currentcolor;
             position: absolute;
             top: 0;
             left: 0;
@@ -78,7 +73,8 @@
         }
 
         .md-text-field-content {
-            @include flex-row();
+            @include flex-row;
+
             position: relative;
             width: 100%;
             height: 100%;
@@ -94,6 +90,9 @@
             transition-property: transform;
             transition-duration: 0.3s;
             transition-timing-function: ease-in-out;
+            user-select: none;
+            pointer-events: none;
+            line-height: normal;
 
             &-focused {
                 color: var(--md-blue-01);
@@ -113,9 +112,9 @@
     }
 
     &-small {
-        @include typography-small();
-        padding: 0.25rem 0.5rem;
+        @include typography-small;
 
+        padding: 0.25rem 0.5rem;
         height: calc(var(--md-height-small) * 1.2);
         min-height: calc(var(--md-height-small) * 1.2);
         max-height: calc(var(--md-height-small) * 1.2);
@@ -132,7 +131,8 @@
     }
 
     &-medium {
-        @include typography-medium();
+        @include typography-medium;
+
         height: calc(var(--md-height-medium) * 1.3);
         min-height: calc(var(--md-height-medium) * 1.3);
         max-height: calc(var(--md-height-medium) * 1.3);
@@ -161,9 +161,9 @@
     }
 
     &-large {
-        @include typography-large();
-        padding: 0.5rem 1rem;
+        @include typography-large;
 
+        padding: 0.5rem 1rem;
         height: calc(var(--md-height-large) * 1.2);
         min-height: calc(var(--md-height-large) * 1.2);
         max-height: calc(var(--md-height-large) * 1.2);
@@ -173,21 +173,21 @@
             padding-top: calc(var(--md-padding-large) * 1.2);
         }
 
+        .md-text-field-label {
+            font-size: inherit;
+        }
+
+        .md-text-field-label-raised {
+            font-size: var(--md-placeholder-lagre-focused);
+        }
+
         .md-text-field-content {
             padding: 0 var(--md-padding-large);
             font-size: var(--md-placeholder-large);
         }
 
-        .md-text-field-label {
-            font-size: inherit;
-        }
-
         &-focused {
             font-size: var(--md-placeholder-large-focused);
-        }
-
-        .md-text-field-label-raised {
-            font-size: var(--md-placeholder-lagre-focused);
         }
     }
 

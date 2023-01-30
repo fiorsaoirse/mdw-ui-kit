@@ -4,13 +4,13 @@ Value: {{ value }}
     <div class="playground-col-33">
         <md-combo-box
             mdRemovable
-            label="Combo-box"
+            label="Combo-box-async"
             [content]="selectionTemplate"
             [(ngModel)]="value"
             (searchInputChange)="search($event)"
             (selectionChange)="selected($event)"
         >
-            <ng-container *ngFor="let item of data$ | async">
+            <ng-container *ngFor="let item of async$ | async">
                 <md-combo-box-option
                     [content]="optionTemplate"
                     [value]="item.id"
@@ -21,10 +21,16 @@ Value: {{ value }}
     </div>
 </section>
 
-<button md-button (click)="log()">Log</button>
+<div class="playground-row">
+    <button md-button (click)="log()">Log</button>
+</div>
+
+<div class="playground-row">
+    <button md-button (click)="load()">Load</button>
+</div>
 
 <ng-template #selectionTemplate let-value let-item="item">
-    <div>Id: {{ item.id }} Name: {{ item.name }}</div>
+    <div>Id: {{ value }} Name: {{ item.name }}</div>
 </ng-template>
 
 <ng-template #optionTemplate let-item="item">

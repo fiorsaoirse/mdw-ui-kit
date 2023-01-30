@@ -7,10 +7,10 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EMPTY_FUNCTION } from 'md-ui-kit/common';
-import { MdInput } from 'md-ui-kit/field';
 import { coerceNumericInput, isNil, isString } from 'md-ui-kit/utils';
 import { NAVIGATION_KEYS } from '../../constants/navigation-keys';
 import { NUMBER_KEYS } from '../../constants/number-keys';
+import { MdInput } from '../../contracts/basic-input';
 
 const MINUS = '-';
 

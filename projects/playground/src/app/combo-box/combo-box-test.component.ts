@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MD_MIN_COMBO_BOX_SEARCH_LENGTH } from 'projects/md-ui-kit/combo-box/src';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 interface IItem {
     id: number;
@@ -23,13 +23,21 @@ export class ComboBoxTestComponent {
     private data$$: BehaviorSubject<ReadonlyArray<IItem>>;
     public data$: Observable<ReadonlyArray<IItem>>;
 
+    public async$: Observable<ReadonlyArray<IItem>>;
+
     value: number | null;
 
     constructor() {
         this.data$$ = new BehaviorSubject(ITEMS as ReadonlyArray<IItem>);
         this.data$ = this.data$$.asObservable();
 
+        this.async$ = of([]);
+
         this.value = null;
+    }
+
+    load(): void {
+        this.async$ = of(ITEMS);
     }
 
     search(value: string | null): void {

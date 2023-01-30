@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { MdContentOutletComponent } from './components/content-outlet/content-outlet.component';
 import { MdDisabledControllerDirective } from './controllers/disabled/disabled.controller';
 import { MdReadonlyControllerDirective } from './controllers/readonly/readonly.controller';
@@ -8,7 +9,7 @@ import { MdSizeControllerDirective } from './controllers/size/size.controller';
 import { MdGuardPipe } from './pipes/guard-pipe';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, BrowserModule],
     declarations: [
         MdContentOutletComponent,
         MdRemovableControllerDirective,
@@ -25,6 +26,7 @@ import { MdGuardPipe } from './pipes/guard-pipe';
         MdReadonlyControllerDirective,
         MdGuardPipe,
         CommonModule,
+        BrowserModule,
     ],
 })
 export class MdCommonModule {}

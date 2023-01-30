@@ -20,9 +20,9 @@ import {
     MdContent,
     MdContext,
     MdOnDestroy,
+    MD_ARROW_ICON_URL,
 } from 'md-ui-kit/common';
-import { MD_ARROW_ICON_URL } from 'projects/md-ui-kit/common/src/tokens/icons';
-import { MdSvgComponent } from 'projects/md-ui-kit/svg/src';
+import { MdSvgComponent } from 'md-ui-kit/svg';
 import { IMdAccordionState } from '../contracts/accordion';
 
 const ACCORDION_CLASS = 'md-accordion';
