@@ -92,6 +92,7 @@
             transition-timing-function: ease-in-out;
             user-select: none;
             pointer-events: none;
+            line-height: normal;
 
             &-focused {
                 color: var(--md-blue-01);
