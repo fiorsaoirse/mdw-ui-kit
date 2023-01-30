@@ -225,6 +225,9 @@ export class MdComboBoxComponent<T, R>
     public toggle(): void {
         const current = this.open$$.getValue();
         const next = !!this.options.length && !current;
+
+        console.log('next ', next);
+
         this.open$$.next(next);
     }
 
@@ -246,7 +249,7 @@ export class MdComboBoxComponent<T, R>
         () => {
             const options = this.options;
 
-            if (options) {
+            if (options.length) {
                 return merge(
                     ...options.map((option) => option.selected.asObservable()),
                 );

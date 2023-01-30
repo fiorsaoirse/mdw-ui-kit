@@ -16,11 +16,11 @@
 
     <ng-container *ngIf="open$ | async">
         <div class="md-combo-box-options-container">
-            <ng-template *ngTemplateOutlet="options"></ng-template>
+            <ng-template *ngTemplateOutlet="optionsContent"></ng-template>
         </div>
     </ng-container>
 </div>
 
-<ng-template #options>
+<ng-template #optionsContent>
     <ng-content></ng-content>
 </ng-template>
