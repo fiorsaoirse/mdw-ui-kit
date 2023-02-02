@@ -60,4 +60,8 @@ export class ComboBoxTestComponent {
     log(): void {
         console.log('current value: ', this.value);
     }
+
+    reset(): void {
+        this.value = null;
+    }
 }

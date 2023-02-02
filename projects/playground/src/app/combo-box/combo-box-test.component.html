@@ -29,6 +29,10 @@ Value: {{ value }}
     <button md-button (click)="load()">Load</button>
 </div>
 
+<div class="playground-row">
+    <button md-button (click)="reset()">Reset</button>
+</div>
+
 <ng-template #selectionTemplate let-value let-item="item">
     <div>Id: {{ value }} Name: {{ item.name }}</div>
 </ng-template>

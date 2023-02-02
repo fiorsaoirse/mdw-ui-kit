@@ -33,7 +33,7 @@ import {
     MdOnDestroy,
     MD_DEBOUNCE_TIME,
 } from 'md-ui-kit/common';
-import { MdTextFieldComponent } from 'md-ui-kit/field';
+import { MdFieldState, MdTextFieldComponent } from 'md-ui-kit/field';
 import { isNil } from 'md-ui-kit/utils';
 import { BehaviorSubject, defer, fromEvent, merge, Observable } from 'rxjs';
 import {
@@ -99,6 +99,7 @@ export class MdComboBoxComponent<T, R = any>
     private selectedItem?: R;
 
     private open$$: BehaviorSubject<boolean>;
+    private isFocused: boolean;
 
     public open$: Observable<boolean>;
 
@@ -131,6 +132,8 @@ export class MdComboBoxComponent<T, R = any>
         this.open$$ = new BehaviorSubject(false);
         this.open$ = this.open$$.asObservable();
 
+        this.isFocused = false;
+
         const initialValue = this.stringify(this.value);
 
         this.formGroup = new FormGroup({
@@ -155,6 +158,10 @@ export class MdComboBoxComponent<T, R = any>
     public writeValue(value: T): void {
         this.value = value;
         this.showContent = !isNil(this.value);
+
+        this.formGroup.patchValue({
+            inputControl: this.stringify(this.value),
+        });
     }
 
     public registerOnChange(fn: (_: any) => void): void {
@@ -185,6 +192,12 @@ export class MdComboBoxComponent<T, R = any>
                 }
 
                 this.searchInputChange.emit(searchInputValue);
+            });
+
+        this.textField?.fieldState$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((state) => {
+                this.isFocused = state === MdFieldState.Focused;
             });
 
         this.ngZone.runOutsideAngular(() => {
@@ -218,6 +231,10 @@ export class MdComboBoxComponent<T, R = any>
             .subscribe(() => {
                 // After options initializing we have to observe the stream of option selection events
                 this.trackCurrentOptionsSelections();
+
+                const next = this.isFocused && !!this.options.length;
+                this.open$$.next(next);
+
                 this.changeDetectorRef.markForCheck();
             });
     }
@@ -225,9 +242,6 @@ export class MdComboBoxComponent<T, R = any>
     public toggle(): void {
         const current = this.open$$.getValue();
         const next = !!this.options.length && !current;
-
-        console.log('next ', next);
-
         this.open$$.next(next);
     }
 
