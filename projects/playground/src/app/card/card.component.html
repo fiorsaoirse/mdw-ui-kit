@@ -6,6 +6,7 @@
             <div mdLazyObserved (reached)="loadMore$.next()"></div>
         </ng-container>
         <md-card
+            mdHoverable
             [content]="cardBody"
             [context]="cat.context"
             basis="calc(33% - 10px)"

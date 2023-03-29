@@ -8,6 +8,10 @@ export {
     MD_DISABLED,
 } from './controllers/disabled/disabled.controller';
 export {
+    MdHoverableControllerDirective,
+    MD_HOVERABLE,
+} from './controllers/hoverable/hoverable.controller';
+export {
     MdReadonlyControllerDirective,
     MD_READONLY,
 } from './controllers/readonly/readonly.controller';

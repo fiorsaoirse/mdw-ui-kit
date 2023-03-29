@@ -5,8 +5,6 @@
 
     gap: var(--md-point-medium);
     position: relative;
-    display: -webkit-box;
-    display: flexbox;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
@@ -19,6 +17,18 @@
     padding: calc(var(--md-point-large) * 0.75);
     flex: 0 0 100%;
     box-sizing: border-box;
+
+    &-hoverable {
+        cursor: pointer;
+        transition: box-shadow 0.2s, border-color 0.2s;
+
+        &:hover {
+            border-color: transparent;
+            box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+                0 3px 6px 0 rgba(0, 0, 0, 0.12),
+                0 5px 12px 4px rgba(0, 0, 0, 0.09);
+        }
+    }
 
     &-header {
         @include flex-column;
